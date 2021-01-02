@@ -1,0 +1,24 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+}
+
+
+group 'com.pinocchio'
+version '0.0.1-SNAPSHOT'
+
+allprojects {
+	apply plugin: "idea"
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/milestone" }
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+subprojects {
+}
