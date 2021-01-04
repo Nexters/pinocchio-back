@@ -38,10 +38,14 @@ class FileServerApiClientTest extends SpringTest {
 					.withName("file")
 					.withBody(binaryEqualTo(fileByte))
 				)
-				.willReturn(okJson("{"
-					+ "\"status\" : \"SUCCEED\","
-					+ "\"message\" : \"성공\""
-					+ "}"))
+				.willReturn(
+					okJson(
+						"{"
+							+ "\"status\" : \"SUCCEED\","
+							+ "\"message\" : \"성공\""
+							+ "}"
+					)
+				)
 		);
 
 		StepVerifier.create(this.sut.upload(request))
