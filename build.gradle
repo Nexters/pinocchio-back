@@ -8,6 +8,9 @@ plugins {
 group 'com.pinocchio'
 version '0.0.1-SNAPSHOT'
 
+bootJar { enabled = false }
+jar { enabled = false }
+
 allprojects {
     repositories {
         mavenCentral()
