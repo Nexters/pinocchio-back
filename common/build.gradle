@@ -1,11 +1,9 @@
-plugins {
-	id "java"
-}
-
-java{
-	sourceCompatibility = JavaVersion.VERSION_1_8
-	targetCompatibility = JavaVersion.VERSION_1_8
-}
+bootJar { enabled = false }
+jar { enabled = true }
 
 dependencies {
+    testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
+    testFixturesImplementation("io.rest-assured:rest-assured:${restAssuredVersion}")
+    testFixturesImplementation("io.rest-assured:rest-assured-all:${restAssuredVersion}")
+    testFixturesImplementation("io.rest-assured:json-schema-validator:${restAssuredVersion}")
 }
