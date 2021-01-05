@@ -1,24 +1,29 @@
-buildscript {
-	repositories {
-		mavenCentral()
-	}
+plugins {
+    id "java"
 }
 
+group = "com.pinocchio"
+version = "0.0.1-SNAPSHOT"
 
-group 'com.pinocchio'
-version '0.0.1-SNAPSHOT'
 
 allprojects {
-	apply plugin: "idea"
-	repositories {
-		mavenCentral()
-		maven { url "https://repo.spring.io/milestone" }
-	}
-}
-
-repositories {
-	mavenCentral()
+    apply plugin: "idea"
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/milestone" }
+    }
 }
 
 subprojects {
+    apply plugin: "java"
+    dependencies {
+        compileOnly('org.projectlombok:lombok')
+        annotationProcessor('org.projectlombok:lombok')
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation("io.rest-assured:rest-assured:${restAssuredVersion}")
+        testImplementation("io.rest-assured:rest-assured-all:${restAssuredVersion}")
+        testImplementation("io.rest-assured:json-schema-validator:${restAssuredVersion}")
+        testImplementation("io.rest-assured:xml-path:${restAssuredVersion}")
+    }
 }
