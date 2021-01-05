@@ -1,9 +1,12 @@
-bootJar { enabled = false }
-jar { enabled = true }
+plugins {
+    id "java"
+    id "java-test-fixtures"
+    id "org.springframework.boot" version "2.4.1"
+    id "io.spring.dependency-management" version "1.0.10.RELEASE"
+}
 
 dependencies {
-    testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
-    testFixturesImplementation("io.rest-assured:rest-assured:${restAssuredVersion}")
-    testFixturesImplementation("io.rest-assured:rest-assured-all:${restAssuredVersion}")
-    testFixturesImplementation("io.rest-assured:json-schema-validator:${restAssuredVersion}")
+
 }
+
+bootJar.enabled = false

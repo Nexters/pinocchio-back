@@ -1,34 +1,21 @@
 plugins {
     id "java"
-    id "java-test-fixtures"
-    id "org.springframework.boot" version '2.4.1'
-    id "io.spring.dependency-management" version '1.0.10.RELEASE'
 }
 
-group 'com.pinocchio'
-version '0.0.1-SNAPSHOT'
+group = "com.pinocchio"
+version = "0.0.1-SNAPSHOT"
 
-bootJar { enabled = false }
-jar { enabled = false }
 
 allprojects {
-    repositories {
-        mavenCentral()
-    }
-}
-
-subprojects {
+    apply plugin: "idea"
     repositories {
         mavenCentral()
         maven { url "https://repo.spring.io/milestone" }
     }
+}
 
-    apply plugin: "idea"
+subprojects {
     apply plugin: "java"
-    apply plugin: "java-test-fixtures"
-    apply plugin: "org.springframework.boot"
-    apply plugin: "io.spring.dependency-management"
-
     dependencies {
         compileOnly('org.projectlombok:lombok')
         annotationProcessor('org.projectlombok:lombok')
@@ -37,5 +24,6 @@ subprojects {
         testImplementation("io.rest-assured:rest-assured:${restAssuredVersion}")
         testImplementation("io.rest-assured:rest-assured-all:${restAssuredVersion}")
         testImplementation("io.rest-assured:json-schema-validator:${restAssuredVersion}")
+        testImplementation("io.rest-assured:xml-path:${restAssuredVersion}")
     }
 }
