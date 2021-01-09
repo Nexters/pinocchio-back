@@ -30,13 +30,6 @@ public class ApiController {
 		Instant uploadDateTime = requestDto.getUploadDateTime();
 		MultipartFile uploadFile = requestDto.getUploadFile();
 
-		String originalFileName = uploadFile.getOriginalFilename();
-		File dest = new File("C:/Image/" + originalFileName);
-		try {
-			uploadFile.transferTo(dest); //업로드한 파일 데이터를 지정한 file에 저장
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
 		return new UploadResponseDto(userId, uploadDateTime, uploadFile);
 	}
