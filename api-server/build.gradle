@@ -6,6 +6,8 @@ plugins {
 
 dependencies {
     compile project(":common")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -15,6 +17,8 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testCompile testFixtures(project((":common")))
     testImplementation("org.springframework.kafka:spring-kafka-test")
+    testImplementation("io.projectreactor:reactor-test")
+    testCompile("com.github.tomakehurst:wiremock:2.27.1")
 }
 
 test {

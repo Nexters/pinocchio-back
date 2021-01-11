@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: santa-clothes-file-server
+  profiles:
+    active: local

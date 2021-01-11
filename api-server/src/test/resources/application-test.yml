@@ -1,11 +1,3 @@
 spirng:
   profiles:
     active: test
-
-api:
-  file-server:
-    url: http://${host.file-server.api}
-
-host:
-  file-server:
-    api: localhost:${wiremock.server.port}
