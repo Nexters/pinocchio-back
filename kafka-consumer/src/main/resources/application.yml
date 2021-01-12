@@ -1,5 +1,5 @@
 spring:
   application:
-    name: santa-clothes-api-server
+    name: santa-clothes-file-server
   profiles:
     active: local

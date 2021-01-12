@@ -1,4 +1,4 @@
-package com.pinnochio.santaclothes;
+package com.pinocchio.santaclothes.consumer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

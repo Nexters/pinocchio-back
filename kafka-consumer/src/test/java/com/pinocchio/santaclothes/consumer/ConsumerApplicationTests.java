@@ -1,4 +1,4 @@
-package com.pinnochio.santaclothes;
+package com.pinocchio.santaclothes.consumer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

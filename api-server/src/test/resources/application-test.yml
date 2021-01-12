@@ -1,0 +1,3 @@
+spirng:
+  profiles:
+    active: test
