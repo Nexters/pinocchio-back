@@ -1,6 +1,6 @@
 spring:
   application:
-    name: santa-clothes-api-server
+    name: santa-clothes-image-server
   profiles:
     active: local
   cloud:
@@ -8,12 +8,17 @@ spring:
       definition: captureCreate;
     stream:
       bindings:
-        captureCreate-in-0:
+        captureCreate-out-0:
           group: capture
           binder: kafka
           destination: captureCreate
+          startOffset: earliest
       kafka:
         binder:
           brokers: localhost
+  servlet:
+    multipart:
+      file-size-threshold: 1MB
+      location: temp
 server:
-  port: 8082
+  port: 8081
