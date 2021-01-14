@@ -16,13 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @Slf4j
 public class EventMessageService {
-	private int test = 1;
 	private final CaptureEventRepository captureEventRepository;
 
 	public void captureEvent(CaptureEventMessage message) {
-		if (++test < 3) {
-			throw new RuntimeException("test");
-		}
 		CaptureEvent captureEvent = new CaptureEvent(message.getCaptureId(), message.getImageId());
 		captureEventRepository.save(captureEvent);
 	}

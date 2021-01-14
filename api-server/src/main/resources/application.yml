@@ -10,9 +10,13 @@ spring:
       bindings:
         captureCreate-in-0:
           group: capture
-          binder: kafka
           destination: captureCreate
       kafka:
+        bindings:
+          captureCreate-in-0:
+            consumer:
+              enableDlq: true
+              dlqName: capture-dlq
         binder:
           brokers: localhost
 server:
