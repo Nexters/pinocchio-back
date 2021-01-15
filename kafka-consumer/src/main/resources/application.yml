@@ -1,5 +1,37 @@
 spring:
   application:
-    name: santa-clothes-file-server
+    name: santa-clothes-kafka-consumer
   profiles:
     active: local
+  cloud:
+    function:
+      definition: captureCreate;captureProcessRequest;captureProcessDone
+    stream:
+      bindings:
+        captureCreate-in-0:
+          group: capture
+          destination: captureCreate
+        captureProcessRequest-in-0:
+          group: capture
+          destination: captureProcessRequest
+        captureProcessDone-in-0:
+          group: capture
+          destination: captureProcessDone
+      kafka:
+        bindings:
+          captureCreate-in-0:
+            consumer:
+              enableDlq: true
+              dlqName: capture-create-dlq
+            captureProcessRequest-in-0:
+              consumer:
+                enableDlq: true
+                dlqName: capture-process-request-dlq
+            captureProcessDone-in-0:
+              consumer:
+                enableDlq: true
+                dlqName: capture-process-done-dlq
+        binder:
+          brokers: localhost
+server:
+  port: 8083

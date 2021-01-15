@@ -27,4 +27,21 @@ public class WebClientConfig {
 				headers.setContentType(MediaType.MULTIPART_MIXED)
 			).build();
 	}
+
+	@Bean("apiServerApiClientProperties")
+	@ConfigurationProperties(prefix = "api.api-server")
+	ApiClientProperties apiServerApiClientProperties() {
+		return new ApiClientProperties();
+	}
+
+	@Bean("apiServerWebClient")
+	WebClient apiServerWebClient(
+		WebClient.Builder webClientBuilder,
+		@Qualifier("apiServerApiClientProperties") ApiClientProperties apiClientProperties
+	) {
+		return webClientBuilder.baseUrl(apiClientProperties.getUrl())
+			.defaultHeaders(headers ->
+				headers.setContentType(MediaType.APPLICATION_JSON)
+			).build();
+	}
 }

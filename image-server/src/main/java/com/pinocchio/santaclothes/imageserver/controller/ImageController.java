@@ -33,7 +33,7 @@ public class ImageController {
 		String captureId = UUID.randomUUID().toString();
 		CaptureImageRequest captureImageRequest = CaptureImageRequest.builder()
 			.imageId(imageId)
-			.captureId(captureId)
+			.eventId(captureId)
 			.image(request.getUploadFile())
 			.build();
 		captureEventService.saveImage(captureImageRequest);

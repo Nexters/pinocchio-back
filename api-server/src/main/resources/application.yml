@@ -3,21 +3,5 @@ spring:
     name: santa-clothes-api-server
   profiles:
     active: local
-  cloud:
-    function:
-      definition: captureCreate;
-    stream:
-      bindings:
-        captureCreate-in-0:
-          group: capture
-          destination: captureCreate
-      kafka:
-        bindings:
-          captureCreate-in-0:
-            consumer:
-              enableDlq: true
-              dlqName: capture-dlq
-        binder:
-          brokers: localhost
 server:
   port: 8082

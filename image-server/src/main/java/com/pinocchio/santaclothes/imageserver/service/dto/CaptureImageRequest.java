@@ -8,7 +8,7 @@ import lombok.Value;
 @Value
 @Builder
 public class CaptureImageRequest {
-	String captureId;
+	String eventId;
 
 	String imageId;
 

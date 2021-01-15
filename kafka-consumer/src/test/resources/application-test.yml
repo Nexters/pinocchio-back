@@ -4,8 +4,10 @@ spirng:
 
 api:
   file-server:
-    url: http://${host.file-server.api}
+    url: http://${host.file-server}
+  api-server:
+    url: http://${host.api-server}
 
 host:
-  file-server:
-    api: localhost:${wiremock.server.port}
+  file-server: localhost:${wiremock.server.port}
+  api-server: localhost:${wiremock.server.port}

@@ -5,29 +5,30 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
+import org.springframework.lang.Nullable;
+
 import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Setter
 @Getter
-@NoArgsConstructor
 @Entity
+@Builder
+@AllArgsConstructor
 @Slf4j
 public class CaptureEvent {
 	@Id
-	private String captureId;
+	private String eventId;
 
 	private String imageId;
 
-	public CaptureEvent(String captureId, String imageId) {
-		log.info("{} {} ", captureId, imageId);
-		this.captureId = captureId;
-		this.imageId = imageId;
-	}
+	@Nullable
+	private String result;
 
 	@Enumerated(EnumType.STRING)
 	private CaptureEventStatus status = CaptureEventStatus.START;

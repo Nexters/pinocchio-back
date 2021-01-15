@@ -5,7 +5,7 @@ spring:
     active: local
   cloud:
     function:
-      definition: captureCreate;
+      definition: captureCreate;captureProcess
     stream:
       bindings:
         captureCreate-out-0:
@@ -13,6 +13,10 @@ spring:
           binder: kafka
           destination: captureCreate
           startOffset: earliest
+        captureProcessRequest-out-0:
+          group: capture
+          binder: kafka
+          destination: captureProcessRequest
       kafka:
         binder:
           brokers: localhost
