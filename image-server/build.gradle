@@ -13,6 +13,8 @@ dependencies {
     runtimeOnly("com.h2database:h2")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testCompile project(":common")
+    testImplementation("io.projectreactor:reactor-test")
+    testImplementation("org.springframework.kafka:spring-kafka-test")
 }
 
 test {

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pinocchio.santaclothes.imageserver.controller.dto.ImageRequest;
+import com.pinocchio.santaclothes.imageserver.controller.dto.ImageResponse;
 import com.pinocchio.santaclothes.imageserver.service.CaptureEventService;
 import com.pinocchio.santaclothes.imageserver.service.dto.CaptureImageRequest;
 
@@ -21,21 +22,17 @@ import lombok.extern.slf4j.Slf4j;
 public class ImageController {
 	private final CaptureEventService captureEventService;
 
-	@GetMapping("/upload")
-	public String uploadTest() {
-		return "test";
-	}
-
 	@PostMapping("/upload")
 	@ResponseStatus(HttpStatus.OK)
-	public void upload(ImageRequest request) {
+	public ImageResponse upload(ImageRequest request) {
 		String imageId = UUID.randomUUID().toString();
-		String captureId = UUID.randomUUID().toString();
+		String eventId = UUID.randomUUID().toString();
 		CaptureImageRequest captureImageRequest = CaptureImageRequest.builder()
 			.imageId(imageId)
-			.eventId(captureId)
+			.eventId(eventId)
 			.image(request.getUploadFile())
 			.build();
 		captureEventService.saveImage(captureImageRequest);
+		return new ImageResponse(eventId, imageId);
 	}
 }
