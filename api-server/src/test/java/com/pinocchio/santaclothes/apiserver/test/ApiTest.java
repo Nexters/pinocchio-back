@@ -21,6 +21,7 @@ public class ApiTest {
 	void setUp() {
 		RestAssured.reset();
 		RestAssured.port = port;
+		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 	}
 
 	@AfterEach

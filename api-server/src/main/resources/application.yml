@@ -1,7 +1,15 @@
 spring:
+  web:
+    resources:
+      add-mappings: false
+  mvc:
+    throw-exception-if-no-handler-found: true
   application:
     name: santa-clothes-api-server
   profiles:
     active: local
 server:
   port: 8082
+  servlet:
+    encoding:
+      force: true
