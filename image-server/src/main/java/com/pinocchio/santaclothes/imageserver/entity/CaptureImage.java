@@ -25,4 +25,6 @@ public class CaptureImage {
 	String savedFileName;
 
 	String filePath;
+
+	long fileLength;
 }

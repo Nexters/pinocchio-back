@@ -22,11 +22,16 @@ public class CaptureEventService {
 	private final ApiServerApiClient apiClient;
 
 	public void create(CaptureEventCreateMessage message) {
-		apiClient.createEvent(new CreateEventRequest(message.getEventId(), message.getImageId())).block();
+		try {
+			apiClient.createEvent(new CreateEventRequest(message.getEventId(), message.getImageId())).block();
+		} catch (Exception e) {
+			log.error("create failed eventId {}", message.getEventId());
+			// ignore
+		}
 	}
 
 	public void processRequest(CaptureEventProcessRequestMessage message) {
-		// Todo process 서버에 요청 전송
+		// TODO: process 서버에 요청 전송
 	}
 
 	public void processDone(CaptureEventProcessDoneMessage message) {

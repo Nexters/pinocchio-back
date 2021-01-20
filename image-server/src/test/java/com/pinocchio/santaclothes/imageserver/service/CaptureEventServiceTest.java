@@ -45,7 +45,7 @@ public class CaptureEventServiceTest {
 		String imageId = "imageId";
 		String eventId = "eventId";
 		String fileName = "mockupFileName";
-		MultipartFile mockFile = new MockMultipartFile("image", fileName, "application/json", "test".getBytes());
+		MultipartFile mockFile = new MockMultipartFile("images", fileName, "application/json", "test".getBytes());
 
 		CaptureImageRequest request = CaptureImageRequest.builder()
 			.eventId(eventId)
