@@ -2,7 +2,10 @@ package com.pinocchio.santaclothes.apiserver.controller;
 
 import static java.util.stream.Collectors.*;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -20,6 +23,8 @@ import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventCreateReq
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventCreateRequestResponse.CaptureEventCreateResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventUpdateRequest;
+import com.pinocchio.santaclothes.apiserver.controller.dto.LoginRequest;
+import com.pinocchio.santaclothes.apiserver.controller.dto.LoginResponse;
 import com.pinocchio.santaclothes.apiserver.entity.CaptureEvent;
 import com.pinocchio.santaclothes.apiserver.service.CaptureService;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateDto;
@@ -95,6 +100,19 @@ public class ApiController {
 			.eventId(event.getEventId())
 			.imageId(event.getImageId())
 			.status(event.getStatus())
+			.build();
+	}
+
+	@PostMapping("/login")
+	public LoginResponse login(LoginRequest loginRequest) {
+		String refreshToken = UUID.randomUUID().toString();
+		String authToken = UUID.randomUUID().toString();
+		Instant expireDate = Instant.now().plus(30, ChronoUnit.DAYS);
+
+		return LoginResponse.builder()
+			.refreshToken(refreshToken)
+			.authToken(authToken)
+			.expireDateTime(expireDate)
 			.build();
 	}
 }
