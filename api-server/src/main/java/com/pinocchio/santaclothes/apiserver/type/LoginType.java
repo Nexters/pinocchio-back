@@ -1,4 +1,5 @@
 package com.pinocchio.santaclothes.apiserver.type;
 
-public class LoginType {
+public enum LoginType {
+	KAKAO,
 }
