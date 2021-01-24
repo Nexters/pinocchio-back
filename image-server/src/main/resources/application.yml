@@ -26,3 +26,7 @@ spring:
       location: temp
 server:
   port: 8081
+
+pinocchio:
+  images:
+    path: /tmp/santaclothes

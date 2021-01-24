@@ -7,7 +7,6 @@ import java.util.UUID;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,7 +26,7 @@ import reactor.core.publisher.Sinks;
 public class CaptureEventService {
 	private static final String FILE_PREFIX_URL;
 	static{
-		FILE_PREFIX_URL = System.getProperty("pinocchio.images.path");
+		FILE_PREFIX_URL = System.getProperty("PINOCCHIO_IMAGES_PATH");
 	}
 	private final Sinks.Many<CaptureEventCreateMessage> captureCreateEmitter;
 	private final Sinks.Many<CaptureEventProcessRequestMessage> captureProcessRequestEmitter;
@@ -55,10 +54,10 @@ public class CaptureEventService {
 
 	public void saveImage(CaptureImageRequest request) {
 		try {
-			ClassPathResource resource = new ClassPathResource("resources/images");
 			MultipartFile file = request.getImage();
 			String originalFileName = file.getOriginalFilename();
 			String fileName = UUID.randomUUID().toString();
+			System.out.println(FILE_PREFIX_URL);
 			new File(FILE_PREFIX_URL).mkdirs();
 			String filePath = FILE_PREFIX_URL + "/" + fileName + ".png";
 			File transferFile = new File(filePath);
