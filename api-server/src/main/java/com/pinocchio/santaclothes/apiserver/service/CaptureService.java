@@ -1,5 +1,6 @@
 package com.pinocchio.santaclothes.apiserver.service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
@@ -23,6 +24,14 @@ public class CaptureService {
 
 	public CaptureEvent findById(String eventId) {
 		return captureEventRepository.findById(eventId).orElseThrow();
+	}
+
+	public List<CaptureEvent> findByStatus(CaptureEventStatus status){
+		return captureEventRepository.findByStatus(status);
+	}
+
+	public void save(CaptureEvent event) {
+		captureEventRepository.save(event);
 	}
 
 	public void resume(String eventId) {
@@ -52,10 +61,6 @@ public class CaptureService {
 			throw new EventResumeException(e)
 				.with("eventId", eventId);
 		}
-	}
-
-	public void save(CaptureEvent event) {
-		captureEventRepository.save(event);
 	}
 
 	public CaptureEvent update(CaptureEventUpdateDto updateDto) {

@@ -1,5 +1,9 @@
 package com.pinocchio.santaclothes.apiserver.controller;
 
+import static java.util.stream.Collectors.*;
+
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +23,7 @@ import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventUpdateReq
 import com.pinocchio.santaclothes.apiserver.entity.CaptureEvent;
 import com.pinocchio.santaclothes.apiserver.service.CaptureService;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateDto;
+import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +35,20 @@ public class ApiController {
 	@GetMapping("/healthCheck")
 	public String healthCheck() {
 		return "ok";
+	}
+
+	@GetMapping("/capture/event")
+	@ResponseStatus(HttpStatus.OK)
+	public List<CaptureEventResponse> findEvents(@RequestParam("status") CaptureEventStatus status) {
+		return captureService.findByStatus(status).stream()
+			.map(
+				it -> CaptureEventResponse.builder()
+					.eventId(it.getEventId())
+					.imageId(it.getImageId())
+					.status(it.getStatus())
+					.build()
+			)
+			.collect(toList());
 	}
 
 	@GetMapping("/capture/event/{eventId}")
