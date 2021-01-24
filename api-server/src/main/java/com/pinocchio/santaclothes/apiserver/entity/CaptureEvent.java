@@ -31,5 +31,6 @@ public class CaptureEvent {
 	private String result;
 
 	@Enumerated(EnumType.STRING)
+	@Builder.Default
 	private CaptureEventStatus status = CaptureEventStatus.START;
 }
