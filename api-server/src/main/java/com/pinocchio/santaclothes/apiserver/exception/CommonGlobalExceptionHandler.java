@@ -9,9 +9,9 @@ import org.zalando.problem.Status;
 import org.zalando.problem.spring.web.advice.ProblemHandling;
 
 public abstract class CommonGlobalExceptionHandler implements ProblemHandling {
-	// BadRequest
-	// InternalServerError
-	// Forbidden
+	// 400 BadRequest
+	// 500 InternalServerError
+	// 403 Forbidden
 
 	// Service unavailable
 
