@@ -9,18 +9,15 @@ import org.springframework.lang.Nullable;
 
 import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 @Setter
 @Getter
 @Entity
-@Builder
-@AllArgsConstructor
-@Slf4j
+@NoArgsConstructor
 public class CaptureEvent {
 	@Id
 	private String eventId;
@@ -31,6 +28,16 @@ public class CaptureEvent {
 	private String result;
 
 	@Enumerated(EnumType.STRING)
-	@Builder.Default
 	private CaptureEventStatus status = CaptureEventStatus.START;
+
+	@Builder
+	public CaptureEvent(String eventId,
+		String imageId,
+		@Nullable String result,
+		CaptureEventStatus status) {
+		this.eventId = eventId;
+		this.imageId = imageId;
+		this.result = result;
+		this.status = status;
+	}
 }
