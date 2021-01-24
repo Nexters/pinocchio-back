@@ -107,7 +107,7 @@ public class ApiController {
 	public LoginResponse login(LoginRequest loginRequest) {
 		String refreshToken = UUID.randomUUID().toString();
 		String authToken = UUID.randomUUID().toString();
-		Instant expireDate = Instant.now().plus(30, ChronoUnit.DAYS);
+		Instant expireDate = Instant.now().plus(1, ChronoUnit.MONTHS);
 
 		return LoginResponse.builder()
 			.refreshToken(refreshToken)
