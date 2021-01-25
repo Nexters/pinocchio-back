@@ -30,8 +30,13 @@ import com.pinocchio.santaclothes.apiserver.service.CaptureService;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateDto;
 import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
+@Api(tags = "API")
 @RestController
 @RequiredArgsConstructor
 public class ApiController {
@@ -42,6 +47,12 @@ public class ApiController {
 		return "ok";
 	}
 
+	@ApiOperation("캡쳐 이벤트 리스트 조회")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "조회 성공"),
+		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
+		@ApiResponse(code = 403, message = "인증 실패")
+	})
 	@GetMapping("/capture/event")
 	@ResponseStatus(HttpStatus.OK)
 	public List<CaptureEventResponse> findEvents(@RequestParam("status") CaptureEventStatus status) {
@@ -56,6 +67,12 @@ public class ApiController {
 			.collect(toList());
 	}
 
+	@ApiOperation("캡쳐 이벤트 조회")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "조회 성공"),
+		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
+		@ApiResponse(code = 403, message = "인증 실패")
+	})
 	@GetMapping("/capture/event/{eventId}")
 	@ResponseStatus(HttpStatus.OK)
 	public CaptureEventResponse fetchEvent(@PathVariable("eventId") String eventId) {
@@ -68,12 +85,23 @@ public class ApiController {
 			.build();
 	}
 
+	@ApiOperation("캡쳐 이벤트 재개")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "재개 요청 성공"),
+		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
+		@ApiResponse(code = 404, message = "이벤트가 존재하지 않음, 이벤트 생성 필요")
+	})
 	@PutMapping("/capture/event/{eventId}/resume")
 	@ResponseStatus(HttpStatus.OK)
 	public void resumeEvent(@PathVariable("eventId") String eventId) {
 		captureService.resume(eventId);
 	}
 
+	@ApiOperation("캡쳐 이벤트 생성")
+	@ApiResponses(value = {
+		@ApiResponse(code = 201, message = "생성 요청 성공"),
+		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
+	})
 	@PostMapping("/capture/event")
 	@ResponseStatus(HttpStatus.CREATED)
 	public CaptureEventCreateResponse createEvent(@RequestBody CaptureEventCreateRequest request) {
@@ -86,6 +114,11 @@ public class ApiController {
 		return new CaptureEventCreateResponse(captureEvent.getEventId());
 	}
 
+	@ApiOperation("캡쳐 이벤트 상태 업데이트")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "업데이트 성공"),
+		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
+	})
 	@PutMapping("/capture/event")
 	@ResponseStatus(HttpStatus.OK)
 	public CaptureEventResponse updateEvent(@Valid @RequestBody CaptureEventUpdateRequest request) {
@@ -103,7 +136,13 @@ public class ApiController {
 			.build();
 	}
 
+	@ApiOperation("로그인")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "로그인 성공"),
+		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
+	})
 	@PostMapping("/login")
+	@ResponseStatus(HttpStatus.OK)
 	public LoginResponse login(LoginRequest loginRequest) {
 		String refreshToken = UUID.randomUUID().toString();
 		String authToken = UUID.randomUUID().toString();
