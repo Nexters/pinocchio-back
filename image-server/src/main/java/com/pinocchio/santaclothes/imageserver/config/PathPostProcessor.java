@@ -17,9 +17,9 @@ public class PathPostProcessor implements EnvironmentPostProcessor {
 			return;
 		}
 		if (!ObjectUtils.isEmpty(springEnvironmentProperty)) {
-			System.setProperty("pinocchio.images.path", springEnvironmentProperty);
+			System.setProperty("PINOCCHIO_IMAGES_PATH", springEnvironmentProperty);
 			return;
 		}
-		System.setProperty("pinocchio.images.path", javaTempPath);
+		System.setProperty("PINOCCHIO_IMAGES_PATH", javaTempPath);
 	}
 }
