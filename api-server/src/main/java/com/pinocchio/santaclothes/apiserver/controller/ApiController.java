@@ -89,6 +89,7 @@ public class ApiController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 201, message = "생성 요청 성공"),
 		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
+		@ApiResponse(code = 403, message = "인증 실패")
 	})
 	@PostMapping("/capture/event")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -106,6 +107,8 @@ public class ApiController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "업데이트 성공"),
 		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
+		@ApiResponse(code = 403, message = "인증 실패"),
+		@ApiResponse(code = 404, message = "이벤트 존재 안함")
 	})
 	@PutMapping("/capture/event")
 	@ResponseStatus(HttpStatus.OK)
@@ -128,6 +131,7 @@ public class ApiController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "로그인 성공"),
 		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
+		@ApiResponse(code = 403, message = "인증 실패")
 	})
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.OK)
