@@ -4,7 +4,7 @@ import lombok.Value;
 
 @Value
 public class CreateEventRequest {
-	String captureId;
+	String eventId;
 
 	String imageId;
 }

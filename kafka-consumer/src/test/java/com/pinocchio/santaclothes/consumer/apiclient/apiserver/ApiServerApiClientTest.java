@@ -22,7 +22,7 @@ class ApiServerApiClientTest extends SpringTest {
 			post("/capture/event")
 				.withRequestBody(equalToJson(
 					"{" +
-						"	\"captureId\": \"abcdef\"," +
+						"	\"eventId\": \"abcdef\"," +
 						"	\"imageId\": \"bcdef\"" +
 						"}"
 				))
