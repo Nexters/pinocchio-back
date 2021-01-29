@@ -2,6 +2,8 @@ package com.pinocchio.santaclothes.apiserver.controller.dto;
 
 import javax.validation.constraints.NotNull;
 
+import org.springframework.lang.Nullable;
+
 import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
 
 import io.swagger.annotations.ApiModel;
@@ -23,4 +25,8 @@ public class CaptureEventUpdateRequest {
 	@ApiModelProperty(value = "이벤트 상태", example = "KAKAO", required = true)
 	@NotNull
 	CaptureEventStatus status;
+
+	@ApiModelProperty(value = "분석 결과 JSON")
+	@Nullable
+	LabelResultRequest result;
 }

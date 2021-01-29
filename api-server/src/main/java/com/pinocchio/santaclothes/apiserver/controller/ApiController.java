@@ -25,7 +25,7 @@ import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventUpdateRequest;
 import com.pinocchio.santaclothes.apiserver.controller.dto.LoginRequest;
 import com.pinocchio.santaclothes.apiserver.controller.dto.LoginResponse;
-import com.pinocchio.santaclothes.apiserver.entity.CaptureEvent;
+import com.pinocchio.santaclothes.apiserver.domain.CaptureEvent;
 import com.pinocchio.santaclothes.apiserver.service.CaptureService;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateDto;
 import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
@@ -83,18 +83,6 @@ public class ApiController {
 			.status(event.getStatus())
 			.result(event.getResult())
 			.build();
-	}
-
-	@ApiOperation("캡쳐 이벤트 재개")
-	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "재개 요청 성공"),
-		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
-		@ApiResponse(code = 404, message = "이벤트가 존재하지 않음, 이벤트 생성 필요")
-	})
-	@PutMapping("/capture/event/{eventId}/resume")
-	@ResponseStatus(HttpStatus.OK)
-	public void resumeEvent(@PathVariable("eventId") String eventId) {
-		captureService.resume(eventId);
 	}
 
 	@ApiOperation("캡쳐 이벤트 생성")

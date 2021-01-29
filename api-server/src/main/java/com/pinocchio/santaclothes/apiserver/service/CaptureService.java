@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
 
-import com.pinocchio.santaclothes.apiserver.entity.CaptureEvent;
+import com.pinocchio.santaclothes.apiserver.domain.CaptureEvent;
 import com.pinocchio.santaclothes.apiserver.exception.EventResumeException;
 import com.pinocchio.santaclothes.apiserver.repository.CaptureEventRepository;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventMessageDto;
@@ -34,17 +34,28 @@ public class CaptureService {
 		captureEventRepository.save(event);
 	}
 
-	public void resume(String eventId) {
+	public CaptureEvent update(CaptureEventUpdateDto updateDto) {
+		String eventId = updateDto.getEventId();
 		try {
 			CaptureEvent event = findById(eventId);
-			CaptureEventStatus status = event.getStatus();
+			CaptureEventStatus nowStatus = event.getStatus();
+			String updatedImageId = updateDto.getImageId();
+			if (updatedImageId != null) {
+				event.setImageId(updatedImageId);
+			}
+
 			CaptureEventMessageDto messageDto = CaptureEventMessageDto.builder()
 				.eventId(eventId)
 				.imageId(event.getImageId())
-				.status(event.getStatus())
+				.status(nowStatus)
 				.build();
 
-			switch (status) {
+			CaptureEventStatus updatedStatus = updateDto.getStatus();
+			if (!updatedStatus.isAfter(nowStatus)) {
+				return event;
+			}
+
+			switch (updatedStatus) {
 				case START:
 					// 업로드 완료
 					messagePublishService.extract(messageDto);
@@ -57,19 +68,10 @@ public class CaptureService {
 					// 끝
 					break;
 			}
+			return event;
 		} catch (NoSuchElementException e) {
 			throw new EventResumeException(e)
 				.with("eventId", eventId);
 		}
-	}
-
-	public CaptureEvent update(CaptureEventUpdateDto updateDto) {
-		CaptureEvent event = findById(updateDto.getEventId());
-		String imageId = updateDto.getImageId();
-		if (imageId != null) {
-			event.setImageId(imageId);
-		}
-		event.setStatus(updateDto.getStatus());
-		return event;
 	}
 }
