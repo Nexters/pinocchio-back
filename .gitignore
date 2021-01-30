@@ -2,7 +2,7 @@
 ### Java template
 .idea
 build
-
+out
 # Compiled class file
 *.class
 

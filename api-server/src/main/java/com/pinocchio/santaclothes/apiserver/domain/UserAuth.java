@@ -22,6 +22,7 @@ public class UserAuth {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	// User의 id
 	private String userId;
 
 	private String authToken;
