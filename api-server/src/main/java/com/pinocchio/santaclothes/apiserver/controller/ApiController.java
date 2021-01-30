@@ -132,8 +132,9 @@ public class ApiController {
 
 	@ApiOperation("회원가입")
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "회원가입 성공"),
+		@ApiResponse(code = 201, message = "회원가입 성공"),
 		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
+		@ApiResponse(code = 409, message = "이미 존재하는 회원 입니다")
 	})
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
