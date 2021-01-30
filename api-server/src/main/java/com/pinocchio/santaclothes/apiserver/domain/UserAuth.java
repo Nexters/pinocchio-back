@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
@@ -18,18 +17,23 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserAuth {
 	@Id
-	String id;
+	private Long id;
 
-	String userId;
+	private String userId;
 
-	String authToken;
+	private String authToken;
 
-	String refreshToken;
+	private String refreshToken;
 
-	Instant expiredDate;
+	private Instant expireDate;
 
-	Instant createdDate;
+	@Builder.Default
+	private Instant createdDate = Instant.now();
 
 	public UserAuth() {
+	}
+
+	public boolean isExpiredWhen(Instant time) {
+		return expireDate.isBefore(time);
 	}
 }

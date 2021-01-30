@@ -28,29 +28,7 @@ public abstract class CommonGlobalExceptionHandler implements ProblemHandling {
 		return create(e, problem, request);
 	}
 
-	protected ResponseEntity<Problem> createResumeProblem(EventResumeException e, NativeWebRequest request) {
-		ProblemBuilder builder = Problem.builder()
-			.withTitle(Status.NOT_FOUND.getReasonPhrase())
-			.withStatus(Status.NOT_FOUND);
-
-		applyAttribute(builder, e);
-
-		Problem problem = builder.build();
-		return create(e, problem, request);
-	}
-
-	protected ResponseEntity<Problem> createDuplicateProblem(DuplicateUserException e, NativeWebRequest request) {
-		ProblemBuilder builder = Problem.builder()
-			.withTitle(Status.CONFLICT.getReasonPhrase())
-			.withStatus(Status.CONFLICT);
-
-		applyAttribute(builder, e);
-
-		Problem problem = builder.build();
-		return create(e, problem, request);
-	}
-
-	private void applyAttribute(ProblemBuilder builder, AttributeException e) {
+	protected void applyAttribute(ProblemBuilder builder, AttributeException e) {
 		e.getAttributes().forEach(builder::with);
 	}
 

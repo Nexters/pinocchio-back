@@ -16,12 +16,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class User {
 	@Id
-	String id;
+	private String id;
 
 	@Column(unique = true)
-	String socialId;
+	private String socialId;
 
-	String nickName;
+	private String nickName;
 
 	public User() {
 	}

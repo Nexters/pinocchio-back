@@ -9,5 +9,7 @@ import com.pinocchio.santaclothes.apiserver.domain.UserAuth;
 
 @Repository
 public interface UserAuthRepository extends JpaRepository<UserAuth, String> {
-	Optional<UserAuth> findTop1ByRefreshTokenOrderByCreatedDateDesc(String userId);
+	Optional<UserAuth> findTop1ByUserIdOrderByCreatedDateDesc(String userId);
+
+	Optional<UserAuth> findTop1ByRefreshTokenOrderByCreatedDateDesc(String refreshToken);
 }
