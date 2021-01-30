@@ -1,8 +1,6 @@
 package com.pinocchio.santaclothes.apiserver.controller;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +13,7 @@ import com.pinocchio.santaclothes.apiserver.controller.dto.AuthResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.LoginRequest;
 import com.pinocchio.santaclothes.apiserver.controller.dto.RefreshRequest;
 import com.pinocchio.santaclothes.apiserver.controller.dto.RegisterRequest;
+import com.pinocchio.santaclothes.apiserver.domain.UserAuth;
 import com.pinocchio.santaclothes.apiserver.service.UserService;
 
 import io.swagger.annotations.Api;
@@ -51,10 +50,10 @@ public class AuthController {
 	})
 	@PutMapping("/token/refresh")
 	public AuthResponse refresh(RefreshRequest request) {
-		// TODO 리프레시 토큰 갱신 추가
-		String refreshToken = UUID.randomUUID().toString();
-		String authToken = UUID.randomUUID().toString();
-		Instant expireDate = Instant.now().plus(1, ChronoUnit.MONTHS);
+		UserAuth userAuth = userService.refresh(request.getRefreshToken());
+		String refreshToken = userAuth.getRefreshToken();
+		String authToken = userAuth.getAuthToken();
+		Instant expireDate = userAuth.getExpireDate();
 
 		return AuthResponse.builder()
 			.refreshToken(refreshToken)
@@ -67,15 +66,17 @@ public class AuthController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "로그인 성공"),
 		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
-		@ApiResponse(code = 403, message = "인증 실패")
+		@ApiResponse(code = 403, message = "토큰 만료"),
+		@ApiResponse(code = 404, message = "존재하지 않는 소셜 아이디"),
 	})
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.OK)
 	public AuthResponse login(LoginRequest loginRequest) {
-		// TODO: 로그인 적용
-		String refreshToken = UUID.randomUUID().toString();
-		String authToken = UUID.randomUUID().toString();
-		Instant expireDate = Instant.now().plus(30, ChronoUnit.DAYS);
+		UserAuth auth = userService.login(loginRequest.getSocialId());
+
+		String refreshToken = auth.getRefreshToken();
+		String authToken = auth.getAuthToken();
+		Instant expireDate = auth.getExpireDate();
 
 		return AuthResponse.builder()
 			.refreshToken(refreshToken)

@@ -58,8 +58,8 @@ public class GlobalExceptionHandler extends CommonGlobalExceptionHandler {
 
 	protected ResponseEntity<Problem> createTokenExpiredProblem(TokenExpiredException e, NativeWebRequest request) {
 		ProblemBuilder builder = Problem.builder()
-			.withTitle(Status.CONFLICT.getReasonPhrase())
-			.withStatus(Status.CONFLICT);
+			.withTitle(Status.FORBIDDEN.getReasonPhrase())
+			.withStatus(Status.FORBIDDEN);
 
 		applyAttribute(builder, e);
 

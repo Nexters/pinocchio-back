@@ -39,7 +39,7 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	public void login(String socialId) {
+	public UserAuth login(String socialId) {
 		User user = userRepository.findById(socialId).orElseThrow();
 		String userId = user.getId();
 		Instant now = Instant.now();
@@ -49,25 +49,25 @@ public class UserService {
 
 		Optional<UserAuth> optionalAuth = userAuthRepository.findTop1ByUserIdOrderByCreatedDateDesc(userId);
 
-		optionalAuth.ifPresentOrElse(
-			(auth) -> {
-				if (auth.isExpiredWhen(now)) {
-					throw new TokenExpiredException();
-				}
-			},
-			() -> {
-				UserAuth newAuth = UserAuth.builder()
-					.userId(userId)
-					.authToken(authToken)
-					.refreshToken(refreshToken)
-					.expireDate(now.plus(30, ChronoUnit.DAYS))
-					.build();
-				userAuthRepository.save(newAuth);
+		if (optionalAuth.isPresent()) {
+			UserAuth auth = optionalAuth.get();
+			if (auth.isExpiredWhen(now)) {
+				throw new TokenExpiredException();
 			}
-		);
+			return auth;
+		}
+
+		UserAuth newAuth = UserAuth.builder()
+			.userId(userId)
+			.authToken(authToken)
+			.refreshToken(refreshToken)
+			.expireDate(now.plus(30, ChronoUnit.DAYS))
+			.build();
+		userAuthRepository.save(newAuth);
+		return newAuth;
 	}
 
-	public void refresh(String refreshToken) {
+	public UserAuth refresh(String refreshToken) {
 		UserAuth userAuth = userAuthRepository.findTop1ByRefreshTokenOrderByCreatedDateDesc(refreshToken)
 			.orElseThrow(IllegalAccessError::new);
 		Instant now = Instant.now();
@@ -82,6 +82,9 @@ public class UserService {
 				.expireDate(expireDate)
 				.build();
 			userAuthRepository.save(newUserAuth);
+			return newUserAuth;
 		}
+		return userAuth;
+
 	}
 }
