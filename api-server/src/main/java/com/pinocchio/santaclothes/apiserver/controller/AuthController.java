@@ -2,6 +2,8 @@ package com.pinocchio.santaclothes.apiserver.controller;
 
 import java.time.Instant;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -37,7 +39,7 @@ public class AuthController {
 	})
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void register(RegisterRequest registerRequest) {
+	public void register(@Valid RegisterRequest registerRequest) {
 		String socialId = registerRequest.getSocialId();
 		String nickName = registerRequest.getNickName();
 		userService.register(socialId, nickName);
@@ -49,7 +51,7 @@ public class AuthController {
 		@ApiResponse(code = 404, message = "존재하지 않는 리프레시 토큰"),
 	})
 	@PutMapping("/authToken")
-	public AuthResponse refresh(RefreshRequest request) {
+	public AuthResponse refresh(@Valid RefreshRequest request) {
 		UserAuth userAuth = userService.refresh(request.getRefreshToken());
 		String refreshToken = userAuth.getRefreshToken();
 		String authToken = userAuth.getAuthToken();
@@ -71,7 +73,7 @@ public class AuthController {
 	})
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.OK)
-	public AuthResponse login(LoginRequest loginRequest) {
+	public AuthResponse login(@Valid LoginRequest loginRequest) {
 		UserAuth auth = userService.login(loginRequest.getSocialId());
 
 		String refreshToken = auth.getRefreshToken();
