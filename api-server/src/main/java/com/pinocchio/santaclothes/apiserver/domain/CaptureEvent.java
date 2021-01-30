@@ -11,13 +11,11 @@ import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
 @Entity
-@NoArgsConstructor
 public class CaptureEvent {
 	@Id
 	private String eventId;
@@ -28,7 +26,12 @@ public class CaptureEvent {
 	private String result;
 
 	@Enumerated(EnumType.STRING)
-	private CaptureEventStatus status = CaptureEventStatus.START;
+	@Builder.Default
+	private CaptureEventStatus status;
+
+	public CaptureEvent() {
+		this.status = CaptureEventStatus.START;
+	}
 
 	@Builder
 	public CaptureEvent(String eventId,
