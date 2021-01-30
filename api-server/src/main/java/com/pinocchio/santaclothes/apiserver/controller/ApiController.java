@@ -39,11 +39,6 @@ import lombok.RequiredArgsConstructor;
 public class ApiController {
 	private final CaptureService captureService;
 
-	@GetMapping("/healthCheck")
-	public String healthCheck() {
-		return "ok";
-	}
-
 	@ApiOperation("캡쳐 이벤트 리스트 조회")
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "조회 성공"),
