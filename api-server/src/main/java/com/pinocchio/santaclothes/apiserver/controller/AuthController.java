@@ -43,7 +43,7 @@ public class AuthController {
 		userService.register(socialId, nickName);
 	}
 
-	@ApiOperation("리프레시 토큰 갱신")
+	@ApiOperation("인증 토큰 갱신")
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "토큰 갱신 성공"),
 		@ApiResponse(code = 404, message = "존재하지 않는 리프레시 토큰"),
