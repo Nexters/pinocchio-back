@@ -86,7 +86,7 @@ public class ApiController {
 	})
 	@PostMapping("/capture/event")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CaptureEventCreateResponse createEvent(@RequestBody CaptureEventCreateRequest request) {
+	public CaptureEventCreateResponse createEvent(@Valid CaptureEventCreateRequest request) {
 		CaptureEvent captureEvent = CaptureEvent.builder()
 			.eventId(request.getEventId())
 			.imageId(request.getImageId())
@@ -105,7 +105,7 @@ public class ApiController {
 	})
 	@PutMapping("/capture/event")
 	@ResponseStatus(HttpStatus.OK)
-	public CaptureEventResponse updateEvent(@Valid @RequestBody CaptureEventUpdateRequest request) {
+	public CaptureEventResponse updateEvent(@Valid CaptureEventUpdateRequest request) {
 		CaptureEventUpdateDto updateDto = CaptureEventUpdateDto.builder()
 			.eventId(request.getEventId())
 			.imageId(request.getImageId())
