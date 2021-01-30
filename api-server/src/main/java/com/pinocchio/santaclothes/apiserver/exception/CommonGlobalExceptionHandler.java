@@ -17,6 +17,12 @@ public abstract class CommonGlobalExceptionHandler implements ProblemHandling {
 
 	// Service unavailable
 
+	@ExceptionHandler(IllegalStateException.class)
+	public ResponseEntity<Problem> handleIllegalStateException(IllegalStateException exception,
+		NativeWebRequest nativeWebRequest) {
+		return createBadRequestProblem(exception, nativeWebRequest);
+	}
+
 	@ExceptionHandler(RuntimeException.class)
 	public ResponseEntity<Problem> handleRuntimeException(RuntimeException exception, NativeWebRequest request) {
 		return createInternalServerProblem(exception, request);
@@ -39,6 +45,14 @@ public abstract class CommonGlobalExceptionHandler implements ProblemHandling {
 		Problem problem = Problem.builder()
 			.withTitle(Status.INTERNAL_SERVER_ERROR.getReasonPhrase())
 			.withStatus(Status.INTERNAL_SERVER_ERROR)
+			.build();
+		return create(e, problem, request);
+	}
+
+	protected ResponseEntity<Problem> createBadRequestProblem(Exception e, NativeWebRequest request) {
+		Problem problem = Problem.builder()
+			.withTitle(Status.BAD_REQUEST.getReasonPhrase())
+			.withStatus(Status.BAD_REQUEST)
 			.build();
 		return create(e, problem, request);
 	}

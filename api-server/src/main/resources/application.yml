@@ -8,6 +8,8 @@ spring:
     name: santa-clothes-api-server
   profiles:
     active: local
+  jpa:
+    show-sql: true
 server:
   port: 8082
   servlet:

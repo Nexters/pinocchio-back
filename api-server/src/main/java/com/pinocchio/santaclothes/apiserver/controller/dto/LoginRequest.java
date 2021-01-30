@@ -1,8 +1,5 @@
 package com.pinocchio.santaclothes.apiserver.controller.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.pinocchio.santaclothes.apiserver.type.LoginType;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Value;

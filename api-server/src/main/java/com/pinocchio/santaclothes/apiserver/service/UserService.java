@@ -40,7 +40,7 @@ public class UserService {
 	}
 
 	public UserAuth login(String socialId) {
-		User user = userRepository.findById(socialId).orElseThrow();
+		User user = userRepository.findBySocialId(socialId).orElseThrow();
 		String userId = user.getId();
 		Instant now = Instant.now();
 
@@ -68,8 +68,7 @@ public class UserService {
 	}
 
 	public UserAuth refresh(String refreshToken) {
-		UserAuth userAuth = userAuthRepository.findTop1ByRefreshTokenOrderByCreatedDateDesc(refreshToken)
-			.orElseThrow(IllegalAccessError::new);
+		UserAuth userAuth = userAuthRepository.findTop1ByRefreshTokenOrderByCreatedDateDesc(refreshToken).orElseThrow();
 		Instant now = Instant.now();
 		Instant expireDate = now.plus(30, ChronoUnit.DAYS);
 		String newAuthToken = userAuth.getAuthToken();

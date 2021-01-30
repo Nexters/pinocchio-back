@@ -48,7 +48,7 @@ public class AuthController {
 		@ApiResponse(code = 200, message = "토큰 갱신 성공"),
 		@ApiResponse(code = 404, message = "존재하지 않는 리프레시 토큰"),
 	})
-	@PutMapping("/token/refresh")
+	@PutMapping("/authToken")
 	public AuthResponse refresh(RefreshRequest request) {
 		UserAuth userAuth = userService.refresh(request.getRefreshToken());
 		String refreshToken = userAuth.getRefreshToken();
