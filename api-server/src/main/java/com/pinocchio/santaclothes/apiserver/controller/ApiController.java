@@ -149,7 +149,14 @@ public class ApiController {
 	@PutMapping("/token/refresh")
 	public AuthResponse refresh(RefreshRequest request) {
 		// TODO 리프레시 토큰 갱신 추가
+		String refreshToken = UUID.randomUUID().toString();
+		String authToken = UUID.randomUUID().toString();
+		Instant expireDate = Instant.now().plus(1, ChronoUnit.MONTHS);
+
 		return AuthResponse.builder()
+			.refreshToken(refreshToken)
+			.authToken(authToken)
+			.expireDateTime(expireDate)
 			.build();
 	}
 
