@@ -10,7 +10,7 @@ import lombok.Value;
 @ApiModel(description = "로그인 응답 결과")
 @Value
 @Builder
-public class LoginResponse {
+public class AuthResponse {
 	@ApiModelProperty(value = "인증 토큰", required = true)
 	String authToken;
 

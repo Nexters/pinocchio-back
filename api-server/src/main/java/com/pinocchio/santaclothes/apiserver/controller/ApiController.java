@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pinocchio.santaclothes.apiserver.controller.dto.AuthResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventCreateRequestResponse.CaptureEventCreateRequest;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventCreateRequestResponse.CaptureEventCreateResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventUpdateRequest;
 import com.pinocchio.santaclothes.apiserver.controller.dto.LoginRequest;
-import com.pinocchio.santaclothes.apiserver.controller.dto.LoginResponse;
+import com.pinocchio.santaclothes.apiserver.controller.dto.RefreshRequest;
+import com.pinocchio.santaclothes.apiserver.controller.dto.RegisterRequest;
 import com.pinocchio.santaclothes.apiserver.domain.CaptureEvent;
 import com.pinocchio.santaclothes.apiserver.service.CaptureService;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateDto;
@@ -118,12 +120,36 @@ public class ApiController {
 			.imageId(request.getImageId())
 			.status(request.getStatus())
 			.build();
+
 		CaptureEvent event = captureService.update(updateDto);
 
 		return CaptureEventResponse.builder()
 			.eventId(event.getEventId())
 			.imageId(event.getImageId())
 			.status(event.getStatus())
+			.build();
+	}
+
+	@ApiOperation("회원가입")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "회원가입 성공"),
+		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
+	})
+	@PostMapping("/register")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void register(RegisterRequest registerRequest) {
+		// TODO: 회원가입, 중복시 409
+	}
+
+	@ApiOperation("리프레시 토큰 갱신")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "토큰 갱신 성공"),
+		@ApiResponse(code = 404, message = "존재하지 않는 리프레시 토큰"),
+	})
+	@PutMapping("/token/refresh")
+	public AuthResponse refresh(RefreshRequest request) {
+		// TODO 리프레시 토큰 갱신 추가
+		return AuthResponse.builder()
 			.build();
 	}
 
@@ -135,12 +161,13 @@ public class ApiController {
 	})
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.OK)
-	public LoginResponse login(LoginRequest loginRequest) {
+	public AuthResponse login(LoginRequest loginRequest) {
+		// TODO: 로그인 적용
 		String refreshToken = UUID.randomUUID().toString();
 		String authToken = UUID.randomUUID().toString();
 		Instant expireDate = Instant.now().plus(1, ChronoUnit.MONTHS);
 
-		return LoginResponse.builder()
+		return AuthResponse.builder()
 			.refreshToken(refreshToken)
 			.authToken(authToken)
 			.expireDateTime(expireDate)
