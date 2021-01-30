@@ -68,7 +68,7 @@ public class AuthController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "로그인 성공"),
 		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
-		@ApiResponse(code = 403, message = "토큰 만료"),
+		@ApiResponse(code = 403, message = "인증 토큰 만료"),
 		@ApiResponse(code = 404, message = "존재하지 않는 소셜 아이디"),
 	})
 	@PostMapping("/login")
