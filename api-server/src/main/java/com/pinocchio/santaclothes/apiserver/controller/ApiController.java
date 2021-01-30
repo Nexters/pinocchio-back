@@ -28,6 +28,7 @@ import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +48,7 @@ public class ApiController {
 	})
 	@GetMapping("/capture/event")
 	@ResponseStatus(HttpStatus.OK)
-	public List<CaptureEventResponse> findEvents(@RequestParam("status") CaptureEventStatus status) {
+	public List<CaptureEventResponse> findEvents(@ApiParam("조회할 이벤트 상태") @RequestParam("status") CaptureEventStatus status) {
 		return captureService.findByStatus(status).stream()
 			.map(
 				it -> CaptureEventResponse.builder()
