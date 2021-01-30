@@ -20,11 +20,6 @@ public abstract class CommonGlobalExceptionHandler implements ProblemHandling {
 		return createInternalServerProblem(exception, request);
 	}
 
-	@ExceptionHandler(EventResumeException.class)
-	public ResponseEntity<Problem> handleEventResumeException(EventResumeException exception , NativeWebRequest request){
-		return createResumeProblem(exception, request);
-	}
-
 	protected ResponseEntity<Problem> createInternalServerProblem(Exception e, NativeWebRequest request) {
 		Problem problem = Problem.builder()
 			.withTitle(Status.INTERNAL_SERVER_ERROR.getReasonPhrase())
@@ -37,6 +32,17 @@ public abstract class CommonGlobalExceptionHandler implements ProblemHandling {
 		ProblemBuilder builder = Problem.builder()
 			.withTitle(Status.NOT_FOUND.getReasonPhrase())
 			.withStatus(Status.NOT_FOUND);
+
+		applyAttribute(builder, e);
+
+		Problem problem = builder.build();
+		return create(e, problem, request);
+	}
+
+	protected ResponseEntity<Problem> createDuplicateProblem(DuplicateUserException e, NativeWebRequest request) {
+		ProblemBuilder builder = Problem.builder()
+			.withTitle(Status.CONFLICT.getReasonPhrase())
+			.withStatus(Status.CONFLICT);
 
 		applyAttribute(builder, e);
 

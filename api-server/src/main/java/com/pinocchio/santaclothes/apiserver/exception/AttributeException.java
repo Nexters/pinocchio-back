@@ -9,6 +9,10 @@ import lombok.Getter;
 public class AttributeException extends RuntimeException {
 	private final Map<String, String> attributes = new HashMap<>();
 
+	public AttributeException() {
+		super();
+	}
+
 	public AttributeException(Throwable cause) {
 		super(cause);
 	}

@@ -15,16 +15,21 @@ import com.pinocchio.santaclothes.apiserver.controller.dto.AuthResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.LoginRequest;
 import com.pinocchio.santaclothes.apiserver.controller.dto.RefreshRequest;
 import com.pinocchio.santaclothes.apiserver.controller.dto.RegisterRequest;
+import com.pinocchio.santaclothes.apiserver.service.UserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.RequiredArgsConstructor;
 
 @Api(tags = "Auth")
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
+	private final UserService userService;
+
 	@ApiOperation("회원가입")
 	@ApiResponses(value = {
 		@ApiResponse(code = 201, message = "회원가입 성공"),
@@ -34,7 +39,9 @@ public class AuthController {
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void register(RegisterRequest registerRequest) {
-		// TODO: 회원가입, 중복시 409
+		String socialId = registerRequest.getSocialId();
+		String nickName = registerRequest.getNickName();
+		userService.register(socialId, nickName);
 	}
 
 	@ApiOperation("리프레시 토큰 갱신")
