@@ -31,6 +31,9 @@ public class CaptureService {
 	}
 
 	public void save(CaptureEvent event) {
+		if(event.getStatus() == null){
+			event.setStatus(CaptureEventStatus.START);
+		}
 		captureEventRepository.save(event);
 	}
 
