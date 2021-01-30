@@ -68,7 +68,7 @@ public class AuthController {
 		// TODO: 로그인 적용
 		String refreshToken = UUID.randomUUID().toString();
 		String authToken = UUID.randomUUID().toString();
-		Instant expireDate = Instant.now().plus(1, ChronoUnit.MONTHS);
+		Instant expireDate = Instant.now().plus(30, ChronoUnit.DAYS);
 
 		return AuthResponse.builder()
 			.refreshToken(refreshToken)
