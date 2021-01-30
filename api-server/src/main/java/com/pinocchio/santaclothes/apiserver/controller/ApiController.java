@@ -100,7 +100,7 @@ public class ApiController {
 		@ApiResponse(code = 200, message = "업데이트 성공"),
 		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
 		@ApiResponse(code = 403, message = "인증 실패"),
-		@ApiResponse(code = 404, message = "이벤트 존재 안함")
+		@ApiResponse(code = 404, message = "이벤트 존재 안함, POST 요청으로 보내기")
 	})
 	@PutMapping("/capture/event")
 	@ResponseStatus(HttpStatus.OK)
