@@ -1,5 +1,7 @@
 package com.pinocchio.santaclothes.apiserver.exception;
 
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,34 +12,41 @@ import org.zalando.problem.Status;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends CommonGlobalExceptionHandler {
-	@ExceptionHandler(EventResumeException.class)
-	public ResponseEntity<Problem> handleEventResumeException(
-		EventResumeException exception,
+	private static final Map<ExceptionReason, Status> REASON_STATUS_MAP = Map.of(
+		ExceptionReason.DUPLICATE_ENTITY, Status.CONFLICT,
+		ExceptionReason.EVENT_SHOULD_RETRY, Status.NOT_FOUND
+	);
+
+	@ExceptionHandler(EventInvalidException.class)
+	public ResponseEntity<Problem> handleEventInvalidException(
+		EventInvalidException exception,
 		NativeWebRequest request
 	) {
-		return createResumeProblem(exception, request);
+		return createEventProblem(exception, request);
 	}
 
-	@ExceptionHandler(DuplicateUserException.class)
-	public ResponseEntity<Problem> handleDuplicateUserException(
-		DuplicateUserException exception,
+	@ExceptionHandler(DatabaseException.class)
+	public ResponseEntity<Problem> handleDatabaseException(
+		DatabaseException exception,
 		NativeWebRequest request
 	) {
 		return createDuplicateProblem(exception, request);
 	}
 
-	@ExceptionHandler(TokenExpiredException.class)
-	public ResponseEntity<Problem> handleTokenExpiredException(
-		TokenExpiredException exception,
+	@ExceptionHandler(TokenInvalidException.class)
+	public ResponseEntity<Problem> handleTokenInvalidException(
+		TokenInvalidException exception,
 		NativeWebRequest request
 	) {
-		return createTokenExpiredProblem(exception, request);
+		return createTokenInvalidProblem(exception, request);
 	}
 
-	protected ResponseEntity<Problem> createResumeProblem(EventResumeException e, NativeWebRequest request) {
+	protected ResponseEntity<Problem> createEventProblem(EventInvalidException e, NativeWebRequest request) {
+		Status status = REASON_STATUS_MAP.getOrDefault(e.getReason(), Status.BAD_REQUEST);
+
 		ProblemBuilder builder = Problem.builder()
-			.withTitle(Status.NOT_FOUND.getReasonPhrase())
-			.withStatus(Status.NOT_FOUND);
+			.withTitle(status.getReasonPhrase())
+			.withStatus(status);
 
 		applyAttribute(builder, e);
 
@@ -45,10 +54,12 @@ public class GlobalExceptionHandler extends CommonGlobalExceptionHandler {
 		return create(e, problem, request);
 	}
 
-	protected ResponseEntity<Problem> createDuplicateProblem(DuplicateUserException e, NativeWebRequest request) {
+	protected ResponseEntity<Problem> createDuplicateProblem(DatabaseException e, NativeWebRequest request) {
+		Status status = REASON_STATUS_MAP.getOrDefault(e.getReason(), Status.BAD_REQUEST);
+
 		ProblemBuilder builder = Problem.builder()
-			.withTitle(Status.CONFLICT.getReasonPhrase())
-			.withStatus(Status.CONFLICT);
+			.withTitle(status.getReasonPhrase())
+			.withStatus(status);
 
 		applyAttribute(builder, e);
 
@@ -56,7 +67,7 @@ public class GlobalExceptionHandler extends CommonGlobalExceptionHandler {
 		return create(e, problem, request);
 	}
 
-	protected ResponseEntity<Problem> createTokenExpiredProblem(TokenExpiredException e, NativeWebRequest request) {
+	protected ResponseEntity<Problem> createTokenInvalidProblem(TokenInvalidException e, NativeWebRequest request) {
 		ProblemBuilder builder = Problem.builder()
 			.withTitle(Status.FORBIDDEN.getReasonPhrase())
 			.withStatus(Status.FORBIDDEN);

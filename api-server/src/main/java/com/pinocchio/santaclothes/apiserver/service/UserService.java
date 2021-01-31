@@ -10,8 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.pinocchio.santaclothes.apiserver.domain.User;
 import com.pinocchio.santaclothes.apiserver.domain.UserAuth;
-import com.pinocchio.santaclothes.apiserver.exception.DuplicateUserException;
-import com.pinocchio.santaclothes.apiserver.exception.TokenExpiredException;
+import com.pinocchio.santaclothes.apiserver.exception.DatabaseException;
+import com.pinocchio.santaclothes.apiserver.exception.ExceptionReason;
+import com.pinocchio.santaclothes.apiserver.exception.TokenInvalidException;
 import com.pinocchio.santaclothes.apiserver.repository.UserAuthRepository;
 import com.pinocchio.santaclothes.apiserver.repository.UserRepository;
 import com.pinocchio.santaclothes.common.utils.Uuids;
@@ -27,7 +28,7 @@ public class UserService {
 
 	public void register(String socialId, String nickName) {
 		if (userRepository.findBySocialId(socialId).isPresent()) {
-			throw new DuplicateUserException();
+			throw new DatabaseException(ExceptionReason.DUPLICATE_ENTITY);
 		}
 
 		String userId = Uuids.generateUuidString();
@@ -52,7 +53,7 @@ public class UserService {
 		if (optionalAuth.isPresent()) {
 			UserAuth auth = optionalAuth.get();
 			if (auth.isExpiredWhen(now)) {
-				throw new TokenExpiredException();
+				throw new TokenInvalidException(ExceptionReason.TOKEN_EXPIRED);
 			}
 			return auth;
 		}
@@ -67,12 +68,14 @@ public class UserService {
 		return newAuth;
 	}
 
-	public UserAuth refresh(String refreshToken) {
-		UserAuth userAuth = userAuthRepository.findTop1ByRefreshTokenOrderByCreatedDateDesc(refreshToken).orElseThrow();
+	public UserAuth refresh(String authToken) {
+		UserAuth userAuth = userAuthRepository.findTop1ByAuthTokenOrderByCreatedDateDesc(authToken).orElseThrow();
 		Instant now = Instant.now();
-		Instant expireDate = now.plus(30, ChronoUnit.DAYS);
-		String newAuthToken = userAuth.getAuthToken();
+
 		if (!userAuth.isExpiredWhen(now)) {
+			Instant expireDate = now.plus(30, ChronoUnit.DAYS);
+			String refreshToken = userAuth.getRefreshToken();
+			String newAuthToken = Uuids.generateUuidString();
 			UserAuth newUserAuth = UserAuth.builder()
 				.refreshToken(refreshToken)
 				.authToken(newAuthToken)
@@ -83,7 +86,12 @@ public class UserService {
 			userAuthRepository.save(newUserAuth);
 			return newUserAuth;
 		}
-		return userAuth;
 
+		return userAuth;
+	}
+
+	public boolean isExpired(String authToken) {
+		Instant now = Instant.now();
+		return userAuthRepository.findTop1ByAuthTokenOrderByCreatedDateDesc(authToken).orElseThrow().isExpiredWhen(now);
 	}
 }

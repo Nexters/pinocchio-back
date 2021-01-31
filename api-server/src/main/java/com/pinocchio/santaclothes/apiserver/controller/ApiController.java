@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,6 +21,7 @@ import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventCreateReq
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventUpdateRequest;
 import com.pinocchio.santaclothes.apiserver.domain.CaptureEvent;
+import com.pinocchio.santaclothes.apiserver.exception.ProblemModel;
 import com.pinocchio.santaclothes.apiserver.service.CaptureService;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateDto;
 import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
@@ -43,8 +43,8 @@ public class ApiController {
 	@ApiOperation("캡쳐 이벤트 리스트 조회")
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "조회 성공"),
-		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
-		@ApiResponse(code = 403, message = "인증 실패")
+		@ApiResponse(code = 400, message = "요청 파라미터 오류", response = ProblemModel.class),
+		@ApiResponse(code = 403, message = "인증 실패", response = ProblemModel.class)
 	})
 	@GetMapping("/capture/event")
 	@ResponseStatus(HttpStatus.OK)
@@ -63,8 +63,8 @@ public class ApiController {
 	@ApiOperation("캡쳐 이벤트 조회")
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "조회 성공"),
-		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
-		@ApiResponse(code = 403, message = "인증 실패")
+		@ApiResponse(code = 400, message = "요청 파라미터 오류", response = ProblemModel.class),
+		@ApiResponse(code = 403, message = "인증 실패", response = ProblemModel.class)
 	})
 	@GetMapping("/capture/event/{eventId}")
 	@ResponseStatus(HttpStatus.OK)
@@ -81,8 +81,8 @@ public class ApiController {
 	@ApiOperation("캡쳐 이벤트 생성")
 	@ApiResponses(value = {
 		@ApiResponse(code = 201, message = "생성 요청 성공"),
-		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
-		@ApiResponse(code = 403, message = "인증 실패")
+		@ApiResponse(code = 400, message = "요청 파라미터 오류", response = ProblemModel.class),
+		@ApiResponse(code = 403, message = "인증 실패", response = ProblemModel.class)
 	})
 	@PostMapping("/capture/event")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -99,9 +99,9 @@ public class ApiController {
 	@ApiOperation("캡쳐 이벤트 상태 업데이트")
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "업데이트 성공"),
-		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
-		@ApiResponse(code = 403, message = "인증 실패"),
-		@ApiResponse(code = 404, message = "이벤트 존재 안함, POST 요청으로 보내기")
+		@ApiResponse(code = 400, message = "요청 파라미터 오류", response = ProblemModel.class),
+		@ApiResponse(code = 403, message = "인증 실패", response = ProblemModel.class),
+		@ApiResponse(code = 404, message = "이벤트 존재 안함, POST 요청으로 보내기", response = ProblemModel.class)
 	})
 	@PutMapping("/capture/event")
 	@ResponseStatus(HttpStatus.OK)

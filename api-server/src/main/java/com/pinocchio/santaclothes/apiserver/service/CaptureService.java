@@ -6,7 +6,8 @@ import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
 
 import com.pinocchio.santaclothes.apiserver.domain.CaptureEvent;
-import com.pinocchio.santaclothes.apiserver.exception.EventResumeException;
+import com.pinocchio.santaclothes.apiserver.exception.EventInvalidException;
+import com.pinocchio.santaclothes.apiserver.exception.ExceptionReason;
 import com.pinocchio.santaclothes.apiserver.repository.CaptureEventRepository;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventMessageDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateDto;
@@ -73,8 +74,7 @@ public class CaptureService {
 			}
 			return event;
 		} catch (NoSuchElementException e) {
-			throw new EventResumeException(e)
-				.with("eventId", eventId);
+			throw new EventInvalidException(e, eventId, ExceptionReason.EVENT_SHOULD_RETRY);
 		}
 	}
 }

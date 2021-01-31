@@ -16,6 +16,7 @@ import com.pinocchio.santaclothes.apiserver.controller.dto.LoginRequest;
 import com.pinocchio.santaclothes.apiserver.controller.dto.RefreshRequest;
 import com.pinocchio.santaclothes.apiserver.controller.dto.RegisterRequest;
 import com.pinocchio.santaclothes.apiserver.domain.UserAuth;
+import com.pinocchio.santaclothes.apiserver.exception.ProblemModel;
 import com.pinocchio.santaclothes.apiserver.service.UserService;
 
 import io.swagger.annotations.Api;
@@ -34,8 +35,8 @@ public class AuthController {
 	@ApiOperation("회원가입")
 	@ApiResponses(value = {
 		@ApiResponse(code = 201, message = "회원가입 성공"),
-		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
-		@ApiResponse(code = 409, message = "이미 존재하는 회원 입니다")
+		@ApiResponse(code = 400, message = "요청 파라미터 오류", response = ProblemModel.class),
+		@ApiResponse(code = 409, message = "이미 존재하는 회원 입니다", response = ProblemModel.class)
 	})
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -48,7 +49,7 @@ public class AuthController {
 	@ApiOperation("인증 토큰 갱신")
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "토큰 갱신 성공"),
-		@ApiResponse(code = 404, message = "존재하지 않는 리프레시 토큰"),
+		@ApiResponse(code = 404, message = "존재하지 않는 리프레시 토큰", response = ProblemModel.class),
 	})
 	@PutMapping("/authToken")
 	public AuthResponse refresh(@Valid RefreshRequest request) {
@@ -67,9 +68,9 @@ public class AuthController {
 	@ApiOperation("로그인")
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "로그인 성공"),
-		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
-		@ApiResponse(code = 403, message = "인증 토큰 만료"),
-		@ApiResponse(code = 404, message = "존재하지 않는 소셜 아이디"),
+		@ApiResponse(code = 400, message = "요청 파라미터 오류", response = ProblemModel.class),
+		@ApiResponse(code = 403, message = "인증 토큰 만료", response = ProblemModel.class),
+		@ApiResponse(code = 404, message = "존재하지 않는 소셜 아이디", response = ProblemModel.class),
 	})
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.OK)
