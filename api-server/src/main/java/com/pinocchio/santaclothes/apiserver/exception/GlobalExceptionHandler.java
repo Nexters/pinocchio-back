@@ -14,7 +14,7 @@ import org.zalando.problem.Status;
 public class GlobalExceptionHandler extends CommonGlobalExceptionHandler {
 	private static final Map<ExceptionReason, Status> REASON_STATUS_MAP = Map.of(
 		ExceptionReason.DUPLICATE_ENTITY, Status.CONFLICT,
-		ExceptionReason.EVENT_SHOULD_RETRY, Status.NOT_FOUND,
+		ExceptionReason.EVENT_NOT_EXIST, Status.NOT_FOUND,
 		ExceptionReason.INVALID_REFRESH_TOKEN, Status.BAD_REQUEST,
 		ExceptionReason.SOCIAL_KEY_NOT_EXISTS, Status.BAD_REQUEST
 	);

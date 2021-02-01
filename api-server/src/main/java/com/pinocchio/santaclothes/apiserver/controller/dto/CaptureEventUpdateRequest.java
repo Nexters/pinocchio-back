@@ -20,6 +20,7 @@ public class CaptureEventUpdateRequest {
 	String eventId;
 
 	@ApiModelProperty(value = "이미지 아이디", required = true)
+	@NotNull
 	String imageId;
 
 	@ApiModelProperty(value = "이벤트 상태", example = "KAKAO", required = true)

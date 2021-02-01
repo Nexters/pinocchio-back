@@ -74,7 +74,7 @@ public class CaptureService {
 			}
 			return event;
 		} catch (NoSuchElementException e) {
-			throw new EventInvalidException(e, eventId, ExceptionReason.EVENT_SHOULD_RETRY);
+			throw new EventInvalidException(e, eventId, ExceptionReason.EVENT_NOT_EXIST);
 		}
 	}
 }
