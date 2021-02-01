@@ -2,7 +2,6 @@ package com.pinocchio.santaclothes.apiserver.service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -41,57 +40,57 @@ public class UserService {
 	}
 
 	public UserAuth login(String socialId) {
-		User user = userRepository.findBySocialId(socialId).orElseThrow();
+		User user = userRepository.findBySocialId(socialId)
+			.orElseThrow(() -> new TokenInvalidException(ExceptionReason.SOCIAL_KEY_NOT_EXISTS));
 		String userId = user.getId();
 		Instant now = Instant.now();
 
 		String authToken = Uuids.generateUuidString();
 		String refreshToken = Uuids.generateUuidString();
 
-		Optional<UserAuth> optionalAuth = userAuthRepository.findTop1ByUserIdOrderByCreatedDateDesc(userId);
-
-		if (optionalAuth.isPresent()) {
-			UserAuth auth = optionalAuth.get();
-			if (auth.isExpiredWhen(now)) {
-				throw new TokenInvalidException(ExceptionReason.TOKEN_EXPIRED);
-			}
-			return auth;
-		}
-
 		UserAuth newAuth = UserAuth.builder()
 			.userId(userId)
-			.authToken(authToken)
+			.accessToken(authToken)
 			.refreshToken(refreshToken)
-			.expireDate(now.plus(30, ChronoUnit.DAYS))
+			.expireDateTime(now.plus(30, ChronoUnit.DAYS))
 			.build();
 		userAuthRepository.save(newAuth);
+
 		return newAuth;
 	}
 
-	public UserAuth refresh(String authToken) {
-		UserAuth userAuth = userAuthRepository.findTop1ByAuthTokenOrderByCreatedDateDesc(authToken).orElseThrow();
+	public UserAuth refresh(String refreshToken) {
 		Instant now = Instant.now();
+		UserAuth userAuth = userAuthRepository.findTop1ByRefreshTokenOrderByCreatedDateDesc(refreshToken)
+			.filter(it -> !it.isExpiredWhen(now))
+			.orElseThrow(() -> new TokenInvalidException(ExceptionReason.INVALID_REFRESH_TOKEN));
 
-		if (!userAuth.isExpiredWhen(now)) {
-			Instant expireDate = now.plus(30, ChronoUnit.DAYS);
-			String refreshToken = userAuth.getRefreshToken();
-			String newAuthToken = Uuids.generateUuidString();
-			UserAuth newUserAuth = UserAuth.builder()
-				.refreshToken(refreshToken)
-				.authToken(newAuthToken)
-				.userId(userAuth.getUserId())
-				.createdDate(now)
-				.expireDate(expireDate)
-				.build();
-			userAuthRepository.save(newUserAuth);
-			return newUserAuth;
-		}
-
-		return userAuth;
+		Instant expireDate = now.plus(30, ChronoUnit.DAYS);
+		String newAuthToken = Uuids.generateUuidString();
+		UserAuth newUserAuth = UserAuth.builder()
+			.refreshToken(refreshToken)
+			.accessToken(newAuthToken)
+			.userId(userAuth.getUserId())
+			.createdDate(now)
+			.expireDateTime(expireDate)
+			.build();
+		userAuthRepository.save(newUserAuth);
+		return newUserAuth;
 	}
 
-	public boolean isExpired(String authToken) {
+	public boolean isActiveToken(String accessToken) {
+		String latestAccessToken = userAuthRepository.findByAccessTokenOrderByCreatedDateDesc(accessToken)
+			.flatMap(it -> userAuthRepository.findTop1ByUserIdOrderByCreatedDateDesc(it.getUserId()))
+			.map(UserAuth::getAccessToken)
+			.orElseThrow(() -> new TokenInvalidException(ExceptionReason.INVALID_ACCESS_TOKEN));
+
+		return accessToken.equals(latestAccessToken);
+	}
+
+	public boolean isExpired(String accessToken) {
 		Instant now = Instant.now();
-		return userAuthRepository.findTop1ByAuthTokenOrderByCreatedDateDesc(authToken).orElseThrow().isExpiredWhen(now);
+		return userAuthRepository.findByAccessTokenOrderByCreatedDateDesc(accessToken)
+			.orElseThrow(() -> new TokenInvalidException(ExceptionReason.INVALID_ACCESS_TOKEN))
+			.isExpiredWhen(now);
 	}
 }

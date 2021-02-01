@@ -26,8 +26,8 @@ public class SecurityInterceptor implements HandlerInterceptor {
 		String authorization = request.getHeader("Authorization");
 		if (authorization != null) {
 			String token = authorization.substring(TOKEN_PREFIX);
-			return !userService.isExpired(token);
+			return userService.isActiveToken(token) && !userService.isExpired(token);
 		}
-		throw new TokenInvalidException(ExceptionReason.TOKEN_NOT_FOUND);
+		throw new TokenInvalidException(ExceptionReason.INVALID_ACCESS_TOKEN);
 	}
 }

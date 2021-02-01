@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +41,7 @@ public class AuthController {
 	})
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void register(@Valid RegisterRequest registerRequest) {
+	public void register(@RequestBody @Valid RegisterRequest registerRequest) {
 		String socialId = registerRequest.getSocialId();
 		String nickName = registerRequest.getNickName();
 		userService.register(socialId, nickName);
@@ -49,18 +50,18 @@ public class AuthController {
 	@ApiOperation("인증 토큰 갱신")
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "토큰 갱신 성공"),
-		@ApiResponse(code = 404, message = "존재하지 않는 리프레시 토큰", response = ProblemModel.class),
+		@ApiResponse(code = 400, message = "존재하지 않는 리프레시 토큰", response = ProblemModel.class),
 	})
-	@PutMapping("/authToken")
-	public AuthResponse refresh(@Valid RefreshRequest request) {
+	@PutMapping("/accessToken")
+	public AuthResponse refresh(@RequestBody @Valid RefreshRequest request) {
 		UserAuth userAuth = userService.refresh(request.getRefreshToken());
 		String refreshToken = userAuth.getRefreshToken();
-		String authToken = userAuth.getAuthToken();
-		Instant expireDate = userAuth.getExpireDate();
+		String authToken = userAuth.getAccessToken();
+		Instant expireDate = userAuth.getExpireDateTime();
 
 		return AuthResponse.builder()
 			.refreshToken(refreshToken)
-			.authToken(authToken)
+			.accessToken(authToken)
 			.expireDateTime(expireDate)
 			.build();
 	}
@@ -68,22 +69,20 @@ public class AuthController {
 	@ApiOperation("로그인")
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "로그인 성공"),
-		@ApiResponse(code = 400, message = "요청 파라미터 오류", response = ProblemModel.class),
-		@ApiResponse(code = 403, message = "인증 토큰 만료", response = ProblemModel.class),
-		@ApiResponse(code = 404, message = "존재하지 않는 소셜 아이디", response = ProblemModel.class),
+		@ApiResponse(code = 400, message = "존재하지 않는 소셜 아이디", response = ProblemModel.class),
 	})
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.OK)
-	public AuthResponse login(@Valid LoginRequest loginRequest) {
+	public AuthResponse login(@RequestBody @Valid LoginRequest loginRequest) {
 		UserAuth auth = userService.login(loginRequest.getSocialId());
 
 		String refreshToken = auth.getRefreshToken();
-		String authToken = auth.getAuthToken();
-		Instant expireDate = auth.getExpireDate();
+		String accessToken = auth.getAccessToken();
+		Instant expireDate = auth.getExpireDateTime();
 
 		return AuthResponse.builder()
 			.refreshToken(refreshToken)
-			.authToken(authToken)
+			.accessToken(accessToken)
 			.expireDateTime(expireDate)
 			.build();
 	}

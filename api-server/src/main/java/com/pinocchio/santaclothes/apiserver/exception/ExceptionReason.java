@@ -1,8 +1,9 @@
 package com.pinocchio.santaclothes.apiserver.exception;
 
 public enum ExceptionReason {
-	TOKEN_EXPIRED,
-	TOKEN_NOT_FOUND,
+	INVALID_REFRESH_TOKEN,
+	INVALID_ACCESS_TOKEN,
+	SOCIAL_KEY_NOT_EXISTS,
 	DUPLICATE_ENTITY,
 	EVENT_SHOULD_RETRY,
 }

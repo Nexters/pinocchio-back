@@ -1,5 +1,7 @@
 package com.pinocchio.santaclothes.apiserver.config;
 
+import static com.pinocchio.santaclothes.apiserver.support.JsonSupports.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.zalando.problem.ProblemModule;
@@ -13,10 +15,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 public class JacksonConfig {
 	@Bean
 	public ObjectMapper objectMapper() {
-		return new ObjectMapper().registerModules(
-			new JavaTimeModule(),
-			new ProblemModule(),
-			new ConstraintViolationProblemModule())
-			.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+		return JSON_MAPPER;
 	}
 }

@@ -25,11 +25,11 @@ public class UserAuth {
 	// User의 id
 	private String userId;
 
-	private String authToken;
+	private String accessToken;
 
 	private String refreshToken;
 
-	private Instant expireDate;
+	private Instant expireDateTime;
 
 	@Builder.Default
 	private Instant createdDate = Instant.now();
@@ -38,6 +38,6 @@ public class UserAuth {
 	}
 
 	public boolean isExpiredWhen(Instant time) {
-		return expireDate.isBefore(time);
+		return expireDateTime.isBefore(time);
 	}
 }

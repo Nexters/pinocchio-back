@@ -12,7 +12,7 @@ import lombok.Value;
 @Builder
 public class AuthResponse {
 	@ApiModelProperty(value = "인증 토큰", required = true)
-	String authToken;
+	String accessToken;
 
 	@ApiModelProperty(value = "리프레시 토큰", required = true)
 	String refreshToken;
