@@ -39,10 +39,10 @@ public class SwaggerConfig{
 		AuthorizationScope[] authorizationScopes = new AuthorizationScope[] {
 			authorizationScope
 		};
-		return List.of(new SecurityReference("JWT", authorizationScopes));
+		return List.of(new SecurityReference("Token", authorizationScopes));
 	}
 
 	private ApiKey apiKey() {
-		return new ApiKey("JWT", "Authorization", "header");
+		return new ApiKey("Token", "Authorization", "header");
 	}
 }
