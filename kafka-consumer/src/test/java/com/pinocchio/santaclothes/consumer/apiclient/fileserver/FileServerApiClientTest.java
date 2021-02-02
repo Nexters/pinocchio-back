@@ -25,10 +25,8 @@ class FileServerApiClientTest extends SpringTest {
 				)
 		);
 
-		// 2048 바이트씩 읽는지 wiremock 내부 구현 확인 필요
-		// Todo 실제 데이터 값과 비교할 수 있는 방법?
 		StepVerifier.create(this.sut.fetchImage(imageName))
-			.expectNextCount(8)
+			.thenConsumeWhile(it -> true)
 			.verifyComplete();
 	}
 }

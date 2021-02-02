@@ -23,6 +23,7 @@ subprojects {
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("io.rest-assured:rest-assured:${restAssuredVersion}")
         testImplementation("io.rest-assured:rest-assured-all:${restAssuredVersion}")
+        testImplementation("io.rest-assured:spring-mock-mvc:${restAssuredVersion}")
         testImplementation("io.rest-assured:json-schema-validator:${restAssuredVersion}")
         testImplementation("io.rest-assured:xml-path:${restAssuredVersion}")
     }

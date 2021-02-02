@@ -1,7 +1,9 @@
 api:
   file-server:
-    url: http://${host.file-server.api}
+    url: http://${host.file-server}
+  api-server:
+    url: http://${host.api-server}
 
 host:
-  file-server:
-    api: localhost:8090
+  file-server: localhost:8081
+  api-server: localhost:8082
