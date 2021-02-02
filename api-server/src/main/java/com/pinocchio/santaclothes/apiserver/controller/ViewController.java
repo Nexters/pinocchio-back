@@ -2,6 +2,7 @@ package com.pinocchio.santaclothes.apiserver.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import com.pinocchio.santaclothes.apiserver.exception.ProblemModel;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +33,7 @@ public class ViewController {
 		@ApiResponse(code = 500, message = "서버 에러", response = ProblemModel.class),
 	})
 	@ResponseStatus(HttpStatus.OK)
-	public MainView mainView() {
-		return viewAssembler.assembleMain();
+	public MainView mainView(@ApiParam(hidden = true) @RequestHeader("authorization") String authorization) {
+		return viewAssembler.assembleMain(authorization.substring(7));
 	}
 }

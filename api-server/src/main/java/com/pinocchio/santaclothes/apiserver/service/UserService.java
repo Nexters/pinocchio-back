@@ -93,4 +93,10 @@ public class UserService {
 			.orElseThrow(() -> new TokenInvalidException(ExceptionReason.INVALID_ACCESS_TOKEN))
 			.isAccessTokenExpiredWhen(now);
 	}
+
+	public User findByAccessToken(String accessToken) {
+		return userAuthRepository.findByAccessTokenOrderByCreatedDateDesc(accessToken)
+			.flatMap(it -> userRepository.findById(it.getUserId()))
+			.orElseThrow();
+	}
 }

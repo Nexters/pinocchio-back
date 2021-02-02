@@ -8,6 +8,8 @@ import lombok.Value;
 @Value
 @Builder
 public class MainView {
+	String nickName;
+
 	long globalCount;
 
 	List<NoticeResponse> notices;
