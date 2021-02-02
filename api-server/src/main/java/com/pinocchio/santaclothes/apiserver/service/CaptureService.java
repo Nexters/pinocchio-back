@@ -9,7 +9,6 @@ import com.pinocchio.santaclothes.apiserver.entity.CaptureEvent;
 import com.pinocchio.santaclothes.apiserver.exception.EventInvalidException;
 import com.pinocchio.santaclothes.apiserver.exception.ExceptionReason;
 import com.pinocchio.santaclothes.apiserver.repository.CaptureEventRepository;
-import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventMessageDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateDto;
 import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
 
@@ -21,13 +20,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CaptureService {
 	private final CaptureEventRepository captureEventRepository;
-	private final EventMessagePublishService messagePublishService;
+	// private final EventMessagePublishService messagePublishService;
 
 	public CaptureEvent findById(String eventId) {
 		return captureEventRepository.findById(eventId).orElseThrow();
 	}
 
-	public List<CaptureEvent> findByStatus(CaptureEventStatus status){
+	public List<CaptureEvent> findByStatus(CaptureEventStatus status) {
 		return captureEventRepository.findByStatus(status);
 	}
 
@@ -48,27 +47,29 @@ public class CaptureService {
 				event.setImageId(updatedImageId);
 			}
 
-			CaptureEventMessageDto messageDto = CaptureEventMessageDto.builder()
-				.eventId(eventId)
-				.imageId(event.getImageId())
-				.status(nowStatus)
-				.build();
+			// CaptureEventMessageDto messageDto = CaptureEventMessageDto.builder()
+			// 	.eventId(eventId)
+			// 	.imageId(event.getImageId())
+			// 	.status(nowStatus)
+			// 	.build();
 
-			CaptureEventStatus updatedStatus = updateDto.getStatus();
-			if (!updatedStatus.isAfter(nowStatus)) {
+			CaptureEventStatus toUpdateStatus = updateDto.getStatus();
+			if (!toUpdateStatus.isAfter(nowStatus)) {
 				return event;
 			}
 
-			switch (updatedStatus) {
+			switch (toUpdateStatus) {
 				case START:
-					// 업로드 완료
-					messagePublishService.extract(messageDto);
+					// Phase 2
+					// messagePublishService.extract(messageDto);
 					break;
 				case EXTRACT:
-					// 데이터 추출 완료
-					messagePublishService.done(messageDto);
+					event.setStatus(CaptureEventStatus.EXTRACT);
+					// Phase 2
+					// messagePublishService.done(messageDto);
 					break;
 				case DONE:
+					event.setStatus(CaptureEventStatus.DONE);
 					// 끝
 					break;
 			}
