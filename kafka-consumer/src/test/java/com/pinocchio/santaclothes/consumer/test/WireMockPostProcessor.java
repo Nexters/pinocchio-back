@@ -9,11 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 
+@Configuration
 public class WireMockPostProcessor implements EnvironmentPostProcessor, InitializingBean {
 	private static final WireMock WIRE_MOCK;
 	private static final WireMockServer WIRE_MOCK_SERVER;
