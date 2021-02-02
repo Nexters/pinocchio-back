@@ -176,6 +176,22 @@ class AuthControllerTest extends ApiTest {
 			.when()
 			.put("/auth/accessToken")
 			.then()
-			.statusCode(400);
+			.statusCode(401);
+	}
+
+	@Test
+	void refreshTokenExpired() {
+		RefreshRequest request = new RefreshRequest("refreshToken");
+
+		BDDMockito.given(userService.refresh(request.getRefreshToken()))
+			.willThrow(new TokenInvalidException(ExceptionReason.INVALID_REFRESH_TOKEN));
+
+		given()
+			.contentType(ContentType.JSON)
+			.body(request)
+			.when()
+			.put("/auth/accessToken")
+			.then()
+			.statusCode(401);
 	}
 }

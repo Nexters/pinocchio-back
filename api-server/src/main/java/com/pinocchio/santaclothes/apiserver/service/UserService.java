@@ -62,7 +62,7 @@ public class UserService {
 	public UserAuth refresh(String refreshToken) {
 		Instant now = Instant.now();
 		UserAuth userAuth = userAuthRepository.findTop1ByRefreshTokenOrderByCreatedDateDesc(refreshToken)
-			.filter(it -> !it.isExpiredWhen(now))
+			.filter(UserAuth::isRefreshTokenActive)
 			.orElseThrow(() -> new TokenInvalidException(ExceptionReason.INVALID_REFRESH_TOKEN));
 
 		Instant expireDate = now.plus(30, ChronoUnit.DAYS);
@@ -91,6 +91,6 @@ public class UserService {
 		Instant now = Instant.now();
 		return userAuthRepository.findByAccessTokenOrderByCreatedDateDesc(accessToken)
 			.orElseThrow(() -> new TokenInvalidException(ExceptionReason.INVALID_ACCESS_TOKEN))
-			.isExpiredWhen(now);
+			.isAccessTokenExpiredWhen(now);
 	}
 }

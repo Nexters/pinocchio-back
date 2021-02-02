@@ -1,6 +1,7 @@
 package com.pinocchio.santaclothes.apiserver.domain;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,7 +38,13 @@ public class UserAuth {
 	public UserAuth() {
 	}
 
-	public boolean isExpiredWhen(Instant time) {
+	public boolean isAccessTokenExpiredWhen(Instant time) {
 		return expireDateTime.isBefore(time);
+	}
+
+	public boolean isRefreshTokenActive() {
+		Instant now = Instant.now();
+		Instant expiredDate = createdDate.plus(30, ChronoUnit.DAYS);
+		return expiredDate.isAfter(now);
 	}
 }
