@@ -50,7 +50,7 @@ public class AuthController {
 	@ApiOperation("인증 토큰 갱신")
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "토큰 갱신 성공"),
-		@ApiResponse(code = 400, message = "존재하지 않는 리프레시 토큰", response = ProblemModel.class),
+		@ApiResponse(code = 400, message = "존재하지 않거나 만료된 리프레시 토큰", response = ProblemModel.class),
 	})
 	@PutMapping("/accessToken")
 	public AuthResponse refresh(@RequestBody @Valid RefreshRequest request) {
