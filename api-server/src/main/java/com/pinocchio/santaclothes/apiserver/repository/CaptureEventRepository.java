@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.pinocchio.santaclothes.apiserver.domain.CaptureEvent;
+import com.pinocchio.santaclothes.apiserver.entity.CaptureEvent;
 import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
 
 public interface CaptureEventRepository extends JpaRepository<CaptureEvent, String> {

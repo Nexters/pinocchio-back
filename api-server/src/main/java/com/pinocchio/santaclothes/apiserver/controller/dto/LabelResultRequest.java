@@ -5,11 +5,11 @@ import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.pinocchio.santaclothes.apiserver.domain.type.Bleach;
-import com.pinocchio.santaclothes.apiserver.domain.type.Dry;
-import com.pinocchio.santaclothes.apiserver.domain.type.DryCleaning;
-import com.pinocchio.santaclothes.apiserver.domain.type.Ironing;
-import com.pinocchio.santaclothes.apiserver.domain.type.Water;
+import com.pinocchio.santaclothes.apiserver.entity.type.Bleach;
+import com.pinocchio.santaclothes.apiserver.entity.type.Dry;
+import com.pinocchio.santaclothes.apiserver.entity.type.DryCleaning;
+import com.pinocchio.santaclothes.apiserver.entity.type.Ironing;
+import com.pinocchio.santaclothes.apiserver.entity.type.Water;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

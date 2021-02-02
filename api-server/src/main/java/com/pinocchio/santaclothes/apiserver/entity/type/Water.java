@@ -1,6 +1,6 @@
-package com.pinocchio.santaclothes.apiserver.domain.type;
+package com.pinocchio.santaclothes.apiserver.entity.type;
 
-import static com.pinocchio.santaclothes.apiserver.domain.type.Nation.*;
+import static com.pinocchio.santaclothes.apiserver.entity.type.Nation.*;
 
 public enum Water {
 	HAND_KR(0, KR,"손 세탁 가능, 중성 세제"),

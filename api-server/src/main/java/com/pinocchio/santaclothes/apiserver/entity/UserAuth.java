@@ -1,4 +1,4 @@
-package com.pinocchio.santaclothes.apiserver.domain;
+package com.pinocchio.santaclothes.apiserver.entity;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

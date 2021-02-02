@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.pinocchio.santaclothes.apiserver.domain.UserAuth;
+import com.pinocchio.santaclothes.apiserver.entity.UserAuth;
 import com.pinocchio.santaclothes.apiserver.exception.TokenInvalidException;
 import com.pinocchio.santaclothes.apiserver.repository.UserAuthRepository;
 import com.pinocchio.santaclothes.apiserver.test.SpringTest;

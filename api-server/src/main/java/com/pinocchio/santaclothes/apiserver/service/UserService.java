@@ -7,8 +7,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import com.pinocchio.santaclothes.apiserver.domain.User;
-import com.pinocchio.santaclothes.apiserver.domain.UserAuth;
+import com.pinocchio.santaclothes.apiserver.entity.User;
+import com.pinocchio.santaclothes.apiserver.entity.UserAuth;
 import com.pinocchio.santaclothes.apiserver.exception.DatabaseException;
 import com.pinocchio.santaclothes.apiserver.exception.ExceptionReason;
 import com.pinocchio.santaclothes.apiserver.exception.TokenInvalidException;

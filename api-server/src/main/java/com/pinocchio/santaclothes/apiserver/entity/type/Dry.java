@@ -1,6 +1,6 @@
-package com.pinocchio.santaclothes.apiserver.domain.type;
+package com.pinocchio.santaclothes.apiserver.entity.type;
 
-import static com.pinocchio.santaclothes.apiserver.domain.type.Nation.*;
+import static com.pinocchio.santaclothes.apiserver.entity.type.Nation.*;
 
 public enum Dry {
 	DRY_SUNNY_HANGER_KR(0, KR, "화창한 날 옷걸이에 걸어서"),

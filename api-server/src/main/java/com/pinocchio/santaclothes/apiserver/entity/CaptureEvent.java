@@ -1,4 +1,4 @@
-package com.pinocchio.santaclothes.apiserver.domain;
+package com.pinocchio.santaclothes.apiserver.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

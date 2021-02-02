@@ -16,7 +16,7 @@ import com.pinocchio.santaclothes.apiserver.controller.dto.AuthResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.LoginRequest;
 import com.pinocchio.santaclothes.apiserver.controller.dto.RefreshRequest;
 import com.pinocchio.santaclothes.apiserver.controller.dto.RegisterRequest;
-import com.pinocchio.santaclothes.apiserver.domain.UserAuth;
+import com.pinocchio.santaclothes.apiserver.entity.UserAuth;
 import com.pinocchio.santaclothes.apiserver.exception.ProblemModel;
 import com.pinocchio.santaclothes.apiserver.service.UserService;
 

@@ -1,6 +1,6 @@
-package com.pinocchio.santaclothes.apiserver.domain.type;
+package com.pinocchio.santaclothes.apiserver.entity.type;
 
-import static com.pinocchio.santaclothes.apiserver.domain.type.Nation.*;
+import static com.pinocchio.santaclothes.apiserver.entity.type.Nation.*;
 
 public enum DryCleaning {
 	DRY_CLEANING_KR(0, KR, "드라이 클리닝 가능"),

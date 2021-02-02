@@ -1,6 +1,6 @@
-package com.pinocchio.santaclothes.apiserver.domain.type;
+package com.pinocchio.santaclothes.apiserver.entity.type;
 
-import static com.pinocchio.santaclothes.apiserver.domain.type.Nation.*;
+import static com.pinocchio.santaclothes.apiserver.entity.type.Nation.*;
 
 public enum Bleach {
 	FORBIDDEN_KR(0, KR, "염소, 산소, 표백 불가"),
