@@ -5,11 +5,11 @@ import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.pinocchio.santaclothes.apiserver.entity.type.Bleach;
-import com.pinocchio.santaclothes.apiserver.entity.type.Dry;
+import com.pinocchio.santaclothes.apiserver.entity.type.BleachType;
+import com.pinocchio.santaclothes.apiserver.entity.type.DryType;
 import com.pinocchio.santaclothes.apiserver.entity.type.DryCleaning;
-import com.pinocchio.santaclothes.apiserver.entity.type.Ironing;
-import com.pinocchio.santaclothes.apiserver.entity.type.Water;
+import com.pinocchio.santaclothes.apiserver.entity.type.IroningType;
+import com.pinocchio.santaclothes.apiserver.entity.type.WaterType;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,19 +24,19 @@ public class LabelResultRequest {
 
 	@ApiModelProperty(value = "물 세탁 방법", required = true)
 	@NotNull
-	Water water;
+	WaterType waterType;
 
 	@ApiModelProperty(value = "세제 세탁 방법", required = true)
 	@NotNull
-	Bleach bleach;
+	BleachType bleachType;
 
 	@ApiModelProperty(value = "다림질 방법", required = true)
 	@NotNull
-	Ironing ironing;
+	IroningType ironingType;
 
 	@ApiModelProperty(value = "건조 방법", required = true)
 	@NotNull
-	Dry dry;
+	DryType dryType;
 
 	@ApiModelProperty(value = "드라이 클리닝 방법", required = true)
 	@NotNull

@@ -1,6 +1,6 @@
 package com.pinocchio.santaclothes.apiserver.entity.type;
 
-import static com.pinocchio.santaclothes.apiserver.entity.type.Nation.*;
+import static com.pinocchio.santaclothes.apiserver.entity.type.NationType.*;
 
 public enum DryCleaning {
 	DRY_CLEANING_KR(0, KR, "드라이 클리닝 가능"),
@@ -16,12 +16,12 @@ public enum DryCleaning {
 	DRY_CLEANING_FORBIDDEN_JP(10, JP, "드라이 클리닝 불가"),
 	;
 	int code;
-	Nation nation;
+	NationType nationType;
 	String description;
 
-	DryCleaning(int code, Nation nation, String description) {
+	DryCleaning(int code, NationType nationType, String description) {
 		this.code = code;
-		this.nation = nation;
+		this.nationType = nationType;
 		this.description = description;
 	}
 }

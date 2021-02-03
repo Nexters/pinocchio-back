@@ -1,8 +1,8 @@
 package com.pinocchio.santaclothes.apiserver.entity.type;
 
-import static com.pinocchio.santaclothes.apiserver.entity.type.Nation.*;
+import static com.pinocchio.santaclothes.apiserver.entity.type.NationType.*;
 
-public enum Dry {
+public enum DryType {
 	DRY_SUNNY_HANGER_KR(0, KR, "화창한 날 옷걸이에 걸어서"),
 	DRY_CLOUD_HANGER_KR(1, KR, "흐린 날 옷걸이에 걸어서"),
 	DRY_SUNNY_DOWN_KR(2, KR, "화창한 날 눕혀서"),
@@ -24,12 +24,12 @@ public enum Dry {
 	;
 
 	int code;
-	Nation nation;
+	NationType nationType;
 	String description;
 
-	Dry(int code, Nation nation, String description) {
+	DryType(int code, NationType nationType, String description) {
 		this.code = code;
-		this.nation = nation;
+		this.nationType = nationType;
 		this.description = description;
 	}
 }

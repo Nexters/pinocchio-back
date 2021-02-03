@@ -1,8 +1,8 @@
 package com.pinocchio.santaclothes.apiserver.entity.type;
 
-import static com.pinocchio.santaclothes.apiserver.entity.type.Nation.*;
+import static com.pinocchio.santaclothes.apiserver.entity.type.NationType.*;
 
-public enum Ironing {
+public enum IroningType {
 	FORBIDDEN_KR(0, KR, "다림질 불가"),
 	IRONING_80_120_KR(1, KR, "80~120도 가능"),
 	IRONING_80_120_FABRIC_KR(2, KR, "80~120도 천 깔고만 가능"),
@@ -20,12 +20,12 @@ public enum Ironing {
 	;
 
 	int code;
-	Nation nation;
+	NationType nationType;
 	String description;
 
-	Ironing(int code, Nation nation, String description) {
+	IroningType(int code, NationType nationType, String description) {
 		this.code = code;
-		this.nation = nation;
+		this.nationType = nationType;
 		this.description = description;
 	}
 }

@@ -7,7 +7,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.pinocchio.santaclothes.apiserver.assembler.domain.MainView;
-import com.pinocchio.santaclothes.apiserver.assembler.domain.MainView.NoticeResponse;
+import com.pinocchio.santaclothes.apiserver.assembler.domain.MainView.NoticeView;
+import com.pinocchio.santaclothes.apiserver.assembler.domain.MyPageView;
+import com.pinocchio.santaclothes.apiserver.assembler.domain.ResultView;
 import com.pinocchio.santaclothes.apiserver.entity.User;
 import com.pinocchio.santaclothes.apiserver.service.GlobalCountService;
 import com.pinocchio.santaclothes.apiserver.service.NoticeService;
@@ -26,9 +28,9 @@ public class ViewAssembler {
 		User user = userService.findByAccessToken(accessToken);
 
 		long count = globalCountService.getCount();
-		List<NoticeResponse> noticeResponseList = noticeService.findAllNotice().stream()
+		List<NoticeView> noticeViewList = noticeService.findAllNotice().stream()
 			.map(
-				it -> NoticeResponse.builder()
+				it -> NoticeView.builder()
 					.title(it.getTitle())
 					.description(it.getDescription())
 					.content(it.getContent())
@@ -40,7 +42,19 @@ public class ViewAssembler {
 		return MainView.builder()
 			.nickName(nickName)
 			.globalCount(count)
-			.notices(noticeResponseList)
+			.notices(noticeViewList)
+			.build();
+	}
+
+	public ResultView resultView(String eventId) {
+		// TODO: resultView 조립해서 만들기
+		return ResultView.builder()
+			.build();
+	}
+
+	public MyPageView myPageView(String authorization) {
+		// TODO: myPageView 조립해서 만들기
+		return MyPageView.builder()
 			.build();
 	}
 }

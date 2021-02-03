@@ -1,8 +1,8 @@
 package com.pinocchio.santaclothes.apiserver.entity.type;
 
-import static com.pinocchio.santaclothes.apiserver.entity.type.Nation.*;
+import static com.pinocchio.santaclothes.apiserver.entity.type.NationType.*;
 
-public enum Water {
+public enum WaterType {
 	HAND_KR(0, KR,"손 세탁 가능, 중성 세제"),
 	FORBIDDEN_KR(1,KR, "물세탁 불가"),
 	WASHER_30_NEUTRAL_KR(2,KR, "세탁기 약 30도 중성"),
@@ -21,14 +21,14 @@ public enum Water {
 	FORBIDDEN_JP(15,JP, "물세탁 불가"),
 	;
 
-	Water(int code, Nation nation, String description) {
+	WaterType(int code, NationType nationType, String description) {
 		this.code = code;
-		this.nation = nation;
+		this.nationType = nationType;
 		this.description = description;
 	}
 
 	int code;
-	Nation nation;
+	NationType nationType;
 	String description;
 
 }

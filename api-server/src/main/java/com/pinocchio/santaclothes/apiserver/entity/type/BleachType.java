@@ -1,8 +1,8 @@
 package com.pinocchio.santaclothes.apiserver.entity.type;
 
-import static com.pinocchio.santaclothes.apiserver.entity.type.Nation.*;
+import static com.pinocchio.santaclothes.apiserver.entity.type.NationType.*;
 
-public enum Bleach {
+public enum BleachType {
 	FORBIDDEN_KR(0, KR, "염소, 산소, 표백 불가"),
 	CL_KR(1, KR, "산소, 표백 불가"),
 	O2_KR(2, KR, "염소, 표백 불가"),
@@ -16,13 +16,13 @@ public enum Bleach {
 	ALL_JP(10, JP, "염소, 산소, 표백 가능"),
 	;
 
-	Bleach(int code, Nation nation, String description) {
+	BleachType(int code, NationType nationType, String description) {
 		this.code = code;
-		this.nation = nation;
+		this.nationType = nationType;
 		this.description = description;
 	}
 
 	int code;
-	Nation nation;
+	NationType nationType;
 	String description;
 }
