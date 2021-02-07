@@ -3,7 +3,7 @@ package com.pinocchio.santaclothes.apiserver.assembler.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.pinocchio.santaclothes.apiserver.entity.type.ClothesType;
+import com.pinocchio.santaclothes.common.type.ClothesType;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,4 +1,4 @@
-package com.pinocchio.santaclothes.apiserver.entity.type;
+package com.pinocchio.santaclothes.common.type;
 
 public enum ClothesType {
 	TOP,
