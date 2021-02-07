@@ -25,6 +25,8 @@ public class CaptureEvent {
 
 	private String imageId;
 
+	private String userId;
+
 	@Nullable
 	private String result;
 

@@ -4,7 +4,6 @@ import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
@@ -18,6 +17,7 @@ import com.pinocchio.santaclothes.apiserver.exception.EventInvalidException;
 import com.pinocchio.santaclothes.apiserver.exception.ExceptionReason;
 import com.pinocchio.santaclothes.apiserver.service.CaptureService;
 import com.pinocchio.santaclothes.apiserver.service.UserService;
+import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventSaveDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateDto;
 import com.pinocchio.santaclothes.apiserver.test.ApiTest;
 import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
@@ -31,80 +31,80 @@ class ApiControllerTest extends ApiTest {
 	@MockBean
 	private UserService userService;
 
-	@Test
-	void findCaptureEventList() {
-		String mockAccessToken = "mockAccessToken";
+	// @Test
+	// void findCaptureEventList() {
+	// 	String mockAccessToken = "mockAccessToken";
+	//
+	// 	List<CaptureEvent> eventList = List.of(
+	// 		CaptureEvent.builder()
+	// 			.eventId("eventId1")
+	// 			.imageId("imageId1")
+	// 			.status(CaptureEventStatus.START)
+	// 			.build(),
+	//
+	// 		CaptureEvent.builder()
+	// 			.eventId("eventId2")
+	// 			.imageId("imageId2")
+	// 			.status(CaptureEventStatus.START)
+	// 			.build(),
+	//
+	// 		CaptureEvent.builder()
+	// 			.eventId("eventId3")
+	// 			.imageId("imageId3")
+	// 			.status(CaptureEventStatus.START)
+	// 			.build()
+	// 	);
+	//
+	// 	String authorization = String.format("Bearer %s", mockAccessToken);
+	// 	mockLogin(mockAccessToken);
+	//
+	// 	BDDMockito.given(captureService.findByStatus(CaptureEventStatus.START))
+	// 		.willReturn(eventList);
+	//
+	// 	given()
+	// 		.queryParam("status", CaptureEventStatus.START)
+	// 		.contentType(ContentType.JSON)
+	// 		.header("Authorization", authorization)
+	// 		.when()
+	// 		.get("/api/capture/event")
+	// 		.then()
+	// 		.statusCode(200)
+	// 		.body("[0].eventId", equalTo("eventId1"))
+	// 		.body("[0].imageId", equalTo("imageId1"))
+	// 		.body("[0].status", equalTo(CaptureEventStatus.START.name()))
+	// 		.body("[1].eventId", equalTo("eventId2"))
+	// 		.body("[1].imageId", equalTo("imageId2"))
+	// 		.body("[1].status", equalTo(CaptureEventStatus.START.name()))
+	// 		.body("[2].eventId", equalTo("eventId3"))
+	// 		.body("[2].imageId", equalTo("imageId3"))
+	// 		.body("[2].status", equalTo(CaptureEventStatus.START.name()));
+	// }
 
-		List<CaptureEvent> eventList = List.of(
-			CaptureEvent.builder()
-				.eventId("eventId1")
-				.imageId("imageId1")
-				.status(CaptureEventStatus.START)
-				.build(),
-
-			CaptureEvent.builder()
-				.eventId("eventId2")
-				.imageId("imageId2")
-				.status(CaptureEventStatus.START)
-				.build(),
-
-			CaptureEvent.builder()
-				.eventId("eventId3")
-				.imageId("imageId3")
-				.status(CaptureEventStatus.START)
-				.build()
-		);
-
-		String authorization = String.format("Bearer %s", mockAccessToken);
-		mockLogin(mockAccessToken);
-
-		BDDMockito.given(captureService.findByStatus(CaptureEventStatus.START))
-			.willReturn(eventList);
-
-		given()
-			.queryParam("status", CaptureEventStatus.START)
-			.contentType(ContentType.JSON)
-			.header("Authorization", authorization)
-			.when()
-			.get("/api/capture/event")
-			.then()
-			.statusCode(200)
-			.body("[0].eventId", equalTo("eventId1"))
-			.body("[0].imageId", equalTo("imageId1"))
-			.body("[0].status", equalTo(CaptureEventStatus.START.name()))
-			.body("[1].eventId", equalTo("eventId2"))
-			.body("[1].imageId", equalTo("imageId2"))
-			.body("[1].status", equalTo(CaptureEventStatus.START.name()))
-			.body("[2].eventId", equalTo("eventId3"))
-			.body("[2].imageId", equalTo("imageId3"))
-			.body("[2].status", equalTo(CaptureEventStatus.START.name()));
-	}
-
-	@Test
-	void findCaptureEventListWithoutParam() {
-		String mockAccessToken = "mockAccessToken";
-		String authorization = String.format("Bearer %s", mockAccessToken);
-		mockLogin(mockAccessToken);
-
-		given()
-			.header("Authorization", authorization)
-			.contentType(ContentType.JSON)
-			.when()
-			.get("/api/capture/event")
-			.then()
-			.statusCode(400);
-	}
-
-	@Test
-	void findCaptureEventListWithoutLogin() {
-		given()
-			.queryParam("status", CaptureEventStatus.START)
-			.contentType(ContentType.JSON)
-			.when()
-			.get("/api/capture/event")
-			.then()
-			.statusCode(401);
-	}
+	// @Test
+	// void findCaptureEventListWithoutParam() {
+	// 	String mockAccessToken = "mockAccessToken";
+	// 	String authorization = String.format("Bearer %s", mockAccessToken);
+	// 	mockLogin(mockAccessToken);
+	//
+	// 	given()
+	// 		.header("Authorization", authorization)
+	// 		.contentType(ContentType.JSON)
+	// 		.when()
+	// 		.get("/api/capture/event")
+	// 		.then()
+	// 		.statusCode(400);
+	// }
+	//
+	// @Test
+	// void findCaptureEventListWithoutLogin() {
+	// 	given()
+	// 		.queryParam("status", CaptureEventStatus.START)
+	// 		.contentType(ContentType.JSON)
+	// 		.when()
+	// 		.get("/api/capture/event")
+	// 		.then()
+	// 		.statusCode(401);
+	// }
 
 	@Test
 	void findCaptureEvent() {
@@ -123,11 +123,12 @@ class ApiControllerTest extends ApiTest {
 		BDDMockito.given(captureService.findById(eventId))
 			.willReturn(event);
 
+		String userId = "userId";
 		given()
 			.contentType(ContentType.JSON)
 			.header("Authorization", authorization)
 			.when()
-			.get("/api/capture/event/{eventId}", eventId)
+			.get("/api/user/{userId}/capture/event/{eventId}", userId, eventId)
 			.then()
 			.statusCode(200)
 			.body("eventId", equalTo(eventId))
@@ -138,11 +139,11 @@ class ApiControllerTest extends ApiTest {
 	@Test
 	void findCaptureEventWithoutLogin() {
 		String eventId = "eventId";
-
+		String userId = "userId";
 		given()
 			.contentType(ContentType.JSON)
 			.when()
-			.get("/api/capture/event/{eventId}", eventId)
+			.get("/api/user/{userId}/capture/event/{eventId}", userId, eventId)
 			.then()
 			.statusCode(401);
 	}
@@ -153,12 +154,14 @@ class ApiControllerTest extends ApiTest {
 		String authorization = String.format("Bearer %s", mockAccessToken);
 		mockLogin(mockAccessToken);
 
+		String userId = "userId";
 		String eventId = "eventId";
 		String imageId = "imageId";
 
-		CaptureEvent event = CaptureEvent.builder()
+		CaptureEventSaveDto event = CaptureEventSaveDto.builder()
 			.eventId(eventId)
 			.imageId(imageId)
+			.userId(userId)
 			.status(CaptureEventStatus.START)
 			.build();
 
@@ -175,7 +178,7 @@ class ApiControllerTest extends ApiTest {
 			.body(request)
 			.header("Authorization", authorization)
 			.when()
-			.post("/api/capture/event")
+			.post("/api/user/{userId}/capture/event", userId)
 			.then()
 			.statusCode(201)
 			.body("eventId", equalTo(eventId));
@@ -192,11 +195,12 @@ class ApiControllerTest extends ApiTest {
 			.eventStatus(CaptureEventStatus.START)
 			.build();
 
+		String userId = "userId";
 		given()
 			.contentType(ContentType.JSON)
 			.body(request)
 			.when()
-			.post("/api/capture/event")
+			.post("/api/user/{userId}/capture/event", userId)
 			.then()
 			.statusCode(401);
 	}
@@ -215,12 +219,13 @@ class ApiControllerTest extends ApiTest {
 			.eventStatus(CaptureEventStatus.START)
 			.build();
 
+		String userId = "userId";
 		given()
 			.header("Authorization", authorization)
 			.contentType(ContentType.JSON)
 			.body(request)
 			.when()
-			.post("/api/capture/event")
+			.post("/api/user/{userId}/capture/event", userId)
 			.then()
 			.statusCode(400);
 	}
@@ -256,12 +261,13 @@ class ApiControllerTest extends ApiTest {
 			.status(toStatus)
 			.build();
 
+		String userId = "userId";
 		given()
 			.header("Authorization", authorization)
 			.contentType(ContentType.JSON)
 			.body(request)
 			.when()
-			.put("/api/capture/event")
+			.put("/api/user/{userId}/capture/event", userId)
 			.then()
 			.statusCode(200)
 			.body(
@@ -297,12 +303,13 @@ class ApiControllerTest extends ApiTest {
 			.status(toStatus)
 			.build();
 
+		String userId = "userId";
 		given()
 			.header("Authorization", authorization)
 			.contentType(ContentType.JSON)
 			.body(request)
 			.when()
-			.put("/api/capture/event")
+			.put("/api/user/{userId}/capture/event", userId)
 			.then()
 			.statusCode(404);
 	}
@@ -319,11 +326,12 @@ class ApiControllerTest extends ApiTest {
 			.status(toStatus)
 			.build();
 
+		String userId = "userId";
 		given()
 			.contentType(ContentType.JSON)
 			.body(request)
 			.when()
-			.put("/api/capture/event")
+			.put("/api/user/{userId}/capture/event", userId)
 			.then()
 			.statusCode(401);
 	}
@@ -337,12 +345,13 @@ class ApiControllerTest extends ApiTest {
 		CaptureEventUpdateRequest request = CaptureEventUpdateRequest.builder()
 			.build();
 
+		String userId = "userId";
 		given()
 			.header("Authorization", authorization)
 			.contentType(ContentType.JSON)
 			.body(request)
 			.when()
-			.put("/api/capture/event")
+			.put("/api/user/{userId}/capture/event", userId)
 			.then()
 			.statusCode(400);
 	}

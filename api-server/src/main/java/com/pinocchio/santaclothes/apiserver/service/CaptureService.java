@@ -9,6 +9,7 @@ import com.pinocchio.santaclothes.apiserver.entity.CaptureEvent;
 import com.pinocchio.santaclothes.apiserver.exception.EventInvalidException;
 import com.pinocchio.santaclothes.apiserver.exception.ExceptionReason;
 import com.pinocchio.santaclothes.apiserver.repository.CaptureEventRepository;
+import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventSaveDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateDto;
 import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
 
@@ -30,11 +31,14 @@ public class CaptureService {
 		return captureEventRepository.findByStatus(status);
 	}
 
-	public void save(CaptureEvent event) {
-		if(event.getStatus() == null){
-			event.setStatus(CaptureEventStatus.START);
-		}
-		captureEventRepository.save(event);
+	public void save(CaptureEventSaveDto saveDto) {
+		CaptureEvent captureEvent = CaptureEvent.builder()
+			.eventId(saveDto.getEventId())
+			.imageId(saveDto.getImageId())
+			.userId(saveDto.getUserId())
+			.status(saveDto.getStatus())
+			.build();
+		captureEventRepository.save(captureEvent);
 	}
 
 	public CaptureEvent update(CaptureEventUpdateDto updateDto) {
@@ -60,12 +64,12 @@ public class CaptureService {
 
 			switch (toUpdateStatus) {
 				case START:
-					// Phase 2
+					// TODO: Phase 2
 					// messagePublishService.extract(messageDto);
 					break;
 				case EXTRACT:
 					event.setStatus(CaptureEventStatus.EXTRACT);
-					// Phase 2
+					// TODO: Phase 2
 					// messagePublishService.done(messageDto);
 					break;
 				case DONE:
