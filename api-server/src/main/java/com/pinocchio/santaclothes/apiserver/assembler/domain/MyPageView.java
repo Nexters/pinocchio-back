@@ -1,6 +1,7 @@
 package com.pinocchio.santaclothes.apiserver.assembler.domain;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.pinocchio.santaclothes.common.type.ClothesType;
@@ -20,5 +21,5 @@ public class MyPageView {
 
 	@ApiModelProperty(value = "카테고리 타입에 따른 인식한 옷 리스트", required = true)
 	@Builder.Default
-	Map<ClothesType, ResultView> clothesByClothesType = new HashMap<>();
+	Map<ClothesType, List<ResultView>> clothesByClothesType = new HashMap<>();
 }

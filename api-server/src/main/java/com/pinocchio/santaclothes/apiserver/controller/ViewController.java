@@ -2,6 +2,7 @@ package com.pinocchio.santaclothes.apiserver.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -39,18 +40,6 @@ public class ViewController {
 		return viewAssembler.assembleMain(authorization.substring(7));
 	}
 
-	@ApiOperation("결과 뷰 조회")
-	@GetMapping("/result")
-	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "뷰 조회 성공"),
-		@ApiResponse(code = 401, message = "인증 에러", response = ProblemModel.class),
-		@ApiResponse(code = 500, message = "서버 에러", response = ProblemModel.class),
-	})
-	@ResponseStatus(HttpStatus.OK)
-	public ResultView resultView(String eventId){
-		return viewAssembler.resultView(eventId);
-	}
-
 	@ApiOperation("마이 페이지 뷰 조회")
 	@GetMapping("/myPage")
 	@ApiResponses(value = {
@@ -59,7 +48,19 @@ public class ViewController {
 		@ApiResponse(code = 500, message = "서버 에러", response = ProblemModel.class),
 	})
 	@ResponseStatus(HttpStatus.OK)
-	public MyPageView myPageView(@ApiParam(hidden = true) @RequestHeader("authorization") String authorization){
-		return viewAssembler.myPageView(authorization);
+	public MyPageView myPageView(@ApiParam(hidden = true) @RequestHeader("authorization") String authorization) {
+		return viewAssembler.myPageView(authorization.substring(7));
+	}
+
+	@ApiOperation("결과 뷰 조회")
+	@GetMapping("/result/{eventId}")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "뷰 조회 성공"),
+		@ApiResponse(code = 401, message = "인증 에러", response = ProblemModel.class),
+		@ApiResponse(code = 500, message = "서버 에러", response = ProblemModel.class),
+	})
+	@ResponseStatus(HttpStatus.OK)
+	public ResultView resultView(@PathVariable String eventId) {
+		return viewAssembler.resultView(eventId);
 	}
 }
