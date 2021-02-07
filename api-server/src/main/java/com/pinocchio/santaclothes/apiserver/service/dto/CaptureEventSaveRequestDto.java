@@ -9,7 +9,7 @@ import lombok.Value;
 
 @Value
 @Builder
-public class CaptureEventSaveDto {
+public class CaptureEventSaveRequestDto {
 	String eventId;
 
 	String imageId;

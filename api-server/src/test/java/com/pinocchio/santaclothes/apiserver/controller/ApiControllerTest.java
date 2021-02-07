@@ -17,8 +17,9 @@ import com.pinocchio.santaclothes.apiserver.exception.EventInvalidException;
 import com.pinocchio.santaclothes.apiserver.exception.ExceptionReason;
 import com.pinocchio.santaclothes.apiserver.service.CaptureService;
 import com.pinocchio.santaclothes.apiserver.service.UserService;
-import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventSaveDto;
-import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateDto;
+import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventDto;
+import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventSaveRequestDto;
+import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateRequestDto;
 import com.pinocchio.santaclothes.apiserver.test.ApiTest;
 import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
 
@@ -111,7 +112,7 @@ class ApiControllerTest extends ApiTest {
 		String mockAccessToken = "mockAccessToken";
 		String eventId = "eventId1";
 
-		CaptureEvent event = CaptureEvent.builder()
+		CaptureEventDto event = CaptureEventDto.builder()
 			.eventId(eventId)
 			.imageId("imageId1")
 			.status(CaptureEventStatus.DONE)
@@ -158,7 +159,7 @@ class ApiControllerTest extends ApiTest {
 		String eventId = "eventId";
 		String imageId = "imageId";
 
-		CaptureEventSaveDto event = CaptureEventSaveDto.builder()
+		CaptureEventSaveRequestDto event = CaptureEventSaveRequestDto.builder()
 			.eventId(eventId)
 			.imageId(imageId)
 			.userId(userId)
@@ -240,13 +241,13 @@ class ApiControllerTest extends ApiTest {
 		String imageId = "imageId";
 		CaptureEventStatus toStatus = CaptureEventStatus.EXTRACT;
 
-		CaptureEventUpdateDto dto = CaptureEventUpdateDto.builder()
+		CaptureEventUpdateRequestDto dto = CaptureEventUpdateRequestDto.builder()
 			.eventId(eventId)
 			.imageId(imageId)
 			.status(toStatus)
 			.build();
 
-		CaptureEvent updatedEvent = CaptureEvent.builder()
+		CaptureEventDto updatedEvent = CaptureEventDto.builder()
 			.eventId(eventId)
 			.imageId(imageId)
 			.status(toStatus)
@@ -287,7 +288,7 @@ class ApiControllerTest extends ApiTest {
 		String imageId = "imageId";
 		CaptureEventStatus toStatus = CaptureEventStatus.EXTRACT;
 
-		CaptureEventUpdateDto dto = CaptureEventUpdateDto.builder()
+		CaptureEventUpdateRequestDto dto = CaptureEventUpdateRequestDto.builder()
 			.eventId(eventId)
 			.imageId(imageId)
 			.status(toStatus)

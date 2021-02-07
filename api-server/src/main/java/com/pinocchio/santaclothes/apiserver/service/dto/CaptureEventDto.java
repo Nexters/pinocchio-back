@@ -1,5 +1,7 @@
 package com.pinocchio.santaclothes.apiserver.service.dto;
 
+import org.springframework.lang.Nullable;
+
 import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
 
 import lombok.Builder;
@@ -7,10 +9,15 @@ import lombok.Value;
 
 @Value
 @Builder
-public class CaptureEventUpdateDto {
+public class CaptureEventDto {
 	String eventId;
 
 	String imageId;
+
+	String userId;
+
+	@Nullable
+	String result;
 
 	CaptureEventStatus status;
 }

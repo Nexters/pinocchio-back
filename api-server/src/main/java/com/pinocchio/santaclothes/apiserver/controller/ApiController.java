@@ -16,11 +16,11 @@ import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventCreateReq
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventCreateRequestResponse.CaptureEventCreateResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventUpdateRequest;
-import com.pinocchio.santaclothes.apiserver.entity.CaptureEvent;
 import com.pinocchio.santaclothes.apiserver.exception.ProblemModel;
 import com.pinocchio.santaclothes.apiserver.service.CaptureService;
-import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventSaveDto;
-import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateDto;
+import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventDto;
+import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventSaveRequestDto;
+import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateRequestDto;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,7 +46,7 @@ public class ApiController {
 	public CaptureEventResponse fetchEvent(
 		@PathVariable String userId,
 		@PathVariable("eventId") String eventId) {
-		CaptureEvent event = captureService.findById(eventId);
+		CaptureEventDto event = captureService.findById(eventId);
 		return CaptureEventResponse.builder()
 			.eventId(event.getEventId())
 			.imageId(event.getImageId())
@@ -68,13 +68,13 @@ public class ApiController {
 		@PathVariable String userId,
 		@RequestBody @Valid CaptureEventUpdateRequest request
 	) {
-		CaptureEventUpdateDto updateDto = CaptureEventUpdateDto.builder()
+		CaptureEventUpdateRequestDto updateDto = CaptureEventUpdateRequestDto.builder()
 			.eventId(request.getEventId())
 			.imageId(request.getImageId())
 			.status(request.getStatus())
 			.build();
 
-		CaptureEvent event = captureService.update(updateDto);
+		CaptureEventDto event = captureService.update(updateDto);
 
 		return CaptureEventResponse.builder()
 			.eventId(event.getEventId())
@@ -95,7 +95,7 @@ public class ApiController {
 		@PathVariable String userId,
 		@RequestBody @Valid CaptureEventCreateRequest request
 	) {
-		CaptureEventSaveDto saveDto = CaptureEventSaveDto.builder()
+		CaptureEventSaveRequestDto saveDto = CaptureEventSaveRequestDto.builder()
 			.userId(userId)
 			.eventId(request.getEventId())
 			.status(request.getEventStatus())
