@@ -19,15 +19,26 @@ import com.pinocchio.santaclothes.imageserver.service.CaptureEventService;
 import com.pinocchio.santaclothes.imageserver.service.dto.CaptureImageRequest;
 import com.pinocchio.santaclothes.imageserver.service.dto.CaptureImageResponse;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@Api(tags = "IMAGE")
 @RestController
 @RequiredArgsConstructor
 @Slf4j
 public class ImageController {
 	private final CaptureEventService captureEventService;
 
+
+	@ApiOperation("업로드")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "업로드 성공"),
+		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
+	})
 	@PostMapping("/image")
 	@ResponseStatus(HttpStatus.OK)
 	public ImageResponse upload(ImageRequest request) {
@@ -42,6 +53,11 @@ public class ImageController {
 		return new ImageResponse(eventId, imageId);
 	}
 
+	@ApiOperation("다운로드")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "다운로드 성공"),
+		@ApiResponse(code = 400, message = "요청 파라미터 오류"),
+	})
 	@GetMapping("/image/{imageId}")
 	@ResponseStatus(HttpStatus.OK)
 	public void download(@PathVariable("imageId") String imageId, HttpServletResponse response) {
