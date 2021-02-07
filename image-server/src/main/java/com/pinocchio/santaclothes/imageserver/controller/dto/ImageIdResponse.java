@@ -6,7 +6,7 @@ import lombok.Value;
 
 @ApiModel(description = "업로드 응답")
 @Value
-public class ImageResponse {
+public class ImageIdResponse {
 	@ApiModelProperty(value = "이벤트 아이디", required = true)
 	String eventId;
 

@@ -1,7 +1,11 @@
 package com.pinocchio.santaclothes.imageserver.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
+
+import com.pinocchio.santaclothes.common.type.ClothesType;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -20,9 +24,16 @@ public class CaptureImage {
 	@Id
 	String imageId;
 
+	String eventId;
+
+	String userId;
+
 	String originalFileName;
 
 	String savedFileName;
+
+	@Enumerated(EnumType.STRING)
+	ClothesType clothesCategory;
 
 	String filePath;
 

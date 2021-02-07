@@ -2,6 +2,7 @@ package com.pinocchio.santaclothes.imageserver.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
@@ -9,6 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pinocchio.santaclothes.common.utils.Uuids;
 import com.pinocchio.santaclothes.imageserver.entity.CaptureImage;
 import com.pinocchio.santaclothes.imageserver.repository.CaptureImageRepository;
 import com.pinocchio.santaclothes.imageserver.service.dto.CaptureImageRequest;
@@ -42,29 +44,55 @@ public class CaptureEventService {
 		CaptureImage captureImage = captureImageRepository.findById(imageId).orElseThrow();
 		return CaptureImageResponse.builder()
 			.imageId(captureImage.getImageId())
+			.eventId(captureImage.getEventId())
 			.filePath(captureImage.getFilePath())
+			.userId(captureImage.getUserId())
 			.fileLength(captureImage.getFileLength())
 			.fileName(captureImage.getSavedFileName())
+			.category(captureImage.getClothesCategory())
 			.build();
 	}
 
+	public List<CaptureImage> findByUserId(String userId) {
+		return captureImageRepository.findByUserId(userId);
+	}
+
+	public String generateImageId() {
+		return Uuids.generateUuidString();
+	}
+
+	public String generateEventId() {
+		return Uuids.generateUuidString();
+	}
+
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public void saveImage(CaptureImageRequest request) {
 		try {
 			MultipartFile file = request.getImage();
-			String originalFileName = file.getOriginalFilename();
-			String fileName = UUID.randomUUID().toString();
-			System.out.println(FILE_PREFIX_URL);
 			new File(FILE_PREFIX_URL).mkdirs();
+
+			String fileName = UUID.randomUUID().toString();
 			String filePath = FILE_PREFIX_URL + "/" + fileName + ".png";
 			File transferFile = new File(filePath);
 			file.transferTo(transferFile);
+
+			String imageId = request.getImageId();
+			String eventId = request.getEventId();
+			String userId = request.getUserId();
+			String originalFileName = file.getOriginalFilename();
+			long fileLength = file.getSize();
+
 			CaptureImage captureImage = CaptureImage.builder()
-				.imageId(request.getImageId())
+				.imageId(imageId)
+				.eventId(eventId)
+				.userId(userId)
 				.originalFileName(originalFileName)
 				.savedFileName(fileName)
-				.fileLength(file.getSize())
+				.fileLength(fileLength)
 				.filePath(filePath)
+				.clothesCategory(request.getClothesCategory())
 				.build();
+
 			captureImageRepository.save(captureImage);
 			// captureCreateEmitter.tryEmitNext(new CaptureEventCreateMessage(request.getEventId(), request.getImageId()));
 			// captureProcessRequestEmitter.tryEmitNext(
