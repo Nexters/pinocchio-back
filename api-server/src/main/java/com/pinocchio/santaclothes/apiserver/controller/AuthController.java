@@ -83,6 +83,7 @@ public class AuthController {
 		return AuthResponse.builder()
 			.refreshToken(refreshToken)
 			.accessToken(accessToken)
+			.userId(auth.getUserId())
 			.expireDateTime(expireDate)
 			.build();
 	}
