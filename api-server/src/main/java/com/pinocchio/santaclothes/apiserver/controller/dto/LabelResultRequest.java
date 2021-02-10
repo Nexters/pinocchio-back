@@ -10,6 +10,7 @@ import com.pinocchio.santaclothes.apiserver.entity.type.DryType;
 import com.pinocchio.santaclothes.apiserver.entity.type.DryCleaning;
 import com.pinocchio.santaclothes.apiserver.entity.type.IroningType;
 import com.pinocchio.santaclothes.apiserver.entity.type.WaterType;
+import com.pinocchio.santaclothes.common.type.ClothesColor;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -42,4 +43,6 @@ public class LabelResultRequest {
 	@NotNull
 	DryCleaning dryCleaning;
 
+	@ApiModelProperty(value = "옷 색깔", required = true)
+	ClothesColor clothesColor;
 }

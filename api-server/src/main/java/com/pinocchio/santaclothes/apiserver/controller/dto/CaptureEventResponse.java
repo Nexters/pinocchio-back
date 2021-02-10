@@ -20,6 +20,9 @@ public class CaptureEventResponse {
 	@ApiModelProperty(value = "이미지 아이디", required = true)
 	String imageId;
 
+	@ApiModelProperty(value = "유저 아이디", required = true)
+	String userId;
+
 	@ApiModelProperty(dataType = "string", value = "이벤트 상태", example = "START, EXTRACT, DONE", required = true)
 	CaptureEventStatus status;
 

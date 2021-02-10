@@ -26,7 +26,6 @@ public class ResultView {
 	@ApiModelProperty(value = "재질 리스트", required = true)
 	List<IngredientView> ingredients;
 
-	// TODO: 종류와 설명을 같이 보낼 것인가, 앱에 넣을 것인가
 	@ApiModelProperty(value = "세탁 라벨", required = true)
 	WaterType waterType;
 
