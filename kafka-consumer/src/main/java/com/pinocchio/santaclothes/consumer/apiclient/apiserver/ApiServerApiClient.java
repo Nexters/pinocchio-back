@@ -7,6 +7,7 @@ import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.pinocchio.santaclothes.consumer.apiclient.apiserver.dto.CreateEventRequest;
+import com.pinocchio.santaclothes.consumer.apiclient.apiserver.dto.CreateEventRequestDto;
 import com.pinocchio.santaclothes.consumer.apiclient.apiserver.dto.CreateEventResponse;
 import com.pinocchio.santaclothes.consumer.apiclient.apiserver.dto.FinishEventRequest;
 
@@ -22,9 +23,10 @@ public class ApiServerApiClient {
 		this.webClient = webClient;
 	}
 
-	public Mono<String> createEvent(CreateEventRequest request) {
+	public Mono<String> createEvent(CreateEventRequestDto requestDto) {
+		CreateEventRequest request = new CreateEventRequest(requestDto.getEventId(), requestDto.getImageId());
 		return webClient.post()
-			.uri("/capture/event")
+			.uri("/api/user/{userId}/capture/event", requestDto.getUserId())
 			.bodyValue(request)
 			.retrieve()
 			.onStatus(HttpStatus::is4xxClientError,
@@ -33,13 +35,13 @@ public class ApiServerApiClient {
 			.map(CreateEventResponse::getEventId);
 	}
 
-	public Mono<Void> finishEvent(FinishEventRequest request) {
-		return webClient.put()
-			.uri("/capture/event/{eventId}")
-			.bodyValue(request)
-			.retrieve()
-			.onStatus(HttpStatus::is4xxClientError,
-				ClientResponse::createException)
-			.bodyToMono(Void.class);
-	}
+	// public Mono<Void> finishEvent(FinishEventRequest request) {
+	// 	return webClient.put()
+	// 		.uri("/api/user/{userId}/capture/event/{eventId}", request.getUserId(), request.getEventId())
+	// 		.bodyValue(request)
+	// 		.retrieve()
+	// 		.onStatus(HttpStatus::is4xxClientError,
+	// 			ClientResponse::createException)
+	// 		.bodyToMono(Void.class);
+	// }
 }

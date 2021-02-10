@@ -9,6 +9,7 @@ import com.pinocchio.santaclothes.common.message.CaptureEventProcessDoneMessage;
 import com.pinocchio.santaclothes.common.message.CaptureEventProcessRequestMessage;
 import com.pinocchio.santaclothes.consumer.apiclient.apiserver.ApiServerApiClient;
 import com.pinocchio.santaclothes.consumer.apiclient.apiserver.dto.CreateEventRequest;
+import com.pinocchio.santaclothes.consumer.apiclient.apiserver.dto.CreateEventRequestDto;
 import com.pinocchio.santaclothes.consumer.apiclient.apiserver.dto.FinishEventRequest;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class CaptureEventService {
 
 	public void create(CaptureEventCreateMessage message) {
 		try {
-			apiClient.createEvent(new CreateEventRequest(message.getEventId(), message.getImageId())).block();
+			apiClient.createEvent(new CreateEventRequestDto(message.getUserId(), message.getEventId(), message.getImageId())).block();
 		} catch (Exception e) {
 			log.error("create failed eventId {}", message.getEventId());
 			// ignore
@@ -35,12 +36,12 @@ public class CaptureEventService {
 	}
 
 	public void processDone(CaptureEventProcessDoneMessage message) {
-		FinishEventRequest request = FinishEventRequest.builder()
-			.eventId(message.getEventId())
-			.imageId(message.getImageId())
-			.result(message.getResult())
-			.build();
-
-		apiClient.finishEvent(request).block();
+		// FinishEventRequest request = FinishEventRequest.builder()
+		// 	.eventId(message.getEventId())
+		// 	.imageId(message.getImageId())
+		// 	.result(message.getResult())
+		// 	.build();
+		//
+		// apiClient.finishEvent(request).block();
 	}
 }

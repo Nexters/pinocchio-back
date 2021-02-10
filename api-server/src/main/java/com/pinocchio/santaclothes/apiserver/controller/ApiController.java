@@ -98,7 +98,7 @@ public class ApiController {
 		CaptureEventSaveRequestDto saveDto = CaptureEventSaveRequestDto.builder()
 			.userId(userId)
 			.eventId(request.getEventId())
-			.status(request.getEventStatus())
+			.status(request.getStatus())
 			.imageId(request.getImageId())
 			.build();
 		captureService.save(saveDto);
