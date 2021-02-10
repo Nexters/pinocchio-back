@@ -23,7 +23,7 @@ public class CaptureEventCreateRequestResponse {
 		@NotNull
 		String imageId;
 
-		@ApiModelProperty(value = "이벤트 상태", required = true)
+		@ApiModelProperty(value = "이벤트 상태", allowableValues = "START, EXTRACT, REPORT, DONE", required = true)
 		@Builder.Default
 		@NotNull
 		CaptureEventStatus eventStatus = CaptureEventStatus.START;

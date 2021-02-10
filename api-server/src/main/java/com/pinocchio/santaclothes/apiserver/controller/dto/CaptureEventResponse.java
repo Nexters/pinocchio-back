@@ -23,7 +23,7 @@ public class CaptureEventResponse {
 	@ApiModelProperty(value = "유저 아이디", required = true)
 	String userId;
 
-	@ApiModelProperty(dataType = "string", value = "이벤트 상태", example = "START, EXTRACT, DONE", required = true)
+	@ApiModelProperty(dataType = "string", value = "이벤트 상태", example = "START, EXTRACT, REPORT, DONE", required = true)
 	CaptureEventStatus status;
 
 	// TODO: jackson global 설정

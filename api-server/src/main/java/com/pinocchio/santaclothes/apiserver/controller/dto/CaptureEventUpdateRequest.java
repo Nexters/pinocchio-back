@@ -23,7 +23,7 @@ public class CaptureEventUpdateRequest {
 	@NotNull
 	String imageId;
 
-	@ApiModelProperty(value = "이벤트 상태", example = "START", required = true)
+	@ApiModelProperty(value = "이벤트 상태", allowableValues = "START, EXTRACT, REPORT, DONE", required = true)
 	@NotNull
 	CaptureEventStatus status;
 
