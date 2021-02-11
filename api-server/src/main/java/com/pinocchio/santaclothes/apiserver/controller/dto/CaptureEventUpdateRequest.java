@@ -15,10 +15,6 @@ import lombok.Value;
 @Value
 @Builder
 public class CaptureEventUpdateRequest {
-	@ApiModelProperty(value = "이벤트 아이디", required = true)
-	@NotNull
-	String eventId;
-
 	@ApiModelProperty(value = "이미지 아이디", required = true)
 	@NotNull
 	String imageId;

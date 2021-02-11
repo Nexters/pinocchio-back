@@ -5,6 +5,8 @@ import static java.util.stream.Collectors.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.pinocchio.santaclothes.apiserver.entity.CaptureEvent;
@@ -14,6 +16,8 @@ import com.pinocchio.santaclothes.apiserver.repository.CaptureEventRepository;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventSaveRequestDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateRequestDto;
+import com.pinocchio.santaclothes.apiserver.support.ObjectSupports;
+import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
 import com.pinocchio.santaclothes.common.type.CaptureEventStatus;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class CaptureService {
 	private final CaptureEventRepository captureEventRepository;
 	// private final EventMessagePublishService messagePublishService;
@@ -65,9 +70,10 @@ public class CaptureService {
 			CaptureEvent event = captureEventRepository.findById(eventId).orElseThrow();
 			CaptureEventStatus nowStatus = event.getStatus();
 			String updatedImageId = updateDto.getImageId();
-			if (updatedImageId != null) {
-				event.setImageId(updatedImageId);
-			}
+			String toResult = updateDto.getResult();
+
+			ObjectSupports.ifNotNullAccept(updatedImageId, event::setImageId);
+			ObjectSupports.ifNotNullAccept(toResult, event::setResult);
 
 			// CaptureEventMessageDto messageDto = CaptureEventMessageDto.builder()
 			// 	.eventId(eventId)

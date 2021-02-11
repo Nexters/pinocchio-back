@@ -1,5 +1,7 @@
 package com.pinocchio.santaclothes.apiserver.controller;
 
+import static com.pinocchio.santaclothes.apiserver.support.ObjectSupports.*;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -12,15 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventCreateRequestResponse.CaptureEventCreateRequest;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventCreateRequestResponse.CaptureEventCreateResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventUpdateRequest;
+import com.pinocchio.santaclothes.apiserver.controller.dto.LabelResultRequest;
 import com.pinocchio.santaclothes.apiserver.exception.ProblemModel;
 import com.pinocchio.santaclothes.apiserver.service.CaptureService;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventSaveRequestDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateRequestDto;
+import com.pinocchio.santaclothes.apiserver.support.JsonSupports;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -62,25 +67,30 @@ public class ApiController {
 		@ApiResponse(code = 401, message = "인증 실패", response = ProblemModel.class),
 		@ApiResponse(code = 404, message = "이벤트 존재 안함, POST 요청으로 보내기", response = ProblemModel.class)
 	})
-	@PutMapping("/user/{userId}/capture/event")
+	@PutMapping("/user/{userId}/capture/event/{eventId}")
 	@ResponseStatus(HttpStatus.OK)
 	public CaptureEventResponse updateEvent(
 		@PathVariable String userId,
+		@PathVariable String eventId,
 		@RequestBody @Valid CaptureEventUpdateRequest request
 	) {
-		CaptureEventUpdateRequestDto updateDto = CaptureEventUpdateRequestDto.builder()
-			.eventId(request.getEventId())
-			.imageId(request.getImageId())
-			.status(request.getStatus())
-			.build();
+			LabelResultRequest requestResult = request.getResult();
+			String result = ifNotNullApply(requestResult, JsonSupports::toJsonString);
 
-		CaptureEventDto event = captureService.update(updateDto);
+			CaptureEventUpdateRequestDto updateDto = CaptureEventUpdateRequestDto.builder()
+				.eventId(eventId)
+				.imageId(request.getImageId())
+				.status(request.getStatus())
+				.result(result)
+				.build();
 
-		return CaptureEventResponse.builder()
-			.eventId(event.getEventId())
-			.imageId(event.getImageId())
-			.status(event.getStatus())
-			.build();
+			CaptureEventDto event = captureService.update(updateDto);
+
+			return CaptureEventResponse.builder()
+				.eventId(event.getEventId())
+				.imageId(event.getImageId())
+				.status(event.getStatus())
+				.build();
 	}
 
 	@ApiOperation("캡쳐 이벤트 생성")
