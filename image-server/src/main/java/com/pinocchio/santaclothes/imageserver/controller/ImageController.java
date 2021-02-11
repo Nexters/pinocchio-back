@@ -49,7 +49,7 @@ public class ImageController {
 	public ImageIdResponse upload(
 		@PathVariable String userId,
 		@ApiParam @RequestPart MultipartFile uploadFile,
-		@ApiParam(name = "category", example = "TOP, PANTS, SOCKS, UNDERWEAR, TOWER") @RequestParam ClothesType category
+		@ApiParam(name = "category", example = "TOP, PANTS, SOCKS, UNDERWEAR, TOWEL") @RequestParam ClothesType category
 	) {
 		String imageId = captureEventService.generateImageId();
 		String eventId = captureEventService.generateEventId();
