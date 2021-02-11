@@ -47,6 +47,7 @@ public class CaptureService {
 			.map(it -> CaptureEventDto.builder()
 				.eventId(it.getEventId())
 				.imageId(it.getImageId())
+				.userId(it.getUserId())
 				.status(it.getStatus())
 				.result(it.getResult())
 				.build())
