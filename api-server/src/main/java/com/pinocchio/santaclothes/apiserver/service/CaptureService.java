@@ -5,6 +5,8 @@ import static java.util.stream.Collectors.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.pinocchio.santaclothes.apiserver.entity.CaptureEvent;
@@ -22,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class CaptureService {
 	private final CaptureEventRepository captureEventRepository;
 	// private final EventMessagePublishService messagePublishService;
