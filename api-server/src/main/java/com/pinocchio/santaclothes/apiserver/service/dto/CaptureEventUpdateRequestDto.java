@@ -12,5 +12,7 @@ public class CaptureEventUpdateRequestDto {
 
 	String imageId;
 
+	String result;
+
 	CaptureEventStatus status;
 }

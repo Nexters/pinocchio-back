@@ -257,7 +257,6 @@ class ApiControllerTest extends ApiTest {
 			.willReturn(updatedEvent);
 
 		CaptureEventUpdateRequest request = CaptureEventUpdateRequest.builder()
-			.eventId(eventId)
 			.imageId(imageId)
 			.status(toStatus)
 			.build();
@@ -268,7 +267,7 @@ class ApiControllerTest extends ApiTest {
 			.contentType(ContentType.JSON)
 			.body(request)
 			.when()
-			.put("/api/user/{userId}/capture/event", userId)
+			.put("/api/user/{userId}/capture/event/{eventId}", userId, eventId)
 			.then()
 			.statusCode(200)
 			.body(
@@ -299,7 +298,6 @@ class ApiControllerTest extends ApiTest {
 				new EventInvalidException(new NoSuchElementException(), eventId, ExceptionReason.EVENT_NOT_EXIST));
 
 		CaptureEventUpdateRequest request = CaptureEventUpdateRequest.builder()
-			.eventId(eventId)
 			.imageId(imageId)
 			.status(toStatus)
 			.build();
@@ -310,7 +308,7 @@ class ApiControllerTest extends ApiTest {
 			.contentType(ContentType.JSON)
 			.body(request)
 			.when()
-			.put("/api/user/{userId}/capture/event", userId)
+			.put("/api/user/{userId}/capture/event/{eventId}", userId, eventId)
 			.then()
 			.statusCode(404);
 	}
@@ -322,7 +320,6 @@ class ApiControllerTest extends ApiTest {
 		CaptureEventStatus toStatus = CaptureEventStatus.EXTRACT;
 
 		CaptureEventUpdateRequest request = CaptureEventUpdateRequest.builder()
-			.eventId(eventId)
 			.imageId(imageId)
 			.status(toStatus)
 			.build();
@@ -332,7 +329,7 @@ class ApiControllerTest extends ApiTest {
 			.contentType(ContentType.JSON)
 			.body(request)
 			.when()
-			.put("/api/user/{userId}/capture/event", userId)
+			.put("/api/user/{userId}/capture/event/{eventId}", userId, eventId)
 			.then()
 			.statusCode(401);
 	}
