@@ -89,6 +89,7 @@ public class ApiController {
 			return CaptureEventResponse.builder()
 				.eventId(event.getEventId())
 				.imageId(event.getImageId())
+				.result(event.getResult())
 				.status(event.getStatus())
 				.build();
 	}
