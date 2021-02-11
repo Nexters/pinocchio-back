@@ -19,18 +19,4 @@ public class MainView {
 
 	@ApiModelProperty(value = "공지사항 리스트", required = true)
 	List<NoticeView> notices;
-
-	@ApiModel(description = "공지사항 뷰")
-	@Value
-	@Builder
-	public static class NoticeView {
-		@ApiModelProperty(value = "제목", required = true)
-		String title;
-
-		@ApiModelProperty(value = "설명", required = true)
-		String description;
-
-		@ApiModelProperty(value = "내용", required = true)
-		String content;
-	}
 }

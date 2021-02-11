@@ -1,5 +1,6 @@
 package com.pinocchio.santaclothes.apiserver.assembler.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,4 +23,8 @@ public class MyPageView {
 	@ApiModelProperty(value = "카테고리 타입에 따른 인식한 옷 리스트", required = true)
 	@Builder.Default
 	Map<ClothesType, List<ResultView>> clothesByClothesType = new HashMap<>();
+
+	@ApiModelProperty(value = "이벤트 리스트", required = true)
+	@Builder.Default
+	List<NoticeView> noticeViewList = new ArrayList<>();
 }
