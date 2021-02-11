@@ -17,7 +17,6 @@ import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventSaveRequestDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateRequestDto;
 import com.pinocchio.santaclothes.apiserver.support.ObjectSupports;
-import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
 import com.pinocchio.santaclothes.common.type.CaptureEventStatus;
 
 import lombok.RequiredArgsConstructor;
@@ -48,6 +47,7 @@ public class CaptureService {
 			.map(it -> CaptureEventDto.builder()
 				.eventId(it.getEventId())
 				.imageId(it.getImageId())
+				.userId(it.getUserId())
 				.status(it.getStatus())
 				.result(it.getResult())
 				.build())
@@ -55,6 +55,7 @@ public class CaptureService {
 	}
 
 	public void save(CaptureEventSaveRequestDto saveDto) {
+		log.info(saveDto.getUserId());
 		CaptureEvent captureEvent = CaptureEvent.builder()
 			.eventId(saveDto.getEventId())
 			.imageId(saveDto.getImageId())
