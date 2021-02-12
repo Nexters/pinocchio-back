@@ -22,7 +22,7 @@ spring:
 #          brokers: localhost
   servlet:
     multipart:
-      file-size-threshold: 1MB
+      file-size-threshold: 100MB
       location: temp
 server:
   port: 8081
