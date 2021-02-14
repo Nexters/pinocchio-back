@@ -83,6 +83,9 @@ public class CaptureService {
 					case EXTRACT:
 						event.setStatus(CaptureEventStatus.EXTRACT);
 						break;
+					case REPORT:
+						event.setStatus(CaptureEventStatus.REPORT);
+						break;
 					case DONE:
 						event.setStatus(CaptureEventStatus.DONE);
 						break;
