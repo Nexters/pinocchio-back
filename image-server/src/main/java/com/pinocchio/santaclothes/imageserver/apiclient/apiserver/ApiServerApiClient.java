@@ -25,9 +25,9 @@ public class ApiServerApiClient {
 	}
 
 	public Mono<String> createEvent(CreateEventRequestDto requestDto) {
-		CreateEventRequest request = new CreateEventRequest(requestDto.getEventId(), requestDto.getImageId());
+		CreateEventRequest request = new CreateEventRequest(requestDto.getEventId(), requestDto.getImageId(), requestDto.getEventStatus());
 		return webClient.post()
-			.uri("/user/{userId}/capture/event", requestDto.getUserId())
+			.uri("/api/user/{userId}/capture/event", requestDto.getUserId())
 			.bodyValue(request)
 			.retrieve()
 			.onStatus(HttpStatus::is4xxClientError,

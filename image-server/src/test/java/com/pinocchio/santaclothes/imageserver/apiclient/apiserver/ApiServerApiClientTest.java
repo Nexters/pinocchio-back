@@ -5,6 +5,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.pinocchio.santaclothes.common.type.CaptureEventStatus;
 import com.pinocchio.santaclothes.imageserver.apiclient.apiserver.dto.CreateEventRequestDto;
 import com.pinocchio.santaclothes.imageserver.test.SpringTest;
 
@@ -16,14 +17,16 @@ class ApiServerApiClientTest extends SpringTest {
 
 	@Test
 	void createCaptureEvent() {
-		CreateEventRequestDto request = new CreateEventRequestDto("userId", "abcdef", "bcdef");
+		CreateEventRequestDto request = new CreateEventRequestDto("userId", "abcdef", "bcdef",
+			CaptureEventStatus.START);
 
 		givenThat(
-			post("/user/userId/capture/event")
+			post("/api/user/userId/capture/event")
 				.withRequestBody(equalToJson(
 					"{" +
 						"	\"eventId\": \"abcdef\"," +
-						"	\"imageId\": \"bcdef\"" +
+						"	\"imageId\": \"bcdef\"," +
+						"	\"eventStatus\": \"START\"" +
 						"}"
 				))
 				.willReturn(

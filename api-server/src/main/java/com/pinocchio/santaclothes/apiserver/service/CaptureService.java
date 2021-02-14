@@ -17,7 +17,7 @@ import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventSaveRequestDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateRequestDto;
 import com.pinocchio.santaclothes.apiserver.support.ObjectSupports;
-import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
+import com.pinocchio.santaclothes.common.type.CaptureEventStatus;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

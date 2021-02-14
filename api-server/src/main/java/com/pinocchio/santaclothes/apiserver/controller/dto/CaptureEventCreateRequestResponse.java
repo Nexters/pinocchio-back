@@ -2,7 +2,7 @@ package com.pinocchio.santaclothes.apiserver.controller.dto;
 
 import javax.validation.constraints.NotNull;
 
-import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
+import com.pinocchio.santaclothes.common.type.CaptureEventStatus;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

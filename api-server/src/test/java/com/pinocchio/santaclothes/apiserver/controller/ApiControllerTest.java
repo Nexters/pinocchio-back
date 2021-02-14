@@ -12,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventCreateRequestResponse.CaptureEventCreateRequest;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventUpdateRequest;
-import com.pinocchio.santaclothes.apiserver.entity.CaptureEvent;
 import com.pinocchio.santaclothes.apiserver.exception.EventInvalidException;
 import com.pinocchio.santaclothes.apiserver.exception.ExceptionReason;
 import com.pinocchio.santaclothes.apiserver.service.CaptureService;
@@ -21,7 +20,7 @@ import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventSaveRequestDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateRequestDto;
 import com.pinocchio.santaclothes.apiserver.test.ApiTest;
-import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
+import com.pinocchio.santaclothes.common.type.CaptureEventStatus;
 
 import io.restassured.http.ContentType;
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventResponse;
 import com.pinocchio.santaclothes.apiserver.exception.ProblemModel;
 import com.pinocchio.santaclothes.apiserver.service.CaptureService;
-import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
+import com.pinocchio.santaclothes.common.type.CaptureEventStatus;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,6 +43,7 @@ public class InternalApiController {
 		return captureService.findByStatus(status).stream()
 			.map(
 				it -> CaptureEventResponse.builder()
+					.userId(it.getUserId())
 					.eventId(it.getEventId())
 					.imageId(it.getImageId())
 					.status(it.getStatus())

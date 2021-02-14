@@ -3,7 +3,7 @@ package com.pinocchio.santaclothes.apiserver.controller.dto;
 import org.springframework.lang.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
+import com.pinocchio.santaclothes.common.type.CaptureEventStatus;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

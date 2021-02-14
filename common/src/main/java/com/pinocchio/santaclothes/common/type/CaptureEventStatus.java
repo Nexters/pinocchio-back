@@ -1,4 +1,4 @@
-package com.pinocchio.santaclothes.apiserver.type;
+package com.pinocchio.santaclothes.common.type;
 
 public enum CaptureEventStatus {
 	START,

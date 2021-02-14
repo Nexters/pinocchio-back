@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.lang.Nullable;
 
-import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
+import com.pinocchio.santaclothes.common.type.CaptureEventStatus;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
