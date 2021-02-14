@@ -6,8 +6,10 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.lang.Nullable;
 
+import com.pinocchio.santaclothes.apiserver.entity.event.CreateClothEvent;
 import com.pinocchio.santaclothes.common.type.CaptureEventStatus;
 
 import lombok.AllArgsConstructor;
@@ -55,5 +57,9 @@ public class CaptureEvent {
 					break;
 			}
 		}
+	}
+
+	public void done(ApplicationEventPublisher publisher) {
+		publisher.publishEvent(new CreateClothEvent(eventId));
 	}
 }

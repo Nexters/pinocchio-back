@@ -343,12 +343,13 @@ class ApiControllerTest extends ApiTest {
 			.build();
 
 		String userId = "userId";
+		String eventId = "eventId";
 		given()
 			.header("Authorization", authorization)
 			.contentType(ContentType.JSON)
 			.body(request)
 			.when()
-			.put("/api/user/{userId}/capture/event", userId)
+			.put("/api/user/{userId}/capture/event/{eventId}", userId, eventId)
 			.then()
 			.statusCode(400);
 	}

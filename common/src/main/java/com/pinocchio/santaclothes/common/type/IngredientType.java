@@ -3,7 +3,7 @@ package com.pinocchio.santaclothes.common.type;
 import lombok.Value;
 
 @Value
-public class Ingredient {
+public class IngredientType {
 	String name;
 
 	int percentage;

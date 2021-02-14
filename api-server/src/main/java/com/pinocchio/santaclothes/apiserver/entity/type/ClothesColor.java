@@ -1,4 +1,4 @@
-package com.pinocchio.santaclothes.common.type;
+package com.pinocchio.santaclothes.apiserver.entity.type;
 
 public enum ClothesColor {
 	RED,

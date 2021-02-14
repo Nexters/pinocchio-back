@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 
 import javax.transaction.Transactional;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CaptureService {
 	private final CaptureEventRepository captureEventRepository;
 	private final ObjectMapper objectMapper;
+	private final ApplicationEventPublisher publisher;
 
 	public CaptureEventDto findById(String eventId) {
 		CaptureEvent captureEvent = captureEventRepository.findById(eventId).orElseThrow();
@@ -79,6 +81,10 @@ public class CaptureService {
 			ObjectSupports.ifNotNullAccept(updatedImageId, event::setImageId);
 			ObjectSupports.ifNotNullAccept(toResult, event::setResult);
 			ObjectSupports.ifNotNullAccept(toUpdateStatus, event::setStatus);
+
+			if (CaptureEventStatus.DONE == toUpdateStatus) {
+				event.done(publisher);
+			}
 
 			return CaptureEventDto.builder()
 				.eventId(event.getEventId())

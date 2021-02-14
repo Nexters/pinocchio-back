@@ -17,6 +17,8 @@ import com.pinocchio.santaclothes.apiserver.entity.type.DryCleaning;
 import com.pinocchio.santaclothes.apiserver.entity.type.DryType;
 import com.pinocchio.santaclothes.apiserver.entity.type.IroningType;
 import com.pinocchio.santaclothes.apiserver.entity.type.WaterType;
+import com.pinocchio.santaclothes.apiserver.exception.EventInvalidException;
+import com.pinocchio.santaclothes.apiserver.exception.ExceptionReason;
 import com.pinocchio.santaclothes.apiserver.service.CaptureService;
 import com.pinocchio.santaclothes.apiserver.service.GlobalCountService;
 import com.pinocchio.santaclothes.apiserver.service.NoticeService;
@@ -24,7 +26,7 @@ import com.pinocchio.santaclothes.apiserver.service.UserService;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventResultDto;
 import com.pinocchio.santaclothes.common.type.ClothesType;
-import com.pinocchio.santaclothes.common.type.Ingredient;
+import com.pinocchio.santaclothes.common.type.IngredientType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -64,7 +66,7 @@ public class ViewAssembler {
 		CaptureEventResultDto resultDto = captureEventDto.getResult();
 
 		if (resultDto == null) {
-			throw new IllegalArgumentException("Event is not finished");
+			throw new EventInvalidException(eventId, ExceptionReason.EVENT_NO_RESULT);
 		}
 
 		return ResultView.builder()
@@ -96,7 +98,7 @@ public class ViewAssembler {
 					.waterType(WaterType.FORBIDDEN_BLOWER_JP)
 					.ingredients(
 						List.of(
-							new Ingredient("폴리에스테르", 100)
+							new IngredientType("폴리에스테르", 100)
 						)
 					)
 					.build()
