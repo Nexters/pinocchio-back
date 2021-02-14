@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventMessageDto;
 
 @Service
-public class EventMessagePublishService {
+public class ExternalEventMessagePublishService {
 	public void extract(CaptureEventMessageDto eventDto){
 		// TODO: consumer extract message 전송
 	}
