@@ -38,4 +38,22 @@ public class CaptureEvent {
 
 	public CaptureEvent() {
 	}
+
+	public void setStatus(CaptureEventStatus toUpdateStatus) {
+		if (toUpdateStatus.isAfter(status)) {
+			switch (toUpdateStatus) {
+				case START:
+					break;
+				case EXTRACT:
+					this.status = CaptureEventStatus.EXTRACT;
+					break;
+				case REPORT:
+					this.status = CaptureEventStatus.REPORT;
+					break;
+				case DONE:
+					this.status = CaptureEventStatus.DONE;
+					break;
+			}
+		}
+	}
 }

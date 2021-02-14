@@ -72,29 +72,13 @@ public class CaptureService {
 		String eventId = updateDto.getEventId();
 		try {
 			CaptureEvent event = captureEventRepository.findById(eventId).orElseThrow();
-			CaptureEventStatus nowStatus = event.getStatus();
 			String updatedImageId = updateDto.getImageId();
 			String toResult = updateDto.getResult();
+			CaptureEventStatus toUpdateStatus = updateDto.getStatus();
 
 			ObjectSupports.ifNotNullAccept(updatedImageId, event::setImageId);
 			ObjectSupports.ifNotNullAccept(toResult, event::setResult);
-
-			CaptureEventStatus toUpdateStatus = updateDto.getStatus();
-			if (toUpdateStatus.isAfter(nowStatus)) {
-				switch (toUpdateStatus) {
-					case START:
-						break;
-					case EXTRACT:
-						event.setStatus(CaptureEventStatus.EXTRACT);
-						break;
-					case REPORT:
-						event.setStatus(CaptureEventStatus.REPORT);
-						break;
-					case DONE:
-						event.setStatus(CaptureEventStatus.DONE);
-						break;
-				}
-			}
+			ObjectSupports.ifNotNullAccept(toUpdateStatus, event::setStatus);
 
 			return CaptureEventDto.builder()
 				.eventId(event.getEventId())
