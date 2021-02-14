@@ -2,24 +2,7 @@ spring:
   application:
     name: santa-clothes-image-server
   profiles:
-    active: local
-#  cloud:
-#    function:
-#      definition: captureCreate;captureProcess
-#    stream:
-#      bindings:
-#        captureCreate-out-0:
-#          group: capture
-#          binder: kafka
-#          destination: captureCreate
-#          startOffset: earliest
-#        captureProcessRequest-out-0:
-#          group: capture
-#          binder: kafka
-#          destination: captureProcessRequest
-#      kafka:
-#        binder:
-#          brokers: localhost
+    active: dev
   servlet:
     multipart:
       file-size-threshold: 100MB

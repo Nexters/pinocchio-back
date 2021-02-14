@@ -26,17 +26,11 @@ public class CaptureEventService {
 	static{
 		FILE_PREFIX_URL = System.getProperty("PINOCCHIO_IMAGES_PATH");
 	}
-	// private final Sinks.Many<CaptureEventCreateMessage> captureCreateEmitter;
-	// private final Sinks.Many<CaptureEventProcessRequestMessage> captureProcessRequestEmitter;
 	private final CaptureImageRepository captureImageRepository;
 
 	public CaptureEventService(
-		// @Qualifier("captureCreateEmitter") Sinks.Many<CaptureEventCreateMessage> captureCreateEmitter,
-		// @Qualifier("captureProcessRequestEmitter") Sinks.Many<CaptureEventProcessRequestMessage> captureProcessRequestEmitter,
 		CaptureImageRepository captureImageRepository
 	) {
-		// this.captureCreateEmitter = captureCreateEmitter;
-		// this.captureProcessRequestEmitter = captureProcessRequestEmitter;
 		this.captureImageRepository = captureImageRepository;
 	}
 
@@ -94,10 +88,6 @@ public class CaptureEventService {
 				.build();
 
 			captureImageRepository.save(captureImage);
-			// captureCreateEmitter.tryEmitNext(new CaptureEventCreateMessage(request.getEventId(), request.getImageId()));
-			// captureProcessRequestEmitter.tryEmitNext(
-			// 	new CaptureEventProcessRequestMessage(request.getEventId(), request.getImageId())
-			// );
 		} catch (IOException e) {
 			log.error(e.getMessage());
 		}

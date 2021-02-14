@@ -75,27 +75,16 @@ public class CaptureService {
 			ObjectSupports.ifNotNullAccept(updatedImageId, event::setImageId);
 			ObjectSupports.ifNotNullAccept(toResult, event::setResult);
 
-			// CaptureEventMessageDto messageDto = CaptureEventMessageDto.builder()
-			// 	.eventId(eventId)
-			// 	.imageId(event.getImageId())
-			// 	.status(nowStatus)
-			// 	.build();
-
 			CaptureEventStatus toUpdateStatus = updateDto.getStatus();
 			if (toUpdateStatus.isAfter(nowStatus)) {
 				switch (toUpdateStatus) {
 					case START:
-						// TODO: Phase 2
-						// messagePublishService.extract(messageDto);
 						break;
 					case EXTRACT:
 						event.setStatus(CaptureEventStatus.EXTRACT);
-						// TODO: Phase 2
-						// messagePublishService.done(messageDto);
 						break;
 					case DONE:
 						event.setStatus(CaptureEventStatus.DONE);
-						// 끝
 						break;
 				}
 			}
@@ -106,6 +95,7 @@ public class CaptureService {
 				.status(event.getStatus())
 				.result(event.getResult())
 				.build();
+
 		} catch (NoSuchElementException e) {
 			throw new EventInvalidException(e, eventId, ExceptionReason.EVENT_NOT_EXIST);
 		}

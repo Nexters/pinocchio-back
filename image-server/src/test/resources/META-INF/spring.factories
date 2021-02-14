@@ -1,0 +1,1 @@
+org.springframework.boot.env.EnvironmentPostProcessor= com.pinocchio.santaclothes.imageserver.test.WireMockPostProcessor

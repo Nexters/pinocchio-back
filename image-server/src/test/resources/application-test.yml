@@ -1,0 +1,10 @@
+spirng:
+  profiles:
+    active: test
+
+api:
+  api-server:
+    url: http://${host.api-server}
+
+host:
+  api-server: localhost:${wiremock.server.port}
