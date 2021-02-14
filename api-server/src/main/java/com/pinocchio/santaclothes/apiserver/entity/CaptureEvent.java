@@ -1,5 +1,6 @@
 package com.pinocchio.santaclothes.apiserver.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -28,6 +29,7 @@ public class CaptureEvent {
 	private String userId;
 
 	@Nullable
+	@Column(length = 65535)
 	private String result;
 
 	@Enumerated(EnumType.STRING)
