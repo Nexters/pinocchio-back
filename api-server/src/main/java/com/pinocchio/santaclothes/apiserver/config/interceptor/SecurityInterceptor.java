@@ -22,7 +22,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 	private final UserService userService;
 	private static final List<String> permitHosts = List.of(
 		"127.0.0.1",
-		"ec2-3-139-60-119.us-east-2.compute.amazonaws.com"
+		"3.139.60.119"
 	);
 
 	@Override
