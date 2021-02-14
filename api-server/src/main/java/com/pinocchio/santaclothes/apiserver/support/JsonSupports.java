@@ -10,6 +10,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class JsonSupports {
 	public final static ObjectMapper JSON_MAPPER;
 

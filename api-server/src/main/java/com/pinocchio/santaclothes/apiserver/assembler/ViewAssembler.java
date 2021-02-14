@@ -31,10 +31,11 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ViewAssembler {
+	private final CaptureService captureService;
+	private final UserService userService;
 	private final GlobalCountService globalCountService;
 	private final NoticeService noticeService;
-	private final UserService userService;
-	private final CaptureService captureService;
+
 
 	public MainView assembleMain(String accessToken) {
 		User user = userService.findByAccessToken(accessToken);

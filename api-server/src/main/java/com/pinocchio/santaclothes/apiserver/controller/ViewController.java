@@ -12,7 +12,9 @@ import com.pinocchio.santaclothes.apiserver.assembler.ViewAssembler;
 import com.pinocchio.santaclothes.apiserver.assembler.domain.MainView;
 import com.pinocchio.santaclothes.apiserver.assembler.domain.MyPageView;
 import com.pinocchio.santaclothes.apiserver.assembler.domain.ResultView;
+import com.pinocchio.santaclothes.apiserver.exception.ExceptionReason;
 import com.pinocchio.santaclothes.apiserver.exception.ProblemModel;
+import com.pinocchio.santaclothes.apiserver.exception.TokenInvalidException;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,7 +39,7 @@ public class ViewController {
 	})
 	@ResponseStatus(HttpStatus.OK)
 	public MainView mainView(@ApiParam(hidden = true) @RequestHeader("authorization") String authorization) {
-		return viewAssembler.assembleMain(authorization.substring(7));
+		return viewAssembler.assembleMain(getToken(authorization));
 	}
 
 	@ApiOperation("마이 페이지 뷰 조회")
@@ -49,7 +51,7 @@ public class ViewController {
 	})
 	@ResponseStatus(HttpStatus.OK)
 	public MyPageView myPageView(@ApiParam(hidden = true) @RequestHeader("authorization") String authorization) {
-		return viewAssembler.myPageView(authorization.substring(7));
+		return viewAssembler.myPageView(getToken(authorization));
 	}
 
 	@ApiOperation("결과 뷰 조회")
@@ -62,5 +64,12 @@ public class ViewController {
 	@ResponseStatus(HttpStatus.OK)
 	public ResultView resultView(@PathVariable String eventId) {
 		return viewAssembler.resultView(eventId);
+	}
+
+	private String getToken(String authorization) {
+		if (authorization.isBlank() || authorization.length() < 8) {
+			throw new TokenInvalidException(ExceptionReason.INVALID_ACCESS_TOKEN);
+		}
+		return authorization.substring(7);
 	}
 }
