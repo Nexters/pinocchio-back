@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pinocchio.santaclothes.apiserver.assembler.ViewAssembler;
-import com.pinocchio.santaclothes.apiserver.assembler.domain.MainView;
-import com.pinocchio.santaclothes.apiserver.assembler.domain.MyPageView;
-import com.pinocchio.santaclothes.apiserver.assembler.domain.ResultView;
+import com.pinocchio.santaclothes.apiserver.assembler.view.MainView;
+import com.pinocchio.santaclothes.apiserver.assembler.view.MyPageView;
+import com.pinocchio.santaclothes.apiserver.assembler.view.ResultView;
 import com.pinocchio.santaclothes.apiserver.exception.ExceptionReason;
 import com.pinocchio.santaclothes.apiserver.exception.ProblemModel;
 import com.pinocchio.santaclothes.apiserver.exception.TokenInvalidException;

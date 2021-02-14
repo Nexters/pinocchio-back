@@ -1,4 +1,4 @@
-package com.pinocchio.santaclothes.apiserver.assembler.domain;
+package com.pinocchio.santaclothes.apiserver.assembler.view;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -7,10 +7,10 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.pinocchio.santaclothes.apiserver.assembler.domain.MainView;
-import com.pinocchio.santaclothes.apiserver.assembler.domain.MyPageView;
-import com.pinocchio.santaclothes.apiserver.assembler.domain.NoticeView;
-import com.pinocchio.santaclothes.apiserver.assembler.domain.ResultView;
+import com.pinocchio.santaclothes.apiserver.assembler.view.MainView;
+import com.pinocchio.santaclothes.apiserver.assembler.view.MyPageView;
+import com.pinocchio.santaclothes.apiserver.assembler.view.NoticeView;
+import com.pinocchio.santaclothes.apiserver.assembler.view.ResultView;
 import com.pinocchio.santaclothes.apiserver.entity.User;
 import com.pinocchio.santaclothes.apiserver.entity.type.BleachType;
 import com.pinocchio.santaclothes.apiserver.entity.type.DryCleaning;
