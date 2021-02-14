@@ -22,6 +22,7 @@ import com.pinocchio.santaclothes.apiserver.service.GlobalCountService;
 import com.pinocchio.santaclothes.apiserver.service.NoticeService;
 import com.pinocchio.santaclothes.apiserver.service.UserService;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventDto;
+import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventResultDto;
 import com.pinocchio.santaclothes.common.type.ClothesType;
 import com.pinocchio.santaclothes.common.type.Ingredient;
 
@@ -59,7 +60,19 @@ public class ViewAssembler {
 
 	public ResultView resultView(String eventId) {
 		CaptureEventDto captureEventDto = captureService.findById(eventId);
+		CaptureEventResultDto resultDto = captureEventDto.getResult();
+
+		if (resultDto == null) {
+			throw new IllegalArgumentException("Event is not finished");
+		}
+
 		return ResultView.builder()
+			.waterType(resultDto.getWaterType())
+			.ironingType(resultDto.getIroningType())
+			.dryCleaning(resultDto.getDryCleaning())
+			.dryType(resultDto.getDryType())
+			.bleachType(resultDto.getBleachType())
+			.ingredients(resultDto.getIngredientList())
 			.build();
 	}
 

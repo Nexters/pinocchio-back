@@ -3,6 +3,8 @@ package com.pinocchio.santaclothes.apiserver.service.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import com.pinocchio.santaclothes.apiserver.entity.type.BleachType;
 import com.pinocchio.santaclothes.apiserver.entity.type.DryCleaning;
 import com.pinocchio.santaclothes.apiserver.entity.type.DryType;
