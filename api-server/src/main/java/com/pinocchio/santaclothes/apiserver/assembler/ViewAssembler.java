@@ -11,6 +11,8 @@ import com.pinocchio.santaclothes.apiserver.assembler.view.MainView;
 import com.pinocchio.santaclothes.apiserver.assembler.view.MyPageView;
 import com.pinocchio.santaclothes.apiserver.assembler.view.NoticeView;
 import com.pinocchio.santaclothes.apiserver.assembler.view.ResultView;
+import com.pinocchio.santaclothes.apiserver.domain.ingredient.IngredientAnalyzeResult;
+import com.pinocchio.santaclothes.apiserver.domain.ingredient.IngredientSource;
 import com.pinocchio.santaclothes.apiserver.entity.User;
 import com.pinocchio.santaclothes.apiserver.entity.type.BleachType;
 import com.pinocchio.santaclothes.apiserver.entity.type.DryCleaning;
@@ -21,6 +23,7 @@ import com.pinocchio.santaclothes.apiserver.exception.EventInvalidException;
 import com.pinocchio.santaclothes.apiserver.exception.ExceptionReason;
 import com.pinocchio.santaclothes.apiserver.service.CaptureService;
 import com.pinocchio.santaclothes.apiserver.service.GlobalCountService;
+import com.pinocchio.santaclothes.apiserver.service.IngredientService;
 import com.pinocchio.santaclothes.apiserver.service.NoticeService;
 import com.pinocchio.santaclothes.apiserver.service.UserService;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventDto;
@@ -37,7 +40,7 @@ public class ViewAssembler {
 	private final UserService userService;
 	private final GlobalCountService globalCountService;
 	private final NoticeService noticeService;
-
+	private final IngredientService ingredientService;
 
 	public MainView assembleMain(String accessToken) {
 		User user = userService.findByAccessToken(accessToken);
@@ -64,18 +67,28 @@ public class ViewAssembler {
 	public ResultView resultView(String eventId) {
 		CaptureEventDto captureEventDto = captureService.findById(eventId);
 		CaptureEventResultDto resultDto = captureEventDto.getResult();
-
 		if (resultDto == null) {
 			throw new EventInvalidException(eventId, ExceptionReason.EVENT_NO_RESULT);
 		}
 
-		return ResultView.builder()
+		IngredientAnalyzeResult analyzeResult = ingredientService.analyze(IngredientSource.builder()
 			.waterType(resultDto.getWaterType())
 			.ironingType(resultDto.getIroningType())
 			.dryCleaning(resultDto.getDryCleaning())
 			.dryType(resultDto.getDryType())
 			.bleachType(resultDto.getBleachType())
 			.ingredients(resultDto.getIngredientList())
+			.build());
+
+		return ResultView.builder()
+			.title(analyzeResult.getTitle())
+			.description(analyzeResult.getDescription())
+			.waterType(analyzeResult.getWaterType())
+			.ironingType(analyzeResult.getIroningType())
+			.bleachType(analyzeResult.getBleachType())
+			.dryCleaning(analyzeResult.getDryCleaning())
+			.dryType(analyzeResult.getDryType())
+			.ingredients(analyzeResult.getIngredients())
 			.build();
 	}
 
