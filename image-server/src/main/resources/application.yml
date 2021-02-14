@@ -2,7 +2,7 @@ spring:
   application:
     name: santa-clothes-image-server
   profiles:
-    active: dev
+    active: local
   servlet:
     multipart:
       file-size-threshold: 100MB

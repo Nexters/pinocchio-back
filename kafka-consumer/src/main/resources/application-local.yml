@@ -1,9 +1,0 @@
-api:
-  file-server:
-    url: http://${host.file-server}
-  api-server:
-    url: http://${host.api-server}
-
-host:
-  file-server: localhost:8081
-  api-server: localhost:8082

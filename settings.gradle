@@ -2,5 +2,4 @@ rootProject.name = "santaclothes"
 
 include "common"
 include "api-server"
-include "kafka-consumer"
 include "image-server"
