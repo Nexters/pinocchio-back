@@ -31,6 +31,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 		@NonNull HttpServletResponse response,
 		@NonNull Object handler
 	) {
+		log.info(request.getRemoteHost());
 		if (permitHosts.contains(request.getRemoteHost())) {
 			return true;
 		}
