@@ -7,6 +7,7 @@ import com.pinocchio.santaclothes.apiserver.entity.type.DryType;
 import com.pinocchio.santaclothes.apiserver.entity.type.DryCleaning;
 import com.pinocchio.santaclothes.apiserver.entity.type.IroningType;
 import com.pinocchio.santaclothes.apiserver.entity.type.WaterType;
+import com.pinocchio.santaclothes.common.type.Ingredient;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,7 +25,7 @@ public class ResultView {
 	String description;
 
 	@ApiModelProperty(value = "재질 리스트", required = true)
-	List<IngredientView> ingredients;
+	List<Ingredient> ingredients;
 
 	@ApiModelProperty(value = "세탁 라벨", required = true)
 	WaterType waterType;
@@ -40,14 +41,4 @@ public class ResultView {
 
 	@ApiModelProperty(value = "드라이 클리닝 라벨", required = true)
 	DryCleaning dryCleaning;
-
-	@ApiModel(description = "재질 뷰")
-	@Value
-	public static class IngredientView {
-		@ApiModelProperty(value = "이름", required = true)
-		String name;
-
-		@ApiModelProperty(value = "함량 퍼센트", required = true)
-		int percentage;
-	}
 }

@@ -7,13 +7,17 @@ import java.util.NoSuchElementException;
 
 import javax.transaction.Transactional;
 
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pinocchio.santaclothes.apiserver.entity.CaptureEvent;
 import com.pinocchio.santaclothes.apiserver.exception.EventInvalidException;
 import com.pinocchio.santaclothes.apiserver.exception.ExceptionReason;
 import com.pinocchio.santaclothes.apiserver.repository.CaptureEventRepository;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventDto;
+import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventResultDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventSaveRequestDto;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateRequestDto;
 import com.pinocchio.santaclothes.apiserver.support.ObjectSupports;
@@ -28,16 +32,16 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class CaptureService {
 	private final CaptureEventRepository captureEventRepository;
-	// private final EventMessagePublishService messagePublishService;
+	private final ObjectMapper objectMapper;
 
 	public CaptureEventDto findById(String eventId) {
 		CaptureEvent captureEvent = captureEventRepository.findById(eventId).orElseThrow();
-
+		CaptureEventResultDto resultDto = getResultDto(captureEvent.getResult());
 		return CaptureEventDto.builder()
 			.eventId(captureEvent.getEventId())
 			.imageId(captureEvent.getImageId())
 			.userId(captureEvent.getUserId())
-			.result(captureEvent.getResult())
+			.result(resultDto)
 			.status(captureEvent.getStatus())
 			.build();
 	}
@@ -49,7 +53,7 @@ public class CaptureService {
 				.imageId(it.getImageId())
 				.userId(it.getUserId())
 				.status(it.getStatus())
-				.result(it.getResult())
+				.result(getResultDto(it.getResult()))
 				.build())
 			.collect(toList());
 	}
@@ -96,11 +100,23 @@ public class CaptureService {
 				.eventId(event.getEventId())
 				.imageId(event.getImageId())
 				.status(event.getStatus())
-				.result(event.getResult())
+				.result(getResultDto(event.getResult()))
 				.build();
 
 		} catch (NoSuchElementException e) {
 			throw new EventInvalidException(e, eventId, ExceptionReason.EVENT_NOT_EXIST);
 		}
+	}
+
+	@Nullable
+	private CaptureEventResultDto getResultDto(String result) {
+		return ObjectSupports.ifNotNullApply(result, it -> {
+			try {
+				return objectMapper.readValue(it, CaptureEventResultDto.class);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+			return null;
+		});
 	}
 }

@@ -17,7 +17,7 @@ public class CaptureEventDto {
 	String userId;
 
 	@Nullable
-	String result;
+	CaptureEventResultDto result;
 
 	CaptureEventStatus status;
 }

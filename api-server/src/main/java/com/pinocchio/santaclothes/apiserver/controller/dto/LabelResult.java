@@ -1,27 +1,32 @@
 package com.pinocchio.santaclothes.apiserver.controller.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.pinocchio.santaclothes.apiserver.entity.type.BleachType;
-import com.pinocchio.santaclothes.apiserver.entity.type.DryType;
 import com.pinocchio.santaclothes.apiserver.entity.type.DryCleaning;
+import com.pinocchio.santaclothes.apiserver.entity.type.DryType;
 import com.pinocchio.santaclothes.apiserver.entity.type.IroningType;
 import com.pinocchio.santaclothes.apiserver.entity.type.WaterType;
 import com.pinocchio.santaclothes.common.type.ClothesColor;
+import com.pinocchio.santaclothes.common.type.Ingredient;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Value;
 
 @ApiModel(description = "라벨 인식 결과")
 @Value
-public class LabelResultRequest {
+@Builder
+public class LabelResult {
 	@ApiModelProperty(value = "원단 리스트", required = true)
 	@NotEmpty
-	List<Ingredient> ingredientList;
+	@Builder.Default
+	List<Ingredient> ingredientList = new ArrayList<>();
 
 	@ApiModelProperty(value = "물 세탁 방법", required = true)
 	@NotNull
@@ -43,6 +48,6 @@ public class LabelResultRequest {
 	@NotNull
 	DryCleaning dryCleaning;
 
-	@ApiModelProperty(value = "옷 색깔", required = true)
+	@ApiModelProperty(value = "옷 색깔")
 	ClothesColor clothesColor;
 }

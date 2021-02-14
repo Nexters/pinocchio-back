@@ -11,17 +11,19 @@ import com.pinocchio.santaclothes.apiserver.assembler.domain.MainView;
 import com.pinocchio.santaclothes.apiserver.assembler.domain.MyPageView;
 import com.pinocchio.santaclothes.apiserver.assembler.domain.NoticeView;
 import com.pinocchio.santaclothes.apiserver.assembler.domain.ResultView;
-import com.pinocchio.santaclothes.apiserver.assembler.domain.ResultView.IngredientView;
 import com.pinocchio.santaclothes.apiserver.entity.User;
 import com.pinocchio.santaclothes.apiserver.entity.type.BleachType;
 import com.pinocchio.santaclothes.apiserver.entity.type.DryCleaning;
 import com.pinocchio.santaclothes.apiserver.entity.type.DryType;
 import com.pinocchio.santaclothes.apiserver.entity.type.IroningType;
 import com.pinocchio.santaclothes.apiserver.entity.type.WaterType;
+import com.pinocchio.santaclothes.apiserver.service.CaptureService;
 import com.pinocchio.santaclothes.apiserver.service.GlobalCountService;
 import com.pinocchio.santaclothes.apiserver.service.NoticeService;
 import com.pinocchio.santaclothes.apiserver.service.UserService;
+import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventDto;
 import com.pinocchio.santaclothes.common.type.ClothesType;
+import com.pinocchio.santaclothes.common.type.Ingredient;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +33,7 @@ public class ViewAssembler {
 	private final GlobalCountService globalCountService;
 	private final NoticeService noticeService;
 	private final UserService userService;
+	private final CaptureService captureService;
 
 	public MainView assembleMain(String accessToken) {
 		User user = userService.findByAccessToken(accessToken);
@@ -55,7 +58,7 @@ public class ViewAssembler {
 	}
 
 	public ResultView resultView(String eventId) {
-		// TODO: resultView 조립해서 만들기
+		CaptureEventDto captureEventDto = captureService.findById(eventId);
 		return ResultView.builder()
 			.build();
 	}
@@ -79,7 +82,7 @@ public class ViewAssembler {
 					.waterType(WaterType.FORBIDDEN_BLOWER_JP)
 					.ingredients(
 						List.of(
-							new IngredientView("폴리에스테르", 100)
+							new Ingredient("폴리에스테르", 100)
 						)
 					)
 					.build()

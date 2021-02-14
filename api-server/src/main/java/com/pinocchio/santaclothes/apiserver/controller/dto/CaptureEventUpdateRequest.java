@@ -25,5 +25,5 @@ public class CaptureEventUpdateRequest {
 
 	@ApiModelProperty(value = "분석 결과 JSON")
 	@Nullable
-	LabelResultRequest result;
+	LabelResult result;
 }

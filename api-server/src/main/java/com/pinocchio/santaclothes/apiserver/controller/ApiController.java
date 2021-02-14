@@ -1,5 +1,6 @@
 package com.pinocchio.santaclothes.apiserver.controller;
 
+import static com.pinocchio.santaclothes.apiserver.controller.converter.CaptureEventConverter.*;
 import static com.pinocchio.santaclothes.apiserver.support.ObjectSupports.*;
 
 import javax.validation.Valid;
@@ -14,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventCreateRequestResponse.CaptureEventCreateRequest;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventCreateRequestResponse.CaptureEventCreateResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventResponse;
 import com.pinocchio.santaclothes.apiserver.controller.dto.CaptureEventUpdateRequest;
-import com.pinocchio.santaclothes.apiserver.controller.dto.LabelResultRequest;
+import com.pinocchio.santaclothes.apiserver.controller.dto.LabelResult;
 import com.pinocchio.santaclothes.apiserver.exception.ProblemModel;
 import com.pinocchio.santaclothes.apiserver.service.CaptureService;
 import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventDto;
@@ -56,7 +56,7 @@ public class ApiController {
 			.eventId(event.getEventId())
 			.imageId(event.getImageId())
 			.status(event.getStatus())
-			.result(event.getResult())
+			.result(toLabelResult(event.getResult()))
 			.build();
 	}
 
@@ -74,22 +74,23 @@ public class ApiController {
 		@PathVariable String eventId,
 		@RequestBody @Valid CaptureEventUpdateRequest request
 	) {
-			LabelResultRequest requestResult = request.getResult();
-			String result = ifNotNullApply(requestResult, JsonSupports::toJsonString);
+		LabelResult requestResult = request.getResult();
+		String result = ifNotNullApply(requestResult, JsonSupports::toJsonString);
 
-			CaptureEventUpdateRequestDto updateDto = CaptureEventUpdateRequestDto.builder()
-				.eventId(eventId)
-				.imageId(request.getImageId())
-				.status(request.getStatus())
-				.result(result)
-				.build();
+		CaptureEventUpdateRequestDto updateDto = CaptureEventUpdateRequestDto.builder()
+			.eventId(eventId)
+			.imageId(request.getImageId())
+			.status(request.getStatus())
+			.result(result)
+			.build();
 
-			CaptureEventDto event = captureService.update(updateDto);
+		CaptureEventDto event = captureService.update(updateDto);
 
 			return CaptureEventResponse.builder()
+				.userId(event.getUserId())
 				.eventId(event.getEventId())
 				.imageId(event.getImageId())
-				.result(event.getResult())
+				.result(toLabelResult(event.getResult()))
 				.status(event.getStatus())
 				.build();
 	}

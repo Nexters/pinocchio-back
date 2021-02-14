@@ -22,7 +22,8 @@ public class SecurityInterceptor implements HandlerInterceptor {
 	private final UserService userService;
 	private static final List<String> permitHosts = List.of(
 		"127.0.0.1",
-		"3.139.60.119"
+		"3.139.60.119",
+		"0:0:0:0:0:0:0:1"
 	);
 
 	@Override

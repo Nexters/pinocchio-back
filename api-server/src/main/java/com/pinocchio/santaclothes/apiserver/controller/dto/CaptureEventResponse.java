@@ -26,9 +26,8 @@ public class CaptureEventResponse {
 	@ApiModelProperty(dataType = "string", value = "이벤트 상태", example = "START, EXTRACT, REPORT, DONE", required = true)
 	CaptureEventStatus status;
 
-	// TODO: jackson global 설정
 	@ApiModelProperty(value = "이벤트 결과")
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Nullable
-	String result;
+	LabelResult result;
 }
