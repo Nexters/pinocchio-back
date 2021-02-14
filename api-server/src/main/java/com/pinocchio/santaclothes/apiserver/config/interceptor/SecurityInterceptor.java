@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
-@Slf4j
 public class SecurityInterceptor implements HandlerInterceptor {
 	private static final int TOKEN_PREFIX = 7; // BEARER
 	private final UserService userService;
@@ -32,7 +31,6 @@ public class SecurityInterceptor implements HandlerInterceptor {
 		@NonNull HttpServletResponse response,
 		@NonNull Object handler
 	) {
-		log.info(request.getRemoteHost());
 		if (permitHosts.contains(request.getRemoteHost())) {
 			return true;
 		}
