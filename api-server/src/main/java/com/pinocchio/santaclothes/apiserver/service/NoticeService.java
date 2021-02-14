@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class NoticeService {
 	private final NoticeRepository noticeRepository;
 
+	// TODO: 실제 notice 적용
 	public List<Notice> findAllNotice(){
 		return List.of(
 			Notice.builder()
