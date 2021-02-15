@@ -3,9 +3,9 @@ package com.pinocchio.santaclothes.apiserver.eventhandler;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import com.pinocchio.santaclothes.apiserver.entity.Cloth;
 import com.pinocchio.santaclothes.apiserver.entity.Ingredient;
@@ -27,7 +27,7 @@ public class CaptureEventHandler {
 	private final CaptureService captureService;
 
 	@Async
-	@EventListener
+	@TransactionalEventListener // transaction 이후에 이벤트 처리
 	public void createCloth(CreateClothEvent event) {
 		CaptureEventDto eventDto = captureService.findById(event.getEventId());
 		CaptureEventResultDto resultDto = eventDto.getResult();
@@ -55,7 +55,7 @@ public class CaptureEventHandler {
 			.ironingType(resultDto.getIroningType())
 			.ingredientList(ingredientList)
 			.build();
-
+		ingredientList.forEach(it -> it.setCloth(cloth)); // TODO: 우아하게 처리하기
 		clothService.save(cloth);
 	}
 }

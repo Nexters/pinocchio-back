@@ -65,7 +65,6 @@ public class Cloth {
 	private DryCleaning dryCleaning;
 
 	@Enumerated(EnumType.STRING)
-	@NotNull
 	private ClothesType clothesType;
 
 	@Enumerated(EnumType.STRING)
