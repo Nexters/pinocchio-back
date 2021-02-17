@@ -1,5 +1,6 @@
 rootProject.name = "santaclothes"
 
 include "common"
+include "cheerios"
 include "api-server"
 include "image-server"

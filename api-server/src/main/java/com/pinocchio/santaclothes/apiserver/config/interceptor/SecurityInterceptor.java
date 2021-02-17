@@ -31,17 +31,16 @@ public class SecurityInterceptor implements HandlerInterceptor {
 		@NonNull HttpServletResponse response,
 		@NonNull Object handler
 	) {
-		return true;
-		// if (permitHosts.contains(request.getRemoteHost())) {
-		// 	return true;
-		// }
-		// String authorization = request.getHeader("Authorization");
-		// if (authorization != null) {
-		// 	String token = authorization.substring(TOKEN_PREFIX);
-		// 	if (userService.isActiveToken(token) && !userService.isExpired(token)) {
-		// 		return true;
-		// 	}
-		// }
-		// throw new TokenInvalidException(ExceptionReason.INVALID_ACCESS_TOKEN);
+		if (permitHosts.contains(request.getRemoteHost())) {
+			return true;
+		}
+		String authorization = request.getHeader("Authorization");
+		if (authorization != null) {
+			String token = authorization.substring(TOKEN_PREFIX);
+			if (userService.isActiveToken(token) && !userService.isExpired(token)) {
+				return true;
+			}
+		}
+		throw new TokenInvalidException(ExceptionReason.INVALID_ACCESS_TOKEN);
 	}
 }
