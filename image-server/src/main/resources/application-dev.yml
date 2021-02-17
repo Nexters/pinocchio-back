@@ -1,0 +1,6 @@
+api:
+  api-server:
+    url: http://${host.api-server}
+
+host:
+  api-server: ec2-13-209-47-146.ap-northeast-2.compute.amazonaws.com:8082

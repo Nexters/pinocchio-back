@@ -17,6 +17,9 @@ public class AuthResponse {
 	@ApiModelProperty(value = "리프레시 토큰", required = true)
 	String refreshToken;
 
+	@ApiModelProperty(value = "유저 아이디", required = true)
+	String userId;
+
 	@ApiModelProperty(value = "만료 날짜", required = true)
 	Instant expireDateTime;
 }

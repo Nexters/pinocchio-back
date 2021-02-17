@@ -1,5 +1,7 @@
 package com.pinocchio.santaclothes.apiserver.config.interceptor;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,11 +13,17 @@ import com.pinocchio.santaclothes.apiserver.exception.TokenInvalidException;
 import com.pinocchio.santaclothes.apiserver.service.UserService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 public class SecurityInterceptor implements HandlerInterceptor {
 	private static final int TOKEN_PREFIX = 7; // BEARER
 	private final UserService userService;
+	private static final List<String> permitHosts = List.of(
+		"127.0.0.1",
+		"3.139.60.119",
+		"0:0:0:0:0:0:0:1"
+	);
 
 	@Override
 	public boolean preHandle(
@@ -23,6 +31,9 @@ public class SecurityInterceptor implements HandlerInterceptor {
 		@NonNull HttpServletResponse response,
 		@NonNull Object handler
 	) {
+		if (permitHosts.contains(request.getRemoteHost())) {
+			return true;
+		}
 		String authorization = request.getHeader("Authorization");
 		if (authorization != null) {
 			String token = authorization.substring(TOKEN_PREFIX);

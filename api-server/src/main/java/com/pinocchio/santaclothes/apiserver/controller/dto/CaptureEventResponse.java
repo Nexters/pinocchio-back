@@ -3,7 +3,7 @@ package com.pinocchio.santaclothes.apiserver.controller.dto;
 import org.springframework.lang.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
+import com.pinocchio.santaclothes.common.type.CaptureEventStatus;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,12 +20,14 @@ public class CaptureEventResponse {
 	@ApiModelProperty(value = "이미지 아이디", required = true)
 	String imageId;
 
-	@ApiModelProperty(dataType = "string", value = "이벤트 상태", example = "START, EXTRACT, DONE", required = true)
+	@ApiModelProperty(value = "유저 아이디", required = true)
+	String userId;
+
+	@ApiModelProperty(dataType = "string", value = "이벤트 상태", example = "START, EXTRACT, REPORT, DONE", required = true)
 	CaptureEventStatus status;
 
-	// TODO: jackson global 설정
 	@ApiModelProperty(value = "이벤트 결과")
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Nullable
-	String result;
+	LabelResult result;
 }

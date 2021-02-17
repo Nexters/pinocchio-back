@@ -11,9 +11,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.pinocchio.santaclothes.apiserver.entity.CaptureEvent;
 import com.pinocchio.santaclothes.apiserver.repository.CaptureEventRepository;
-import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateDto;
+import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventDto;
+import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateRequestDto;
 import com.pinocchio.santaclothes.apiserver.test.SpringTest;
-import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
+import com.pinocchio.santaclothes.common.type.CaptureEventStatus;
 
 class CaptureServiceTest extends SpringTest {
 	@MockBean
@@ -40,13 +41,13 @@ class CaptureServiceTest extends SpringTest {
 			.willReturn(captureEvent);
 
 		String newImageId = "newImageId";
-		CaptureEventUpdateDto captureEventUpdateDto= CaptureEventUpdateDto.builder()
+		CaptureEventUpdateRequestDto captureEventUpdateRequestDto = CaptureEventUpdateRequestDto.builder()
 			.eventId(captureEventId)
 			.imageId(newImageId)
 			.status(status)
 			.build();
 
-		CaptureEvent newCaptureEvent = sut.update(captureEventUpdateDto);
+		CaptureEventDto newCaptureEvent = sut.update(captureEventUpdateRequestDto);
 
 		then(newCaptureEvent.getEventId()).isEqualTo(captureEventId);
 		then(newCaptureEvent.getImageId()).isEqualTo(newImageId);
@@ -71,13 +72,13 @@ class CaptureServiceTest extends SpringTest {
 			.willReturn(captureEvent);
 
 		CaptureEventStatus newStatus = CaptureEventStatus.EXTRACT;
-		CaptureEventUpdateDto captureEventUpdateDto= CaptureEventUpdateDto.builder()
+		CaptureEventUpdateRequestDto captureEventUpdateRequestDto = CaptureEventUpdateRequestDto.builder()
 			.eventId(captureEventId)
 			.imageId(imageId)
 			.status(newStatus)
 			.build();
 
-		CaptureEvent newCaptureEvent = sut.update(captureEventUpdateDto);
+		CaptureEventDto newCaptureEvent = sut.update(captureEventUpdateRequestDto);
 
 		then(newCaptureEvent.getEventId()).isEqualTo(captureEventId);
 		then(newCaptureEvent.getImageId()).isEqualTo(imageId);
@@ -102,13 +103,13 @@ class CaptureServiceTest extends SpringTest {
 			.willReturn(captureEvent);
 
 		CaptureEventStatus newStatus = CaptureEventStatus.START;
-		CaptureEventUpdateDto captureEventUpdateDto= CaptureEventUpdateDto.builder()
+		CaptureEventUpdateRequestDto captureEventUpdateRequestDto = CaptureEventUpdateRequestDto.builder()
 			.eventId(captureEventId)
 			.imageId(imageId)
 			.status(newStatus)
 			.build();
 
-		CaptureEvent newCaptureEvent = sut.update(captureEventUpdateDto);
+		CaptureEventDto newCaptureEvent = sut.update(captureEventUpdateRequestDto);
 
 		then(newCaptureEvent.getEventId()).isEqualTo(captureEventId);
 		then(newCaptureEvent.getImageId()).isEqualTo(imageId);

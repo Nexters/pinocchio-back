@@ -1,7 +1,6 @@
 package com.pinocchio.santaclothes.apiserver.service;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 
 import javax.transaction.Transactional;
 
@@ -14,6 +13,7 @@ import com.pinocchio.santaclothes.apiserver.exception.ExceptionReason;
 import com.pinocchio.santaclothes.apiserver.exception.TokenInvalidException;
 import com.pinocchio.santaclothes.apiserver.repository.UserAuthRepository;
 import com.pinocchio.santaclothes.apiserver.repository.UserRepository;
+import com.pinocchio.santaclothes.apiserver.support.DateSupports;
 import com.pinocchio.santaclothes.common.utils.Uuids;
 
 import lombok.RequiredArgsConstructor;
@@ -48,11 +48,12 @@ public class UserService {
 		String authToken = Uuids.generateUuidString();
 		String refreshToken = Uuids.generateUuidString();
 
+		Instant expireDateTime = DateSupports.calculateExpireDate(now);
 		UserAuth newAuth = UserAuth.builder()
 			.userId(userId)
 			.accessToken(authToken)
 			.refreshToken(refreshToken)
-			.expireDateTime(now.plus(30, ChronoUnit.DAYS))
+			.expireDateTime(expireDateTime)
 			.build();
 		userAuthRepository.save(newAuth);
 
@@ -65,7 +66,7 @@ public class UserService {
 			.filter(UserAuth::isRefreshTokenActive)
 			.orElseThrow(() -> new TokenInvalidException(ExceptionReason.INVALID_REFRESH_TOKEN));
 
-		Instant expireDate = now.plus(30, ChronoUnit.DAYS);
+		Instant expireDate = DateSupports.calculateExpireDate(now);
 		String newAuthToken = Uuids.generateUuidString();
 		UserAuth newUserAuth = UserAuth.builder()
 			.refreshToken(refreshToken)

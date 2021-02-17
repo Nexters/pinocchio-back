@@ -2,7 +2,7 @@ package com.pinocchio.santaclothes.apiserver.controller.dto;
 
 import javax.validation.constraints.NotNull;
 
-import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
+import com.pinocchio.santaclothes.common.type.CaptureEventStatus;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -23,7 +23,7 @@ public class CaptureEventCreateRequestResponse {
 		@NotNull
 		String imageId;
 
-		@ApiModelProperty(value = "이벤트 상태", required = true)
+		@ApiModelProperty(value = "이벤트 상태", allowableValues = "START, EXTRACT, REPORT, DONE", required = true)
 		@Builder.Default
 		@NotNull
 		CaptureEventStatus eventStatus = CaptureEventStatus.START;

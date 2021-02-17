@@ -1,0 +1,6 @@
+api:
+  api-server:
+    url: http://${host.api-server}
+
+host:
+  api-server: localhost:8082

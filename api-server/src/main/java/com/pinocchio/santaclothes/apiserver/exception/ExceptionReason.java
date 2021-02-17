@@ -6,4 +6,5 @@ public enum ExceptionReason {
 	SOCIAL_KEY_NOT_EXISTS,
 	DUPLICATE_ENTITY,
 	EVENT_NOT_EXIST,
+	EVENT_NO_RESULT,
 }

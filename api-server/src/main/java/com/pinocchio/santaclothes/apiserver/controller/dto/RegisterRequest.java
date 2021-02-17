@@ -5,9 +5,11 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pinocchio.santaclothes.apiserver.type.LoginType;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Value;
 
+@ApiModel(description = "회원가입 요청")
 @Value
 public class RegisterRequest {
 	@ApiModelProperty(value = "사용자 소셜 로그인 식별 번호", required = true)

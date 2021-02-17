@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.lang.Nullable;
 
-import com.pinocchio.santaclothes.apiserver.type.CaptureEventStatus;
+import com.pinocchio.santaclothes.common.type.CaptureEventStatus;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -15,19 +15,15 @@ import lombok.Value;
 @Value
 @Builder
 public class CaptureEventUpdateRequest {
-	@ApiModelProperty(value = "이벤트 아이디", required = true)
-	@NotNull
-	String eventId;
-
 	@ApiModelProperty(value = "이미지 아이디", required = true)
 	@NotNull
 	String imageId;
 
-	@ApiModelProperty(value = "이벤트 상태", example = "KAKAO", required = true)
+	@ApiModelProperty(value = "이벤트 상태", allowableValues = "START, EXTRACT, REPORT, DONE", required = true)
 	@NotNull
 	CaptureEventStatus status;
 
 	@ApiModelProperty(value = "분석 결과 JSON")
 	@Nullable
-	LabelResultRequest result;
+	LabelResult result;
 }
