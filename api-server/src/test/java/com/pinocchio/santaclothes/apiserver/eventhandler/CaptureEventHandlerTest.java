@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.task.SyncTaskExecutor;
 
 import com.pinocchio.santaclothes.apiserver.entity.CaptureEvent;
 import com.pinocchio.santaclothes.apiserver.entity.Cloth;
+import com.pinocchio.santaclothes.apiserver.eventhandler.CaptureEventHandlerTest.ContextConfiguration;
 import com.pinocchio.santaclothes.apiserver.repository.CaptureEventRepository;
 import com.pinocchio.santaclothes.apiserver.service.CaptureService;
 import com.pinocchio.santaclothes.apiserver.service.ClothService;
@@ -22,6 +24,7 @@ import com.pinocchio.santaclothes.apiserver.service.dto.CaptureEventUpdateReques
 import com.pinocchio.santaclothes.apiserver.test.SpringTest;
 import com.pinocchio.santaclothes.common.type.CaptureEventStatus;
 
+@Import(ContextConfiguration.class)
 public class CaptureEventHandlerTest extends SpringTest {
 	@MockBean
 	private ClothService clothService;
