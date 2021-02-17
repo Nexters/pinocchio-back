@@ -3,10 +3,15 @@ package com.pinocchio.santaclothes.apiserver.eventhandler;
 import static org.mockito.Mockito.*;
 
 import java.util.Optional;
+import java.util.concurrent.Executor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.core.task.SyncTaskExecutor;
 
 import com.pinocchio.santaclothes.apiserver.entity.CaptureEvent;
 import com.pinocchio.santaclothes.apiserver.entity.Cloth;
@@ -26,6 +31,15 @@ public class CaptureEventHandlerTest extends SpringTest {
 
 	@MockBean
 	private CaptureEventRepository captureEventRepository;
+
+	@Configuration
+	static class ContextConfiguration {
+		@Bean
+		@Primary
+		public Executor executor() {
+			return new SyncTaskExecutor();
+		}
+	}
 
 	@Test
 	void createClothWhenEventIsDone() {

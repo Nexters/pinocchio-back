@@ -55,6 +55,7 @@ public class CaptureEventHandler {
 			.ironingType(resultDto.getIroningType())
 			.ingredientList(ingredientList)
 			.build();
+
 		ingredientList.forEach(it -> it.setCloth(cloth)); // TODO: 우아하게 처리하기
 		clothService.save(cloth);
 	}
